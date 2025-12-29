@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { PILLARS } from '@/config/pillars';
+import { SearchDropdown } from '@/components/search/SearchDropdown';
 
 export const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [showMobileSearch, setShowMobileSearch] = useState(false);
 
     const pillarLinks = PILLARS.map(pillar => ({
         href: `/topics/${pillar.slug}`,
@@ -16,9 +18,9 @@ export const Header: React.FC = () => {
     return (
         <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
             <Container>
-                <div className="flex items-center justify-between h-16">
+                <div className="flex items-center justify-between h-16 gap-4">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2">
+                    <Link href="/" className="flex items-center gap-2 flex-shrink-0">
                         <div className="relative w-8 h-8 flex items-center justify-center">
                             <svg viewBox="0 0 32 36" fill="none" className="w-full h-full">
                                 <path
@@ -47,6 +49,11 @@ export const Header: React.FC = () => {
                             RegulateThis
                         </span>
                     </Link>
+
+                    {/* Desktop Search - Hidden on mobile/tablet */}
+                    <div className="hidden lg:flex flex-1 max-w-md mx-4">
+                        <SearchDropdown />
+                    </div>
 
                     {/* Desktop Navigation */}
                     <nav className="hidden lg:flex items-center space-x-6">
@@ -104,12 +111,13 @@ export const Header: React.FC = () => {
                         </Link>
                     </nav>
 
-                    {/* Right Side: Search + Mobile Menu */}
-                    <div className="flex items-center space-x-4">
-                        {/* Search Icon */}
+                    {/* Right Side: Search Icon (mobile/tablet) + Mobile Menu */}
+                    <div className="flex items-center space-x-2">
+                        {/* Mobile/Tablet Search Icon */}
                         <button
-                            className="p-2 text-[#0B1F3B] hover:text-[#49648C] hover:bg-[#F5F2EA] rounded-full transition-colors"
-                            aria-label="Search"
+                            className="lg:hidden p-2 text-[#0B1F3B] hover:text-[#49648C] hover:bg-[#F5F2EA] rounded-full transition-colors"
+                            onClick={() => setShowMobileSearch(!showMobileSearch)}
+                            aria-label="Toggle search"
                         >
                             <svg
                                 className="w-5 h-5"
@@ -144,6 +152,13 @@ export const Header: React.FC = () => {
                         </button>
                     </div>
                 </div>
+
+                {/* Mobile/Tablet Search Bar */}
+                {showMobileSearch && (
+                    <div className="lg:hidden py-4 border-t border-gray-200">
+                        <SearchDropdown />
+                    </div>
+                )}
 
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (

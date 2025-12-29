@@ -5,12 +5,30 @@ import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
 import { mockArticles } from '@/lib/mock-data';
 import { getPillarBySlug } from '@/config/pillars';
+import { generatePillarMetadata } from '@/lib/seo';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 interface PillarPageProps {
     params: Promise<{
         slug: string;
     }>;
+}
+
+// Generate metadata for SEO
+export async function generateMetadata({ params }: PillarPageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const pillarConfig = getPillarBySlug(slug);
+
+    if (!pillarConfig) {
+        return {
+            title: 'Topic Not Found | RegulateThis',
+        };
+    }
+
+    const articleCount = mockArticles.filter(article => article.pillar === pillarConfig.name).length;
+
+    return generatePillarMetadata(pillarConfig, articleCount);
 }
 
 export default async function PillarPage({ params }: PillarPageProps) {

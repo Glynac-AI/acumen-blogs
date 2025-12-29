@@ -4,12 +4,30 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
 import { mockAuthors, mockArticles } from '@/lib/mock-data';
+import { generateAuthorMetadata } from '@/lib/seo';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 interface AuthorPageProps {
     params: Promise<{
         id: string;
     }>;
+}
+
+// Generate metadata for SEO
+export async function generateMetadata({ params }: AuthorPageProps): Promise<Metadata> {
+    const { id } = await params;
+    const author = mockAuthors.find(a => a.id === id);
+
+    if (!author) {
+        return {
+            title: 'Author Not Found | RegulateThis',
+        };
+    }
+
+    const articleCount = mockArticles.filter(article => article.author.id === author.id).length;
+
+    return generateAuthorMetadata(author, articleCount);
 }
 
 export default async function AuthorPage({ params }: AuthorPageProps) {

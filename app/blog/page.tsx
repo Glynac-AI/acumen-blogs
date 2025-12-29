@@ -8,6 +8,9 @@ import { mockArticles } from '@/lib/mock-data';
 import { Pillar } from '@/types';
 import { PILLARS } from '@/config/pillars';
 
+// Note: Since this is a client component, metadata is set in layout or we'd need to make it server component
+// For now, we'll add a simple head update via useEffect if needed
+
 function BlogContent() {
     const searchParams = useSearchParams();
     const pillarParam = searchParams.get('pillar');

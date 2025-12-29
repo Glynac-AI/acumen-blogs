@@ -3,6 +3,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { mockAuthors, mockArticles } from '@/lib/mock-data';
+import { generateDefaultMetadata } from '@/lib/seo';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generateDefaultMetadata(
+    'Authors',
+    'Meet the industry professionals behind RegulateThis. Experienced advisors, compliance officers, and technology experts sharing their insights.',
+    '/authors'
+);
 
 export default function AuthorsPage() {
     // Get article count for each author

@@ -6,12 +6,31 @@ import { PillarBadge } from '@/components/article/PillarBadge';
 import { SocialShareButtons } from '@/components/article/SocialShareButtons';
 import { mockArticles } from '@/lib/mock-data';
 import { pillarToSlug } from '@/lib/utils';
+import { generateArticleMetadata } from '@/lib/seo';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 
 interface BlogPageProps {
     params: Promise<{
         slug: string;
     }>;
+}
+
+// Generate metadata for SEO
+export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const article = mockArticles.find(a => a.slug === slug);
+
+    if (!article) {
+        return {
+            title: 'Article Not Found | RegulateThis',
+        };
+    }
+
+    // TODO: When Strapi is connected, fetch article data here
+    // const article = await fetch(`your-strapi/api/articles?slug=${slug}`).then(r => r.json());
+
+    return generateArticleMetadata(article);
 }
 
 export default async function BlogArticlePage({ params }: BlogPageProps) {

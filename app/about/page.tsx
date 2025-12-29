@@ -2,6 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { PILLARS } from '@/config/pillars';
+import { generateDefaultMetadata } from '@/lib/seo';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = generateDefaultMetadata(
+    'About',
+    'RegulateThis publishes sharp, actionable insights on practice management, wealth management technology, and regulatory compliance. Learn about our mission and what makes us different.',
+    '/about'
+);
 
 export default function AboutPage() {
     return (

@@ -22,6 +22,7 @@ export const Footer: React.FC = () => {
         legal: [
             { href: '/privacy', label: 'Privacy Policy' },
             { href: '/terms', label: 'Terms of Use' },
+            { href: '/feed.xml', label: 'RSS Feed' },
         ],
     };
 

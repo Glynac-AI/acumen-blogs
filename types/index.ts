@@ -3,6 +3,15 @@ import { PILLARS } from '@/config/pillars';
 // Generate Pillar type from config
 export type Pillar = typeof PILLARS[number]['name'];
 
+export interface SEOMetadata {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: string;
+    ogImage?: string;
+    noIndex?: boolean;
+    canonicalURL?: string;
+}
+
 export interface Author {
     id: string;
     name: string;
@@ -34,6 +43,7 @@ export interface Article {
     publishDate: string;
     readTime: number;
     isFeatured?: boolean;
+    seo?: SEOMetadata;
 }
 
 export interface NewsletterSubscription {
