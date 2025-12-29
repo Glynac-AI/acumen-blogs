@@ -3,45 +3,32 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
+import { PILLARS } from '@/config/pillars';
 
 export const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    const mainNavLinks = [
-        { href: '/', label: 'Home' },
-        { href: '/blog', label: 'Blog' },
-        { href: '/authors', label: 'Authors' },
-        { href: '/about', label: 'About' },
-    ];
-
-    const pillarLinks = [
-        { href: '/blog?pillar=compliance-regulation', label: 'Compliance & Regulation' },
-        { href: '/blog?pillar=technology-operations', label: 'Technology & Operations' },
-        { href: '/blog?pillar=practice-management', label: 'Practice Management' },
-        { href: '/blog?pillar=client-strategy', label: 'Client Strategy' },
-        { href: '/blog?pillar=industry-insights', label: 'Industry Insights' },
-    ];
+    const pillarLinks = PILLARS.map(pillar => ({
+        href: `/topics/${pillar.slug}`,
+        label: pillar.name
+    }));
 
     return (
         <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
             <Container>
                 <div className="flex items-center justify-between h-16">
-                    {/* Logo with Icon */}
+                    {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
-                        {/* Logo Icon - Shield/Badge shape */}
                         <div className="relative w-8 h-8 flex items-center justify-center">
                             <svg viewBox="0 0 32 36" fill="none" className="w-full h-full">
-                                {/* Outer shield */}
                                 <path
                                     d="M16 2L4 8v8c0 7.5 5 14 12 18 7-4 12-10.5 12-18V8L16 2z"
                                     fill="#49648C"
                                 />
-                                {/* Inner accent */}
                                 <path
                                     d="M16 6L8 10v6c0 5 3.5 9.5 8 12 4.5-2.5 8-7 8-12v-6l-8-4z"
                                     fill="#0B1F3B"
                                 />
-                                {/* Check mark or 'R' initial */}
                                 <text
                                     x="16"
                                     y="21"
@@ -61,7 +48,7 @@ export const Header: React.FC = () => {
                         </span>
                     </Link>
 
-                    {/* Desktop Navigation - Topics First */}
+                    {/* Desktop Navigation */}
                     <nav className="hidden lg:flex items-center space-x-6">
                         <Link
                             href="/"
@@ -70,7 +57,7 @@ export const Header: React.FC = () => {
                             Home
                         </Link>
 
-                        {/* Topics Dropdown - Now Second */}
+                        {/* Topics Dropdown */}
                         <div className="relative group">
                             <button className="text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors flex items-center gap-1">
                                 Topics
@@ -99,7 +86,7 @@ export const Header: React.FC = () => {
                             href="/blog"
                             className="text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors"
                         >
-                            Blog
+                            All Articles
                         </Link>
 
                         <Link
@@ -164,7 +151,7 @@ export const Header: React.FC = () => {
                         <nav className="flex flex-col space-y-1">
                             <Link
                                 href="/"
-                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#EEE9DF] rounded transition-colors"
+                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 Home
@@ -178,7 +165,7 @@ export const Header: React.FC = () => {
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className="px-4 py-2 pl-8 text-sm text-[#0B1F3B] hover:bg-[#EEE9DF] rounded transition-colors"
+                                    className="px-4 py-2 pl-8 text-sm text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {link.label}
@@ -187,15 +174,15 @@ export const Header: React.FC = () => {
 
                             <Link
                                 href="/blog"
-                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#EEE9DF] rounded transition-colors"
+                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                Blog
+                                All Articles
                             </Link>
 
                             <Link
                                 href="/authors"
-                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#EEE9DF] rounded transition-colors"
+                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 Authors
@@ -203,7 +190,7 @@ export const Header: React.FC = () => {
 
                             <Link
                                 href="/about"
-                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#EEE9DF] rounded transition-colors"
+                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 About

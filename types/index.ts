@@ -1,9 +1,7 @@
-export type Pillar =
-    | 'Compliance & Regulation'
-    | 'Technology & Operations'
-    | 'Practice Management'
-    | 'Client Strategy'
-    | 'Industry Insights';
+import { PILLARS } from '@/config/pillars';
+
+// Generate Pillar type from config
+export type Pillar = typeof PILLARS[number]['name'];
 
 export interface Author {
     id: string;

@@ -4,24 +4,13 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
-import { mockArticles } from '@/lib/mock-data';
-import { Pillar } from '@/types';
+import { getFeaturedArticlesByPillar } from '@/lib/mock-data';
 
 export const HeroSection: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-    const pillars: Pillar[] = [
-        'Compliance & Regulation',
-        'Technology & Operations',
-        'Practice Management',
-        'Client Strategy',
-        'Industry Insights',
-    ];
-
-    const featuredArticles = pillars
-        .map(pillar => mockArticles.find(article => article.pillar === pillar))
-        .filter(article => article !== undefined);
+    const featuredArticles = getFeaturedArticlesByPillar();
 
     useEffect(() => {
         if (!isAutoPlaying) return;
@@ -64,7 +53,6 @@ export const HeroSection: React.FC = () => {
                 }}></div>
             </div>
 
-           
             <Container>
                 <div className="relative py-8 md:py-12 flex flex-col justify-center h-full">
                     {/* Content Grid */}
@@ -137,14 +125,13 @@ export const HeroSection: React.FC = () => {
                                         className="object-cover group-hover:scale-105 transition-transform duration-700"
                                         priority
                                     />
-                                    {/* Gradient overlay for sophistication */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60"></div>
                                 </div>
                             </Link>
                         </div>
                     </div>
 
-                    {/* Navigation Controls - Minimal & Elegant */}
+                    {/* Navigation Controls */}
                     <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-800">
                         {/* Left: Topic Pills */}
                         <div className="flex items-center space-x-2 flex-wrap">

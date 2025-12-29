@@ -5,18 +5,12 @@ import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
 import { mockArticles } from '@/lib/mock-data';
 import { Pillar } from '@/types';
+import { PILLARS } from '@/config/pillars';
 
 export const RecentArticlesSection: React.FC = () => {
     const [selectedPillar, setSelectedPillar] = useState<Pillar | 'All'>('All');
 
-    const pillars: Array<Pillar | 'All'> = [
-        'All',
-        'Compliance & Regulation',
-        'Technology & Operations',
-        'Practice Management',
-        'Client Strategy',
-        'Industry Insights',
-    ];
+    const pillars: Array<Pillar | 'All'> = ['All', ...PILLARS.map(p => p.name as Pillar)];
 
     // Filter articles based on selected pillar
     const filteredArticles = selectedPillar === 'All'

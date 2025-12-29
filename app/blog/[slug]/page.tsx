@@ -5,6 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { PillarBadge } from '@/components/article/PillarBadge';
 import { SocialShareButtons } from '@/components/article/SocialShareButtons';
 import { mockArticles } from '@/lib/mock-data';
+import { pillarToSlug } from '@/lib/utils';
 import { notFound } from 'next/navigation';
 
 interface BlogPageProps {
@@ -14,15 +15,19 @@ interface BlogPageProps {
 }
 
 export default async function BlogArticlePage({ params }: BlogPageProps) {
-    // Await params in Next.js 15
     const { slug } = await params;
-
-    // Find the article by slug
     const article = mockArticles.find(a => a.slug === slug);
 
     if (!article) {
         notFound();
     }
+
+    // Get related articles from same pillar
+    const relatedArticles = mockArticles
+        .filter(a => a.pillar === article.pillar && a.id !== article.id)
+        .slice(0, 3);
+
+    const pillarSlug = pillarToSlug(article.pillar);
 
     return (
         <>
@@ -40,7 +45,9 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                                 Blog
                             </Link>
                             <span>/</span>
-                            <span className="text-[#0B1F3B]">{article.pillar}</span>
+                            <Link href={`/topics/${pillarSlug}`} className="hover:text-[#49648C] transition-colors">
+                                {article.pillar}
+                            </Link>
                         </div>
 
                         {/* Pillar Badge */}
@@ -106,7 +113,6 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                     <article className="py-16 md:py-20">
                         {/* Article Body */}
                         <div className="prose prose-lg max-w-none">
-                            {/* Mock content - replace with actual content from CMS */}
                             <p className="text-lg text-gray-700 leading-relaxed mb-6">
                                 {article.excerpt}
                             </p>
@@ -152,7 +158,7 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                                 {article.tags.map((tag) => (
                                     <Link
                                         key={tag.id}
-                                        href={`/blog?tag=${tag.slug}`}
+                                        href={`/tags/${tag.slug}`}
                                         className="px-3 py-1 text-xs font-medium text-[#0B1F3B] border border-gray-200 hover:border-[#49648C] hover:text-[#49648C] transition-colors"
                                         style={{ borderRadius: '2px' }}
                                     >
@@ -164,7 +170,6 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
 
                         {/* Share */}
                         <div className="mt-8 pt-8 border-t border-gray-200">
-                            <p className="text-sm font-medium text-gray-500 mb-4">Share this article:</p>
                             <SocialShareButtons
                                 title={article.title}
                                 url={`https://regulatethis.com/blog/${article.slug}`}
@@ -194,23 +199,66 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                                 <p className="text-base text-gray-700 leading-relaxed">{article.author.bio}</p>
 
                                 {article.author.linkedin && (
-<a
-                                    href = { article.author.linkedin }
-                    target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center space-x-2 text-sm font-medium text-[#49648C] hover:text-[#0B1F3B] transition-colors mt-4"
-                  >
-                                <span>Connect on LinkedIn</span>
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                                </svg>
-                            </a>
-                )}
+                                    <a
+                                        href={article.author.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center space-x-2 text-sm font-medium text-[#49648C] hover:text-[#0B1F3B] transition-colors mt-4"
+                                    >
+                                        <span>Connect on LinkedIn</span>
+                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                        </svg>
+                                    </a>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </Container>
-        </section >
-    </>
-  );
+                </Container>
+            </section>
+
+            {/* Related Articles */}
+            {relatedArticles.length > 0 && (
+                <section className="bg-white">
+                    <Container maxWidth="lg">
+                        <div className="py-16 md:py-20">
+                            <div className="flex items-center space-x-3 mb-8">
+                                <div className="h-px w-12 bg-[#49648C]"></div>
+                                <h2 className="text-2xl md:text-3xl font-light text-[#0B1F3B]">
+                                    More on {article.pillar}
+                                </h2>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {relatedArticles.map((related) => (
+                                    <Link
+                                        key={related.id}
+                                        href={`/blog/${related.slug}`}
+                                        className="group"
+                                    >
+                                        <article>
+                                            <div className="relative w-full aspect-[16/9] bg-gray-100 overflow-hidden mb-4">
+                                                <Image
+                                                    src={related.featuredImage}
+                                                    alt={related.title}
+                                                    fill
+                                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                                />
+                                            </div>
+                                            <h3 className="text-lg font-medium text-[#0B1F3B] group-hover:text-[#49648C] transition-colors mb-2 line-clamp-2">
+                                                {related.title}
+                                            </h3>
+                                            <p className="text-sm text-gray-600 line-clamp-2">
+                                                {related.excerpt}
+                                            </p>
+                                        </article>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </Container>
+                </section>
+            )}
+        </>
+    );
 }
