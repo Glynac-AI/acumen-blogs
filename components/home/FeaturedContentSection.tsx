@@ -60,7 +60,7 @@ export const FeaturedContentSection: React.FC = () => {
 
                                     <div className="space-y-4">
                                         <div className="flex items-center space-x-4 text-xs text-gray-500">
-                                            <span className="font-medium text-[#49648C]">{mainArticle.pillar}</span>
+                                            <span className="font-medium text-[#49648C]">{mainArticle.pillar.name}</span>
                                             <span>•</span>
                                             <span>{mainArticle.author.name}</span>
                                             <span>•</span>
@@ -107,7 +107,7 @@ export const FeaturedContentSection: React.FC = () => {
                                         {/* Content */}
                                         <div className="flex-grow space-y-2">
                                             <div className="text-xs text-gray-500">
-                                                <span className="text-[#49648C] font-medium">{article.pillar}</span>
+                                                <span className="text-[#49648C] font-medium">{article.pillar.name}</span>
                                                 <span className="mx-2">•</span>
                                                 <span>{article.readTime} min</span>
                                             </div>

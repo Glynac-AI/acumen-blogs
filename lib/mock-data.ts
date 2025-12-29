@@ -1,4 +1,11 @@
 import { Author, Article, Tag, Pillar } from '@/types';
+import { PILLARS, getPillarByName } from '@/config/pillars';
+
+
+// Helper to get pillar object
+const practiceManagement = getPillarByName('Practice Management')!;
+const wealthTech = getPillarByName('Wealth Management Tech')!;
+const compliance = getPillarByName('Compliance & Regulation')!;
 
 export const mockAuthors: Author[] = [
     {
@@ -51,7 +58,7 @@ export const mockArticles: Article[] = [
         slug: '2025-sec-examination-priorities',
         content: 'Full article content here...',
         excerpt: `The SEC released its examination priorities for 2025. We break down what actually matters for your compliance program versus what's just noise.`,
-        pillar: 'Compliance & Regulation',
+        pillar: compliance,
         tags: [mockTags[1], mockTags[4]],
         author: mockAuthors[0],
         featuredImage: 'https://placehold.co/1200x600/0B1F3B/FFFFFF?text=SEC+Priorities',
@@ -66,7 +73,7 @@ export const mockArticles: Article[] = [
         slug: 'crm-platforms-compared',
         content: 'Full article content here...',
         excerpt: 'Every CRM vendor claims high adoption rates. We surveyed 200+ firms to see what advisors actually use daily and what sits ignored.',
-        pillar: 'Wealth Management Tech',
+        pillar: wealthTech,
         tags: [mockTags[2], mockTags[9]],
         author: mockAuthors[1],
         featuredImage: 'https://placehold.co/1200x600/0B1F3B/FFFFFF?text=CRM+Analysis',
@@ -80,7 +87,7 @@ export const mockArticles: Article[] = [
         slug: 'what-breaks-when-aum-doubles',
         content: 'Full article content here...',
         excerpt: `Growth creates good problems. Here's what breaks first in firms that scale from $500M to $1B+ and how to prepare before it happens.`,
-        pillar: 'Practice Management',
+        pillar: practiceManagement,
     tags: [mockTags[3], mockTags[6]],
     author: mockAuthors[2],
     featuredImage: 'https://placehold.co/1200x600/0B1F3B/FFFFFF?text=Scaling+Operations',
@@ -94,7 +101,7 @@ export const mockArticles: Article[] = [
                 slug: 'marketing-rule-two-years-later',
                     content: 'Full article content here...',
                         excerpt: 'Two years after the SEC marketing rule changes, we look at how firms actually adapted versus what regulators expected.',
-                            pillar: 'Compliance & Regulation',
+                            pillar: compliance,
                                 tags: [mockTags[4]],
                                     author: mockAuthors[0],
                                         featuredImage: 'https://placehold.co/1200x600/0B1F3B/FFFFFF?text=Marketing+Rule',
@@ -108,7 +115,7 @@ export const mockArticles: Article[] = [
     slug: 'portfolio-platforms-beyond-demos',
         content: 'Full article content here...',
             excerpt: `Sales demos look great. Implementation is different. Here's what portfolio management platforms don't tell you upfront.`,
-                pillar: 'Wealth Management Tech',
+                pillar: wealthTech,
                     tags: [mockTags[0], mockTags[9]],
                         author: mockAuthors[1],
                             featuredImage: 'https://placehold.co/1200x600/0B1F3B/FFFFFF?text=Portfolio+Tech',
@@ -122,7 +129,7 @@ export const mockArticles: Article[] = [
                 slug: 'compensation-structures-that-work',
                     content: 'Full article content here...',
                         excerpt: `Most compensation plans create the wrong incentives. Here's how top firms structure pay to drive the behavior they actually want.`,
-    pillar: 'Practice Management',
+    pillar: practiceManagement,
         tags: [mockTags[8], mockTags[3]],
             author: mockAuthors[2],
                 featuredImage: 'https://placehold.co/1200x600.png?text=Compensation',
@@ -136,7 +143,7 @@ export const mockArticles: Article[] = [
                 slug: 'cybersecurity-requirements-reality',
                     content: 'Full article content here...',
                         excerpt: `Not all cybersecurity measures are created equal. Here's what actually protects your firm versus what just checks compliance boxes.`,
-    pillar: 'Compliance & Regulation',
+    pillar: compliance,
         tags: [mockTags[5]],
             author: mockAuthors[0],
                 featuredImage: 'https://placehold.co/1200x600.png?text=Cybersecurity',
@@ -150,7 +157,7 @@ export const mockArticles: Article[] = [
     slug: 'integration-nightmares',
         content: 'Full article content here...',
             excerpt: `Every vendor promises seamless integration. Reality is messier. Here's how successful firms handle the gaps.`,
-    pillar: 'Wealth Management Tech',
+    pillar: wealthTech,
         tags: [mockTags[9], mockTags[2]],
             author: mockAuthors[1],
                 featuredImage: 'https://placehold.co/1200x600.png?text=Integration',
@@ -164,7 +171,7 @@ export const mockArticles: Article[] = [
                 slug: 'client-segmentation-profitability',
                     content: 'Full article content here...',
                         excerpt: `Most firms segment by AUM. The most profitable firms use different criteria. Here's what they look at instead.`,
-    pillar: 'Practice Management',
+    pillar: practiceManagement,
         tags: [mockTags[6]],
             author: mockAuthors[2],
                 featuredImage: 'https://placehold.co/1200x600.png?text=Segmentation',
@@ -178,7 +185,7 @@ export const mockArticles: Article[] = [
                 slug: 'sec-advertising-rule-mistakes',
                     content: 'Full article content here...',
                         excerpt: 'Three years in, firms still misinterpret key parts of the advertising rule. Here are the mistakes that trigger examiner attention.',
-                            pillar: 'Compliance & Regulation',
+                            pillar: compliance,
                                 tags: [mockTags[4], mockTags[1]],
                                     author: mockAuthors[0],
                                         featuredImage: 'https://placehold.co/1200x600.png?text=Advertising+Rule',
@@ -192,7 +199,7 @@ export const mockArticles: Article[] = [
                 slug: 'reporting-tools-clients-read',
                     content: 'Full article content here...',
                         excerpt: `Beautiful reports don't matter if clients ignore them.Here's what makes clients engage with performance reporting.`,
-                            pillar: 'Wealth Management Tech',
+                            pillar: wealthTech,
                                 tags: [mockTags[0]],
                                     author: mockAuthors[1],
                                         featuredImage: 'https://placehold.co/1200x600.png?text=Reporting',
@@ -206,7 +213,7 @@ export const mockArticles: Article[] = [
                 slug: 'succession-planning-conversation',
                     content: 'Full article content here...',
                         excerpt: `Most advisors delay succession planning until it's too late.Here's how to start the conversation before crisis forces it.`,
-                            pillar: 'Practice Management',
+                            pillar: practiceManagement,
                                 tags: [mockTags[7]],
                                     author: mockAuthors[2],
                                         featuredImage: 'https://placehold.co/1200x600.png?text=Succession',
@@ -226,13 +233,13 @@ export const getRecentArticles = (limit: number = 9): Article[] => {
         .slice(0, limit);
 };
 
-export const getArticlesByPillar = (pillar: Pillar): Article[] => {
-    return mockArticles.filter(article => article.pillar === pillar);
+export const getArticlesByPillar = (pillarSlug: string): Article[] => {
+    return mockArticles.filter(article => article.pillar.slug === pillarSlug);
 };
 
 export const getFeaturedArticlesByPillar = (): Article[] => {
-    const pillars: Pillar[] = ['Practice Management', 'Wealth Management Tech', 'Compliance & Regulation'];
+    const pillars: Pillar[] = [practiceManagement, wealthTech, compliance];
     return pillars
-        .map(pillar => mockArticles.find(article => article.pillar === pillar))
+        .map(pillar => mockArticles.find(article => article.pillar.id === pillar.id)) // Compare IDs, not objects
         .filter((article): article is Article => article !== undefined);
 };

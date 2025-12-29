@@ -28,7 +28,7 @@ export function useSearch(query: string): SearchResult[] {
                 { name: 'excerpt', weight: 5 },
                 { name: 'subtitle', weight: 4 },
                 { name: 'author.name', weight: 3 },
-                { name: 'pillar', weight: 2 },
+                { name: 'pillar.name', weight: 2 },
             ],
             threshold: 0.4,
             includeScore: true,

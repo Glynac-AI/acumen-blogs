@@ -1,16 +1,17 @@
 import { Metadata } from 'next';
 import { Article, Author } from '@/types';
 import { PillarConfig } from '@/config/pillars';
+import { siteConfig, getBaseUrl, getFullUrl } from '@/config/site';
 
-const SITE_NAME = 'RegulateThis';
-const SITE_URL = 'https://regulatethis.com'; // Update with your actual domain
-const SITE_DESCRIPTION = 'Sharp, actionable insights on practice management, wealth management technology, and regulatory compliance.';
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`; // You'll need to create this
+const SITE_NAME = siteConfig.name;
+const SITE_URL = getBaseUrl();
+const SITE_DESCRIPTION = siteConfig.description;
+const DEFAULT_OG_IMAGE = getFullUrl(siteConfig.ogImage);
 
 export function generateArticleMetadata(article: Article): Metadata {
     const title = article.seo?.metaTitle || `${article.title} | ${SITE_NAME}`;
     const description = article.seo?.metaDescription || article.excerpt;
-    const url = article.seo?.canonicalURL || `${SITE_URL}/blog/${article.slug}`;
+    const url = article.seo?.canonicalURL || getFullUrl(`/blog/${article.slug}`);
     const ogImage = article.seo?.ogImage || article.featuredImage || DEFAULT_OG_IMAGE;
     const keywords = article.seo?.keywords || article.tags.map(t => t.name).join(', ');
 
@@ -47,7 +48,7 @@ export function generateArticleMetadata(article: Article): Metadata {
             title,
             description,
             images: [ogImage],
-            creator: article.author.twitter || '@regulatethis', // Update with your Twitter
+            creator: article.author.twitter || '@regulatethis',
         },
 
         robots: {
@@ -64,7 +65,7 @@ export function generateArticleMetadata(article: Article): Metadata {
 export function generateAuthorMetadata(author: Author, articleCount: number): Metadata {
     const title = `${author.name} | ${SITE_NAME}`;
     const description = `${author.bio} - ${articleCount} ${articleCount === 1 ? 'article' : 'articles'} published.`;
-    const url = `${SITE_URL}/authors/${author.id}`;
+    const url = getFullUrl(`/authors/${author.id}`);
 
     return {
         title,
@@ -103,7 +104,7 @@ export function generateAuthorMetadata(author: Author, articleCount: number): Me
 export function generatePillarMetadata(pillar: PillarConfig, articleCount: number): Metadata {
     const title = `${pillar.name}: ${pillar.subtitle} | ${SITE_NAME}`;
     const description = `${pillar.description} - ${articleCount} ${articleCount === 1 ? 'article' : 'articles'} on ${pillar.name}.`;
-    const url = `${SITE_URL}/topics/${pillar.slug}`;
+    const url = getFullUrl(`/topics/${pillar.slug}`);
 
     return {
         title,
@@ -146,7 +147,7 @@ export function generateDefaultMetadata(
 ): Metadata {
     const fullTitle = `${title} | ${SITE_NAME}`;
     const finalDescription = description || SITE_DESCRIPTION;
-    const url = path ? `${SITE_URL}${path}` : SITE_URL;
+    const url = path ? getFullUrl(path) : SITE_URL;
 
     return {
         title: fullTitle,

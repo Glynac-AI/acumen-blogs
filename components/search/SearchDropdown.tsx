@@ -124,7 +124,7 @@ export const SearchDropdown: React.FC = () => {
                                                         {article.excerpt}
                                                     </p>
                                                     <div className="flex items-center gap-2 mt-1">
-                                                        <span className="text-xs text-[#49648C]">{article.pillar}</span>
+                                                        <span className="text-xs text-[#49648C]">{article.pillar.name}</span>
                                                         <span className="text-xs text-gray-400">•</span>
                                                         <span className="text-xs text-gray-500">{article.author.name}</span>
                                                     </div>

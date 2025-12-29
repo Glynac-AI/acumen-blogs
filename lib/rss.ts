@@ -1,17 +1,20 @@
 import { Article } from '@/types';
+import { siteConfig, getBaseUrl } from '@/config/site';
 
 interface RSSConfig {
     title: string;
     description: string;
     siteUrl: string;
     language: string;
+    email: string;
 }
 
 const config: RSSConfig = {
-    title: 'RegulateThis',
-    description: 'Sharp, actionable insights on practice management, wealth management technology, and regulatory compliance.',
-    siteUrl: 'https://regulatethis.com', 
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteUrl: getBaseUrl(),
     language: 'en-us',
+    email: siteConfig.email,
 };
 
 function escapeXml(unsafe: string): string {
@@ -26,12 +29,14 @@ function escapeXml(unsafe: string): string {
 export function generateRSS(articles: Article[]): string {
     const latestArticles = articles
         .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
-        .slice(0, 50); // Include latest 50 articles
+        .slice(0, 50);
 
     const rssItems = latestArticles
         .map((article) => {
             const articleUrl = `${config.siteUrl}/blog/${article.slug}`;
             const pubDate = new Date(article.publishDate).toUTCString();
+            const authorEmail = article.author.email || config.email;
+            const authorName = escapeXml(article.author.name);
 
             return `
     <item>
@@ -40,8 +45,8 @@ export function generateRSS(articles: Article[]): string {
       <guid isPermaLink="true">${articleUrl}</guid>
       <description>${escapeXml(article.excerpt)}</description>
       <pubDate>${pubDate}</pubDate>
-      <author>${escapeXml(article.author.email || 'info@regulatethis.com')} (${escapeXml(article.author.name)})</author>
-      <category>${escapeXml(article.pillar)}</category>
+      <author>${escapeXml(authorEmail)} (${authorName})</author>
+      <category>${escapeXml(article.pillar.name)}</category>
       ${article.tags.map(tag => `<category>${escapeXml(tag.name)}</category>`).join('\n      ')}
       ${article.featuredImage ? `<enclosure url="${article.featuredImage}" type="image/jpeg" />` : ''}
     </item>`;
@@ -63,7 +68,7 @@ export function generateRSS(articles: Article[]): string {
     <language>${config.language}</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
     <atom:link href="${config.siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>
-    ${rssItems}
+${rssItems}
   </channel>
 </rss>`;
 }

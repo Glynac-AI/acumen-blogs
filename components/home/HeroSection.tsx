@@ -64,7 +64,7 @@ export const HeroSection: React.FC = () => {
                             <div className="flex items-center space-x-3">
                                 <div className="h-px w-12 bg-[#49648C]"></div>
                                 <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#49648C]">
-                                    {currentArticle.pillar}
+                                    {currentArticle.pillar.name}
                                 </span>
                             </div>
 
@@ -145,7 +145,7 @@ export const HeroSection: React.FC = () => {
                                         }`}
                                     style={{ borderRadius: '2px' }}
                                 >
-                                    {article.pillar.split(' ')[0]}
+                                    {article.pillar.name}
                                 </button>
                             ))}
                         </div>

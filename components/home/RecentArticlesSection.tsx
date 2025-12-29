@@ -10,14 +10,14 @@ import { PILLARS } from '@/config/pillars';
 export const RecentArticlesSection: React.FC = () => {
     const [selectedPillar, setSelectedPillar] = useState<Pillar | 'All'>('All');
 
-    const pillars: Array<Pillar | 'All'> = ['All', ...PILLARS.map(p => p.name as Pillar)];
+    const pillars: Array<Pillar | 'All'> = ['All', ...PILLARS];
 
     // Filter articles based on selected pillar
     const filteredArticles = selectedPillar === 'All'
         ? mockArticles
-        : mockArticles.filter(article => article.pillar === selectedPillar);
+        : mockArticles.filter(article => article.pillar.id === selectedPillar.id);
 
-    // Show only first 9 articles (or all if less than 9)
+    // Show only first 9 articles
     const displayedArticles = filteredArticles.slice(0, 9);
 
     return (
@@ -38,19 +38,31 @@ export const RecentArticlesSection: React.FC = () => {
 
                         {/* Filter Tabs */}
                         <div className="flex flex-wrap gap-3">
-                            {pillars.map((pillar) => (
-                                <button
-                                    key={pillar}
-                                    onClick={() => setSelectedPillar(pillar)}
-                                    className={`px-4 py-2 text-sm font-medium transition-all duration-300 ${selectedPillar === pillar
-                                            ? 'bg-[#0B1F3B] text-white'
-                                            : 'bg-white text-[#0B1F3B] border border-gray-200 hover:border-[#49648C] hover:text-[#49648C]'
-                                        }`}
-                                    style={{ borderRadius: '2px' }}
-                                >
-                                    {pillar}
-                                </button>
-                            ))}
+                            {pillars.map((pillar) => {
+                                // Get unique key
+                                const key = pillar === 'All' ? 'all' : pillar.id;
+                                // Get display name
+                                const displayName = pillar === 'All' ? 'All' : pillar.name;
+
+                                // Check if this pillar is selected
+                                const isSelected =
+                                    (selectedPillar === 'All' && pillar === 'All') ||
+                                    (selectedPillar !== 'All' && pillar !== 'All' && selectedPillar.id === pillar.id);
+
+                                return (
+                                    <button
+                                        key={key}
+                                        onClick={() => setSelectedPillar(pillar)}
+                                        className={`px-4 py-2 text-sm font-medium transition-all duration-300 ${isSelected
+                                                ? 'bg-[#0B1F3B] text-white'
+                                                : 'bg-white text-[#0B1F3B] border border-gray-200 hover:border-[#49648C] hover:text-[#49648C]'
+                                            }`}
+                                        style={{ borderRadius: '2px' }}
+                                    >
+                                        {displayName}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -71,7 +83,7 @@ export const RecentArticlesSection: React.FC = () => {
                     <div className="mt-8 text-center">
                         <p className="text-sm text-gray-500">
                             Showing {displayedArticles.length} of {filteredArticles.length} articles
-                            {selectedPillar !== 'All' && ` in ${selectedPillar}`}
+                            {selectedPillar !== 'All' && ` in ${selectedPillar.name}`}
                         </p>
                     </div>
                 </div>

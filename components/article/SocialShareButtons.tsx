@@ -1,16 +1,20 @@
 'use client';
 
 import React from 'react';
+import { getFullUrl } from '@/config/site';
 
 interface SocialShareButtonsProps {
     title: string;
-    url: string;
+    slug: string; // Changed from url to slug
 }
 
 export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
     title,
-    url,
+    slug,
 }) => {
+    // Generate full URL from slug
+    const url = getFullUrl(`/blog/${slug}`);
+
     const shareOnLinkedIn = () => {
         window.open(
             `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
@@ -87,7 +91,7 @@ export const SocialShareButtons: React.FC<SocialShareButtonsProps> = ({
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                        d="M8 16H6a2 2 0 01-2-2V6a2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
                     />
                 </svg>
             </button>

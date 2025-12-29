@@ -17,7 +17,7 @@ export const PillarBadge: React.FC<PillarBadgeProps> = ({ pillar, className, var
                 className
             )}
         >
-            {pillar}
+            {pillar.name}
         </span>
     );
 };

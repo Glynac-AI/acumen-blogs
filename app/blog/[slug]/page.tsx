@@ -65,7 +65,7 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                             </Link>
                             <span>/</span>
                             <Link href={`/topics/${pillarSlug}`} className="hover:text-[#49648C] transition-colors">
-                                {article.pillar}
+                                {article.pillar.slug}
                             </Link>
                         </div>
 
@@ -191,7 +191,7 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                         <div className="mt-8 pt-8 border-t border-gray-200">
                             <SocialShareButtons
                                 title={article.title}
-                                url={`https://regulatethis.com/blog/${article.slug}`}
+                                slug={article.slug}  // Changed from url prop
                             />
                         </div>
                     </article>
@@ -244,7 +244,7 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                             <div className="flex items-center space-x-3 mb-8">
                                 <div className="h-px w-12 bg-[#49648C]"></div>
                                 <h2 className="text-2xl md:text-3xl font-light text-[#0B1F3B]">
-                                    More on {article.pillar}
+                                    More on {article.pillar.name}
                                 </h2>
                             </div>
 

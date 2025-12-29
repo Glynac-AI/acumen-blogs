@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
+import { getBaseUrl } from '@/config/site';
 
-const SITE_URL = 'https://regulatethis.com'; // Update with your actual domain
+const SITE_URL = getBaseUrl();
 
 export async function GET() {
     const robotsTxt = `# Robot Rules for RegulateThis
@@ -24,7 +25,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
     return new NextResponse(robotsTxt, {
         headers: {
             'Content-Type': 'text/plain; charset=utf-8',
-            'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate', // Cache for 24 hours
+            'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate',
         },
     });
 }

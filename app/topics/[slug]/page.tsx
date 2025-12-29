@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PillarPageProps): Promise<Met
         };
     }
 
-    const articleCount = mockArticles.filter(article => article.pillar === pillarConfig.name).length;
+    const articleCount = mockArticles.filter(article => article.pillar.name === pillarConfig.name).length;
 
     return generatePillarMetadata(pillarConfig, articleCount);
 }
@@ -41,7 +41,7 @@ export default async function PillarPage({ params }: PillarPageProps) {
 
     // Get all articles for this pillar
     const pillarArticles = mockArticles
-        .filter(article => article.pillar === pillarConfig.name)
+        .filter(article => article.pillar.name === pillarConfig.name)
         .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
     // Featured article (most recent)

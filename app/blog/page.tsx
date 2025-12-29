@@ -8,26 +8,21 @@ import { mockArticles } from '@/lib/mock-data';
 import { Pillar } from '@/types';
 import { PILLARS } from '@/config/pillars';
 
-// Note: Since this is a client component, metadata is set in layout or we'd need to make it server component
-// For now, we'll add a simple head update via useEffect if needed
-
 function BlogContent() {
     const searchParams = useSearchParams();
     const pillarParam = searchParams.get('pillar');
     const tagParam = searchParams.get('tag');
 
-    const [selectedPillar, setSelectedPillar] = useState<Pillar | 'All'>(
-        (pillarParam as Pillar) || 'All'
-    );
+    const [selectedPillar, setSelectedPillar] = useState<Pillar | 'All'>('All');
 
-    const pillars: Array<Pillar | 'All'> = ['All', ...PILLARS.map(p => p.name as Pillar)];
+    const pillars: Array<Pillar | 'All'> = ['All', ...PILLARS];
 
     // Filter articles
     let filteredArticles = mockArticles;
 
     if (selectedPillar !== 'All') {
         filteredArticles = filteredArticles.filter(
-            article => article.pillar === selectedPillar
+            article => article.pillar.id === selectedPillar.id
         );
     }
 
@@ -72,19 +67,27 @@ function BlogContent() {
                     <div className="py-12 md:py-16">
                         {/* Filter Tabs */}
                         <div className="flex flex-wrap gap-3 mb-12">
-                            {pillars.map((pillar) => (
-                                <button
-                                    key={pillar}
-                                    onClick={() => setSelectedPillar(pillar)}
-                                    className={`px-4 py-2 text-sm font-medium transition-all duration-300 ${selectedPillar === pillar
-                                            ? 'bg-[#0B1F3B] text-white'
-                                            : 'bg-white text-[#0B1F3B] border border-gray-200 hover:border-[#49648C] hover:text-[#49648C]'
-                                        }`}
-                                    style={{ borderRadius: '2px' }}
-                                >
-                                    {pillar}
-                                </button>
-                            ))}
+                            {pillars.map((pillar) => {
+                                const key = pillar === 'All' ? 'all' : pillar.id;
+                                const displayName = pillar === 'All' ? 'All' : pillar.name;
+                                const isSelected = selectedPillar === 'All'
+                                    ? pillar === 'All'
+                                    : pillar !== 'All' && selectedPillar.id === pillar.id;
+
+                                return (
+                                    <button
+                                        key={key}
+                                        onClick={() => setSelectedPillar(pillar)}
+                                        className={`px-4 py-2 text-sm font-medium transition-all duration-300 ${isSelected
+                                                ? 'bg-[#0B1F3B] text-white'
+                                                : 'bg-white text-[#0B1F3B] border border-gray-200 hover:border-[#49648C] hover:text-[#49648C]'
+                                            }`}
+                                        style={{ borderRadius: '2px' }}
+                                    >
+                                        {displayName}
+                                    </button>
+                                );
+                            })}
                         </div>
 
                         {/* Articles Grid */}
@@ -100,7 +103,7 @@ function BlogContent() {
                                 <div className="mt-12 text-center">
                                     <p className="text-sm text-gray-500">
                                         Showing {filteredArticles.length} {filteredArticles.length === 1 ? 'article' : 'articles'}
-                                        {selectedPillar !== 'All' && ` in ${selectedPillar}`}
+                                        {selectedPillar !== 'All' && ` in ${selectedPillar.name}`}
                                     </p>
                                 </div>
                             </>

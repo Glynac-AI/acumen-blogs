@@ -1,7 +1,8 @@
 import { Article, Author, Tag } from '@/types';
 import { PillarConfig } from '@/config/pillars';
+import { getBaseUrl } from '@/config/site';
 
-const SITE_URL = 'https://regulatethis.com'; // Update with your actual domain
+const SITE_URL = getBaseUrl();
 
 interface SitemapURL {
     loc: string;
@@ -20,7 +21,7 @@ function escapeXml(unsafe: string): string {
 }
 
 function formatDate(date: string): string {
-    return new Date(date).toISOString().split('T')[0]; // YYYY-MM-DD format
+    return new Date(date).toISOString().split('T')[0];
 }
 
 export function generateSitemap(
@@ -31,7 +32,7 @@ export function generateSitemap(
 ): string {
     const urls: SitemapURL[] = [];
 
-    // Static pages (high priority, change less frequently)
+    // Static pages
     urls.push({
         loc: `${SITE_URL}/`,
         lastmod: formatDate(new Date().toISOString()),
@@ -58,7 +59,7 @@ export function generateSitemap(
         priority: 0.7,
     });
 
-    // Article pages (sorted by date, most recent first)
+    // Article pages
     const sortedArticles = [...articles].sort(
         (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
     );
@@ -67,7 +68,7 @@ export function generateSitemap(
         urls.push({
             loc: `${SITE_URL}/blog/${escapeXml(article.slug)}`,
             lastmod: formatDate(article.publishDate),
-            changefreq: 'monthly', // Articles don't change often once published
+            changefreq: 'monthly',
             priority: 0.8,
         });
     });
@@ -81,7 +82,7 @@ export function generateSitemap(
         });
     });
 
-    // Pillar/Topic pages
+    // Pillar pages
     pillars.forEach((pillar) => {
         urls.push({
             loc: `${SITE_URL}/topics/${escapeXml(pillar.slug)}`,

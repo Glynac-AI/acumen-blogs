@@ -1,14 +1,17 @@
 export interface PillarConfig {
+    id: string;
     name: string;
     slug: string;
     subtitle: string;
     description: string;
     details: string[];
     color: string;
+    order: number;
 }
 
 export const PILLARS: PillarConfig[] = [
     {
+        id: '1',
         name: 'Practice Management',
         slug: 'practice-management',
         subtitle: 'Building Firms That Work',
@@ -18,9 +21,11 @@ export const PILLARS: PillarConfig[] = [
             'Scaling Operations — What breaks first when your AUM doubles',
             'Client Experience — Retention starts long before the annual review'
         ],
-        color: '#49648C'
+        color: '#49648C',
+        order: 1
     },
     {
+        id: '2',
         name: 'Wealth Management Tech',
         slug: 'wealth-management-tech',
         subtitle: 'Cutting Through the Noise',
@@ -32,9 +37,11 @@ export const PILLARS: PillarConfig[] = [
             'Integration challenges and how firms solve them',
             'Security considerations that matter now'
         ],
-        color: '#49648C'
+        color: '#49648C',
+        order: 2
     },
     {
+        id: '3',
         name: 'Compliance & Regulation',
         slug: 'compliance-regulation',
         subtitle: 'Keeping You Ahead of the Curve',
@@ -44,11 +51,12 @@ export const PILLARS: PillarConfig[] = [
             'Examination Priorities — Where regulators are focusing their attention',
             'Cybersecurity Standards — Requirements keep evolving. So should your approach'
         ],
-        color: '#49648C'
+        color: '#49648C',
+        order: 3
     }
 ];
 
-// Helper functions
+// Keep helper functions, just update to use objects
 export function getPillarBySlug(slug: string): PillarConfig | undefined {
     return PILLARS.find(pillar => pillar.slug === slug);
 }
@@ -63,12 +71,4 @@ export function getAllPillarNames(): string[] {
 
 export function getAllPillarSlugs(): string[] {
     return PILLARS.map(pillar => pillar.slug);
-}
-
-export function pillarNameToSlug(name: string): string | undefined {
-    return PILLARS.find(pillar => pillar.name === name)?.slug;
-}
-
-export function pillarSlugToName(slug: string): string | undefined {
-    return PILLARS.find(pillar => pillar.slug === slug)?.name;
 }
