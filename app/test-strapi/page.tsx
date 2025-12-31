@@ -131,9 +131,10 @@ export default async function TestStrapiPage() {
                                 {articles.length > 0 ? (
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {articles.map((article) => (
-                                            <div
+                                            <Link
                                                 key={article.id}
-                                                className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+                                                href={`/blog/${article.slug}`}
+                                                className="group block border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg hover:border-[#49648C] transition-all"
                                             >
                                                 {/* Image */}
                                                 {article?.featuredImage && (
@@ -142,25 +143,48 @@ export default async function TestStrapiPage() {
                                                             src={article.featuredImage}
                                                             alt={article?.title || 'Article'}
                                                             fill
-                                                            className="object-cover"
+                                                            className="object-cover group-hover:scale-105 transition-transform duration-300"
                                                         />
                                                     </div>
                                                 )}
 
                                                 {/* Content */}
                                                 <div className="p-4">
-                                                    <h3 className="font-semibold text-[#0B1F3B] mb-2 line-clamp-2">
+                                                    {/* Featured Badge */}
+                                                    {article.isFeatured && (
+                                                        <span className="inline-block px-2 py-1 bg-[#49648C] text-white text-xs font-medium rounded mb-2">
+                                                            Featured
+                                                        </span>
+                                                    )}
+
+                                                    <h3 className="font-semibold text-[#0B1F3B] mb-2 line-clamp-2 group-hover:text-[#49648C] transition-colors">
                                                         {article?.title || 'Untitled'}
                                                     </h3>
+
+                                                    {article?.subtitle && (
+                                                        <p className="text-sm text-gray-500 mb-2 line-clamp-1">
+                                                            {article.subtitle}
+                                                        </p>
+                                                    )}
+
                                                     <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                                                         {article?.excerpt || 'No excerpt'}
                                                     </p>
+
                                                     <div className="flex items-center justify-between text-xs text-gray-500">
                                                         <span>{article?.author?.name || 'Unknown'}</span>
                                                         <span>{article?.readTime || 0} min read</span>
                                                     </div>
+
+                                                    {/* Click indicator */}
+                                                    <div className="mt-3 flex items-center text-xs text-[#49648C] font-medium">
+                                                        <span>Read article</span>
+                                                        <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                        </svg>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </Link>
                                         ))}
                                     </div>
                                 ) : (
@@ -193,4 +217,4 @@ export default async function TestStrapiPage() {
             </Container>
         </div>
     );
-} 
+}
