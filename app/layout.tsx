@@ -1,7 +1,9 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { getPillars } from "@/lib/api/strapi";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -21,19 +23,22 @@ export const metadata: Metadata = {
   description: "Educational content for RIA owners, compliance teams, and financial advisors.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // ✅ Fetch pillars once at the layout level
+  const pillars = await getPillars();
+
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="antialiased font-sans">
-        <Header />
+        <Header pillars={pillars} /> 
         <main className="min-h-screen">
           {children}
         </main>
-        <Footer />
+        <Footer pillars={pillars} />
       </body>
     </html>
   );

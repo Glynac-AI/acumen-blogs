@@ -30,7 +30,7 @@ async function fetchFromStrapi(endpoint: string, retries = 3): Promise<any> {
                     'Content-Type': 'application/json',
                 },
                 next: {
-                    revalidate: 60, // Cache for 60 seconds
+                    revalidate: 60,
                     tags: ['strapi-content']
                 },
             });
@@ -39,17 +39,14 @@ async function fetchFromStrapi(endpoint: string, retries = 3): Promise<any> {
                 const errorText = await res.text();
                 console.error(`❌ API Error (${res.status}):`, errorText);
 
-                // Don't retry on client errors (400-499)
                 if (res.status >= 400 && res.status < 500) {
                     throw new Error(`Strapi API error: ${res.status} - ${errorText}`);
                 }
 
-                // Retry on server errors (500+)
                 if (attempt === retries) {
                     throw new Error(`Strapi API error after ${retries} attempts: ${res.status}`);
                 }
 
-                // Wait before retry (exponential backoff)
                 await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
                 continue;
             }
@@ -89,7 +86,6 @@ function transformPillar(strapiPillar: any): Pillar {
             details: Array.isArray(attrs.details)
                 ? attrs.details.map((d: any) => d.detail || d).filter(Boolean)
                 : [],
-            color: attrs.color || '#49648C',
             order: attrs.order || 0,
         };
     } catch (error) {

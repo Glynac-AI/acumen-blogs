@@ -1,12 +1,21 @@
+// components/layout/Footer.tsx
 'use client';
 
 import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
-import { PILLARS } from '@/config/pillars';
+import type { Pillar } from '@/types';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+    pillars: Pillar[];
+}
+
+export const Footer: React.FC<FooterProps> = ({ pillars = [] }) => {
     const currentYear = new Date().getFullYear();
+
+    // ✅ Show only first 5 pillars
+    const displayedPillars = pillars.slice(0, 5);
+    const hasMorePillars = pillars.length > 5;
 
     const footerLinks = {
         navigation: [
@@ -15,7 +24,7 @@ export const Footer: React.FC = () => {
             { href: '/authors', label: 'Authors' },
             { href: '/about', label: 'About' },
         ],
-        pillars: PILLARS.map(pillar => ({
+        pillars: displayedPillars.map(pillar => ({
             href: `/topics/${pillar.slug}`,
             label: pillar.name
         })),
@@ -84,7 +93,7 @@ export const Footer: React.FC = () => {
                             </ul>
                         </div>
 
-                        {/* Content Pillars */}
+                        {/* ✅ UPDATED: Content Pillars (Top 5 + View All) */}
                         <div>
                             <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
                                 Topics
@@ -100,6 +109,20 @@ export const Footer: React.FC = () => {
                                         </Link>
                                     </li>
                                 ))}
+                                {/* ✅ View All Link (only if more than 5) */}
+                                {hasMorePillars && (
+                                    <li className="pt-2">
+                                        <Link
+                                            href="/topics"
+                                            className="inline-flex items-center space-x-1 text-sm text-[#49648C] hover:text-white transition-colors font-medium"
+                                        >
+                                            <span>View All Topics</span>
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </Link>
+                                    </li>
+                                )}
                             </ul>
                         </div>
 
@@ -125,29 +148,30 @@ export const Footer: React.FC = () => {
                                 </button>
                             </form>
                         </div>
-                    </div>
 
-                    {/* Bottom Bar */}
-                    <div className="mt-12 pt-8 border-t border-[#0F2A4D]">
-                        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                            <p className="text-sm text-gray-400">
-                                © {currentYear} RegulateThis. All rights reserved.
-                            </p>
-                            <div className="flex space-x-6">
-                                {footerLinks.legal.map((link) => (
-                                    <Link
-                                        key={link.href}
-                                        href={link.href}
-                                        className="text-sm text-gray-400 hover:text-white transition-colors"
-                                    >
-                                        {link.label}
-                                    </Link>
-                                ))}
+
+                        {/* Bottom Bar */}
+                        <div className="mt-12 pt-8 border-t border-[#0F2A4D]">
+                            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                                <p className="text-sm text-gray-400">
+                                    © {currentYear} RegulateThis. All rights reserved.
+                                </p>
+                                <div className="flex space-x-6">
+                                    {footerLinks.legal.map((link) => (
+                                        <Link
+                                            key={link.href}
+                                            href={link.href}
+                                            className="text-sm text-gray-400 hover:text-white transition-colors"
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </Container>
-        </footer>
+            </Container >
+        </footer >
     );
 };

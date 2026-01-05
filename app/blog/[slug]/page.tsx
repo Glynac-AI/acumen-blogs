@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { PillarBadge } from '@/components/article/PillarBadge';
 import { SocialShareButtons } from '@/components/article/SocialShareButtons';
-import { getArticleBySlug, getArticles } from '@/lib/api/strapi'; // ✅ Import from Strapi
+import { getArticleBySlug, getArticles } from '@/lib/api/strapi'; 
 import { pillarToSlug } from '@/lib/utils';
 import { generateArticleMetadata } from '@/lib/seo';
+import { MarkdownContent } from '@/components/article/MarkdownContent';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -130,40 +131,39 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
             <section className="bg-white">
                 <Container maxWidth="md">
                     <article className="py-16 md:py-20">
-                        {/* Article Body */}
-                        <div className="prose prose-lg max-w-none">
-                            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                        {/* Excerpt - Large intro paragraph */}
+                        <div className="mb-12">
+                            <p className="text-xl text-gray-700 leading-relaxed font-light">
                                 {article.excerpt}
                             </p>
-
-                            {/* Render actual content from Strapi */}
-                            <div
-                                className="article-content"
-                                dangerouslySetInnerHTML={{ __html: article.content }}
-                            />
-
-                            {/* If content is empty, show placeholder */}
-                            {!article.content && (
-                                <>
-                                    <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">Understanding the Landscape</h2>
-                                    <p className="text-base text-gray-700 leading-relaxed mb-6">
-                                        This article is being edited. Check back soon for the full content.
-                                    </p>
-                                </>
-                            )}
                         </div>
 
-                        {/* Tags */}
+                        {/* Divider */}
+                        <div className="border-t border-gray-200 mb-12"></div>
+
+                        {/* Main Article Content - Markdown */}
+                        {article.content ? (
+                            <MarkdownContent content={article.content} />
+                        ) : (
+                            <div className="text-center py-12 bg-gray-50 rounded-lg">
+                                <svg className="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <p className="text-gray-500 text-lg mb-2">Content coming soon</p>
+                                <p className="text-sm text-gray-400">This article is being edited</p>
+                            </div>
+                        )}
+
+                        {/* Tags Section */}
                         {article.tags && article.tags.length > 0 && (
-                            <div className="mt-12 pt-8 border-t border-gray-200">
-                                <p className="text-sm font-medium text-gray-500 mb-3">Topics:</p>
+                            <div className="mt-16 pt-8 border-t border-gray-200">
+                                <p className="text-sm font-medium text-gray-500 mb-4">Related Topics:</p>
                                 <div className="flex flex-wrap gap-2">
                                     {article.tags.map((tag) => (
                                         <Link
                                             key={tag.id}
                                             href={`/tags/${tag.slug}`}
-                                            className="px-3 py-1 text-xs font-medium text-[#0B1F3B] border border-gray-200 hover:border-[#49648C] hover:text-[#49648C] transition-colors"
-                                            style={{ borderRadius: '2px' }}
+                                            className="px-3 py-1.5 text-xs font-medium text-[#0B1F3B] bg-[#F5F2EA] hover:bg-[#49648C] hover:text-white transition-colors rounded-sm"
                                         >
                                             {tag.name}
                                         </Link>
@@ -172,8 +172,9 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                             </div>
                         )}
 
-                        {/* Share */}
+                        {/* Social Share Section */}
                         <div className="mt-8 pt-8 border-t border-gray-200">
+                            <p className="text-sm font-medium text-gray-500 mb-4">Share this article:</p>
                             <SocialShareButtons
                                 title={article.title}
                                 slug={article.slug}

@@ -1,15 +1,7 @@
-export interface PillarConfig {
-    id: string;
-    name: string;
-    slug: string;
-    subtitle: string;
-    description: string;
-    details: string[];
-    color: string;
-    order: number;
-}
+import { Pillar } from "@/types";
 
-export const PILLARS: PillarConfig[] = [
+
+export const PILLARS: Pillar[] = [
     {
         id: '1',
         name: 'Practice Management',
@@ -21,7 +13,6 @@ export const PILLARS: PillarConfig[] = [
             'Scaling Operations — What breaks first when your AUM doubles',
             'Client Experience — Retention starts long before the annual review'
         ],
-        color: '#49648C',
         order: 1
     },
     {
@@ -37,7 +28,6 @@ export const PILLARS: PillarConfig[] = [
             'Integration challenges and how firms solve them',
             'Security considerations that matter now'
         ],
-        color: '#49648C',
         order: 2
     },
     {
@@ -51,17 +41,16 @@ export const PILLARS: PillarConfig[] = [
             'Examination Priorities — Where regulators are focusing their attention',
             'Cybersecurity Standards — Requirements keep evolving. So should your approach'
         ],
-        color: '#49648C',
         order: 3
     }
 ];
 
 // Keep helper functions, just update to use objects
-export function getPillarBySlug(slug: string): PillarConfig | undefined {
+export function getPillarBySlug(slug: string): Pillar | undefined {
     return PILLARS.find(pillar => pillar.slug === slug);
 }
 
-export function getPillarByName(name: string): PillarConfig | undefined {
+export function getPillarByName(name: string): Pillar | undefined {
     return PILLARS.find(pillar => pillar.name === name);
 }
 
