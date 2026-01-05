@@ -1,7 +1,13 @@
-import { PillarConfig } from '@/config/pillars';
-
 // Generate Pillar type from config
-export type Pillar = PillarConfig;
+export interface Pillar {
+    id: string;
+    name: string;
+    slug: string;
+    subtitle: string;
+    description: string;
+    details: string[];
+    order: number;
+}
 
 export interface SEOMetadata {
     metaTitle?: string;
