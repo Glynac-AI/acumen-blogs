@@ -18,12 +18,12 @@ export const HeroSection: React.FC = () => {
     // Side articles - Get more articles if not enough featured ones
     let sideArticles = featuredArticles.slice(1);
 
-    if (sideArticles.length < 4) {
+    if (sideArticles.length < 5) {
         const recentArticles = mockArticles
             .filter(article => !article.isFeatured && article.id !== mainFeatured.id)
             .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
-        sideArticles = [...sideArticles, ...recentArticles].slice(0, 4);
+        sideArticles = [...sideArticles, ...recentArticles].slice(0, 5);
     }
 
     const formatDate = (date: string) => {
@@ -116,7 +116,7 @@ export const HeroSection: React.FC = () => {
                                     <Link href={`/blog/${article.slug}`} className="block">
                                         <div className="flex gap-4">
                                             {/* Thumbnail */}
-                                            <div className="relative w-28 h-28 flex-shrink-0 overflow-hidden rounded-sm">
+                                            <div className="relative w-40 h-24 flex-shrink-0 overflow-hidden rounded-sm">
                                                 <Image
                                                     src={article.featuredImage}
                                                     alt={article.title}
@@ -159,7 +159,7 @@ export const HeroSection: React.FC = () => {
                                     </svg>
                                 </Link>
                             </div>
-                        </div>
+                    </div>
                     </div>
                 </div>
             </Container>
