@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { getBaseUrl } from "@/config/site";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -17,8 +18,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getBaseUrl()),
   title: "RegulateThis - Insights for Wealth Management Professionals",
   description: "Educational content for RIA owners, compliance teams, and financial advisors.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "RegulateThis",
+  },
+  twitter: {
+    card: "summary_large_image",
+    creator: "@regulatethis",
+  },
 };
 
 export default function RootLayout({

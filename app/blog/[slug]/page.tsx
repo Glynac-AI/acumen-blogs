@@ -68,7 +68,7 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                         {/* Category Badge */}
                         <Link
                             href={`/categories/${article.category.slug}`}
-                            className="inline-block px-4 py-2 bg-[#49648C] text-white text-sm font-semibold uppercase tracking-wider rounded mb-6 hover:bg-[#5A7AA0] transition-colors"
+                            className="inline-block px-4 py-1.5 bg-[#49648C] text-white text-xs font-semibold uppercase tracking-wider mb-6 hover:bg-[#5A7AA0] transition-colors"
                         >
                             {article.category.name}
                         </Link>
@@ -85,13 +85,10 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                             </p>
                         )}
 
-                        {/* Author & Meta */}
-                        <div className="flex items-center space-x-6 text-sm text-gray-600 mb-8">
-                            <Link
-                                href={`/authors/${article.author.id}`}
-                                className="flex items-center space-x-3 hover:text-[#49648C] transition-colors"
-                            >
-                                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+                        {/* Meta Info */}
+                        <div className="flex items-center justify-between border-t border-b border-gray-200 py-6">
+                            <div className="flex items-center space-x-4">
+                                <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#49648C]">
                                     <Image
                                         src={article.author.photo}
                                         alt={article.author.name}
@@ -100,33 +97,17 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                                     />
                                 </div>
                                 <div>
-                                    <p className="font-medium text-[#0B1F3B]">{article.author.name}</p>
+                                    <p className="text-sm font-medium text-[#0B1F3B]">{article.author.name}</p>
                                     <p className="text-xs text-gray-500">{article.author.title}</p>
                                 </div>
-                            </Link>
-                            <span>•</span>
-                            <span>{new Date(article.publishDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                            <span>•</span>
-                            <span>{article.readTime} min read</span>
-                        </div>
-
-                        {/* Subcategories */}
-                        {article.subcategories.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mb-6">
-                                {article.subcategories.map((subcategory) => (
-                                    <Link
-                                        key={subcategory.id}
-                                        href={`/subcategories/${subcategory.slug}`}
-                                        className="px-3 py-1 text-sm text-[#49648C] border border-[#49648C] rounded hover:bg-[#49648C] hover:text-white transition-colors"
-                                    >
-                                        {subcategory.name}
-                                    </Link>
-                                ))}
                             </div>
-                        )}
 
-                        {/* Social Share */}
-                        <SocialShareButtons title={article.title} slug={article.slug} />
+                            <div className="flex items-center space-x-6 text-sm text-gray-500">
+                                <span>{new Date(article.publishDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                                <span>•</span>
+                                <span>{article.readTime} min read</span>
+                            </div>
+                        </div>
                     </div>
                 </Container>
             </section>
@@ -149,11 +130,156 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
             {/* Article Content */}
             <section className="bg-white">
                 <Container maxWidth="md">
-                    <article className="py-12 md:py-16 prose prose-lg max-w-none">
-                        <div
-                            className="text-gray-800 leading-relaxed"
-                            dangerouslySetInnerHTML={{ __html: article.content }}
-                        />
+                    <article className="py-16 md:py-20">
+                        {/* Lead Paragraph */}
+                        <div className="mb-12">
+                            <p className="text-xl text-gray-800 leading-relaxed font-light">
+                                {article.excerpt}
+                            </p>
+                        </div>
+
+                        {/* Main Content */}
+                        <div className="prose prose-lg max-w-none">
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                The wealth management industry stands at a critical juncture. Regulatory demands continue to intensify, client expectations evolve rapidly, and technological disruption reshapes traditional practice models. For advisory firms navigating this landscape, success increasingly depends on making informed strategic decisions grounded in operational reality rather than vendor promises.
+                            </p>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                Recent examination findings reveal a consistent pattern: firms struggle not because they lack compliance intentions, but because their operational infrastructure cannot support their regulatory obligations at scale. This gap between aspiration and execution creates unnecessary risk and limits growth potential.
+                            </p>
+
+                            <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">The Real Cost of Operational Inefficiency</h2>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                When firms experience rapid asset growth, operational bottlenecks emerge predictably. Client onboarding extends from days to weeks. Portfolio rebalancing becomes manual and error-prone. Compliance reviews create backlogs that delay business development. The very success that drives growth begins undermining service quality.
+                            </p>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                Consider the typical progression: A firm crosses $500 million in assets under management. Client acquisition accelerates. Then workflows that functioned adequately at smaller scale begin breaking down. Partners spend increasing time on administrative tasks rather than client relationships. New hires struggle to access information scattered across multiple systems. Critical deadlines slip.
+                            </p>
+
+                            <blockquote className="border-l-4 border-[#49648C] pl-6 my-8 italic text-gray-700">
+                                "The firms that scale successfully don't just add more people to broken processes. They fundamentally rethink how work flows through their organization before growth forces the issue."
+                            </blockquote>
+
+                            <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">Building Sustainable Infrastructure</h2>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                Strategic technology implementation requires understanding what actually drives efficiency gains versus what simply creates the appearance of sophistication. The distinction matters because technology deployed without clear operational objectives often increases complexity rather than reducing it.
+                            </p>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                Successful implementations share common characteristics. They begin with process documentation—not the compliance theater variety, but genuine understanding of how work currently flows and where friction exists. They prioritize integration over feature sets. They measure impact through operational metrics rather than adoption rates.
+                            </p>
+
+                            <h3 className="text-2xl font-light text-[#0B1F3B] mt-10 mb-5">Key Implementation Principles</h3>
+
+                            <ul className="space-y-3 mb-8 text-gray-800">
+                                <li className="flex items-start">
+                                    <span className="text-[#49648C] mr-3 mt-1.5">•</span>
+                                    <span><strong className="font-semibold text-[#0B1F3B]">Start with data architecture.</strong> Without clean, accessible data, sophisticated tools become expensive paperweights.</span>
+                                </li>
+                                <li className="flex items-start">
+                                    <span className="text-[#49648C] mr-3 mt-1.5">•</span>
+                                    <span><strong className="font-semibold text-[#0B1F3B]">Prioritize integration capabilities.</strong> The best individual tools mean nothing if they can't communicate with your existing systems.</span>
+                                </li>
+                                <li className="flex items-start">
+                                    <span className="text-[#49648C] mr-3 mt-1.5">•</span>
+                                    <span><strong className="font-semibold text-[#0B1F3B]">Test with real workflows.</strong> Demos showcase ideal conditions. Implementation reveals actual utility under operational pressure.</span>
+                                </li>
+                                <li className="flex items-start">
+                                    <span className="text-[#49648C] mr-3 mt-1.5">•</span>
+                                    <span><strong className="font-semibold text-[#0B1F3B]">Measure specific outcomes.</strong> Time saved per process, error reduction rates, client satisfaction scores—concrete metrics that demonstrate value.</span>
+                                </li>
+                            </ul>
+
+                            <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">Regulatory Compliance as Competitive Advantage</h2>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                Viewing compliance solely as cost center misses strategic opportunity. Firms that build robust compliance frameworks gain operational advantages extending beyond examination preparation. Systematic risk monitoring identifies issues before they become problems. Documented procedures enable consistent client service. Comprehensive recordkeeping supports informed decision-making.
+                            </p>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                The most sophisticated firms treat compliance infrastructure as business intelligence system. They leverage the same policies and procedures required for regulatory purposes to improve operational efficiency, reduce liability exposure, and demonstrate value to clients increasingly concerned about advisor oversight.
+                            </p>
+
+                            <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">Looking Forward</h2>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                Industry consolidation will continue. Regulatory requirements will expand. Technology capabilities will advance. Client expectations will rise. In this environment, competitive advantage belongs to firms that build operational infrastructure supporting sustainable growth rather than those chasing short-term efficiency gains.
+                            </p>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                The firms positioning themselves for long-term success share a common characteristic: they make strategic decisions based on operational reality rather than aspirational thinking. They invest in infrastructure before growth forces the issue. They implement technology to solve specific problems rather than following trends. They build compliance frameworks that support business objectives rather than simply checking regulatory boxes.
+                            </p>
+
+                            <p className="text-gray-800 leading-relaxed mb-6">
+                                This approach requires patience. It demands upfront investment that doesn't generate immediate revenue. It means declining opportunities that stress operational capacity. But it creates foundation for sustainable competitive advantage in an industry where operational excellence increasingly separates thriving firms from struggling ones.
+                            </p>
+                        </div>
+
+                        {/* Social Share */}
+                        <div className="mt-16 pt-8 border-t border-gray-200">
+                            <SocialShareButtons
+                                title={article.title}
+                                slug={article.slug}
+                            />
+                        </div>
+
+                        {/* Topics Section */}
+                        {(article.subcategories.length > 0 || (article.tags && article.tags.length > 0)) && (
+                            <div className="mt-12 pt-12 border-t border-gray-200">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                                    {/* Subcategories */}
+                                    {article.subcategories.length > 0 && (
+                                        <div>
+                                            <div className="flex items-center space-x-3 mb-5">
+                                                <div className="h-px w-8 bg-[#49648C]"></div>
+                                                <h3 className="text-sm font-semibold text-[#0B1F3B] uppercase tracking-wider">
+                                                    Related Topics
+                                                </h3>
+                                            </div>
+                                            <div className="flex flex-wrap gap-2.5">
+                                                {article.subcategories.map((subcategory) => (
+                                                    <Link
+                                                        key={subcategory.id}
+                                                        href={`/subcategories/${subcategory.slug}`}
+                                                        className="group relative inline-flex items-center px-4 py-2.5 bg-[#F5F2EA] text-[#0B1F3B] text-sm font-medium hover:bg-[#49648C] hover:text-white transition-all duration-300 overflow-hidden"
+                                                    >
+                                                        <span className="relative z-10">{subcategory.name}</span>
+                                                        <div className="absolute inset-0 bg-[#49648C] transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Tags */}
+                                    {article.tags && article.tags.length > 0 && (
+                                        <div>
+                                            <div className="flex items-center space-x-3 mb-5">
+                                                <div className="h-px w-8 bg-[#49648C]"></div>
+                                                <h3 className="text-sm font-semibold text-[#0B1F3B] uppercase tracking-wider">
+                                                    Tags
+                                                </h3>
+                                            </div>
+                                            <div className="flex flex-wrap gap-2.5">
+                                                {article.tags.map((tag) => (
+                                                    <Link
+                                                        key={tag.id}
+                                                        href={`/tags/${tag.slug}`}
+                                                        className="inline-flex items-center px-3.5 py-2 bg-white text-gray-600 text-sm font-medium border border-gray-300 hover:border-[#49648C] hover:text-[#49648C] hover:bg-[#F5F2EA] transition-all duration-200"
+                                                    >
+                                                        <span className="text-[#49648C] mr-1.5">#</span>
+                                                        {tag.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
                     </article>
                 </Container>
             </section>
@@ -161,43 +287,68 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
             {/* Author Bio */}
             <section className="bg-[#F5F2EA]">
                 <Container maxWidth="lg">
-                    <div className="py-12 md:py-16">
+                    <div className="py-16 md:py-20">
                         <div className="flex flex-col md:flex-row gap-8 items-start">
-                            <Link href={`/authors/${article.author.id}`} className="flex-shrink-0">
-                                <div className="relative w-32 h-32 rounded-full overflow-hidden bg-gray-200">
+                            <Link
+                                href={`/authors/${article.author.id}`}
+                                className="flex-shrink-0 group"
+                            >
+                                <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg group-hover:shadow-xl transition-shadow duration-300">
                                     <Image
                                         src={article.author.photo}
                                         alt={article.author.name}
                                         fill
-                                        className="object-cover"
+                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
                                     />
                                 </div>
                             </Link>
                             <div className="flex-1">
-                                <Link href={`/authors/${article.author.id}`} className="hover:text-[#49648C] transition-colors">
-                                    <h3 className="text-2xl font-light text-[#0B1F3B] mb-1">
+                                <div className="flex items-center space-x-3 mb-4">
+                                    <div className="h-px w-12 bg-[#49648C]"></div>
+                                    <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#49648C]">
+                                        About the Author
+                                    </span>
+                                </div>
+                                <Link
+                                    href={`/authors/${article.author.id}`}
+                                    className="group inline-block"
+                                >
+                                    <h3 className="text-2xl md:text-3xl font-light text-[#0B1F3B] mb-2 group-hover:text-[#49648C] transition-colors">
                                         {article.author.name}
                                     </h3>
                                 </Link>
                                 <p className="text-sm text-gray-600 mb-4">{article.author.title}</p>
                                 <p className="text-gray-700 leading-relaxed mb-6">{article.author.bio}</p>
-                                <div className="flex items-center space-x-4">
+                                <div className="flex flex-wrap items-center gap-4">
                                     {article.author.linkedin && (
                                         <a
                                             href={article.author.linkedin}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-sm font-medium text-[#49648C] hover:text-[#0B1F3B] transition-colors"
+                                            className="inline-flex items-center space-x-2 text-sm font-medium text-[#49648C] hover:text-[#0B1F3B] transition-colors group"
                                         >
-                                            LinkedIn →
+                                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                            </svg>
+                                            <span>LinkedIn</span>
+                                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
                                         </a>
                                     )}
+
                                     {article.author.email && (
                                         <a
                                             href={`mailto:${article.author.email}`}
-                                            className="text-sm font-medium text-[#49648C] hover:text-[#0B1F3B] transition-colors"
+                                            className="inline-flex items-center space-x-2 text-sm font-medium text-[#49648C] hover:text-[#0B1F3B] transition-colors group"
                                         >
-                                            Email →
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                            </svg>
+                                            <span>Email</span>
+                                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
                                         </a>
                                     )}
                                 </div>
@@ -211,10 +362,10 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
             {relatedArticles.length > 0 && (
                 <section className="bg-white">
                     <Container>
-                        <div className="py-12 md:py-16">
-                            <div className="flex items-center space-x-3 mb-8">
+                        <div className="py-16 md:py-20">
+                            <div className="flex items-center space-x-3 mb-12">
                                 <div className="h-px w-12 bg-[#49648C]"></div>
-                                <h2 className="text-2xl md:text-3xl font-light text-[#0B1F3B]">
+                                <h2 className="text-3xl md:text-4xl font-light text-[#0B1F3B]">
                                     More in {article.category.name}
                                 </h2>
                             </div>
@@ -238,9 +389,20 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                                             <h3 className="text-lg font-medium text-[#0B1F3B] group-hover:text-[#49648C] transition-colors mb-2 line-clamp-2">
                                                 {related.title}
                                             </h3>
-                                            <p className="text-sm text-gray-600 line-clamp-2">
+                                            <p className="text-sm text-gray-600 line-clamp-2 mb-3">
                                                 {related.excerpt}
                                             </p>
+                                            <div className="flex items-center text-xs text-gray-500">
+                                                <time dateTime={related.publishDate}>
+                                                    {new Date(related.publishDate).toLocaleDateString('en-US', {
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                        year: 'numeric'
+                                                    })}
+                                                </time>
+                                                <span className="mx-2">•</span>
+                                                <span>{related.readTime} min read</span>
+                                            </div>
                                         </article>
                                     </Link>
                                 ))}
@@ -257,12 +419,12 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                         <h2 className="text-3xl md:text-4xl font-light mb-4">
                             Get More Insights Like This
                         </h2>
-                        <p className="text-lg text-gray-300 mb-8">
-                            Sharp analysis delivered when we have something worth saying.
+                        <p className="text-lg text-gray-300 mb-8 leading-relaxed">
+                            Sharp analysis delivered when we have something worth saying. No fluff, just actionable insights.
                         </p>
                         <Link
                             href="/newsletter"
-                            className="inline-block px-8 py-3 bg-[#49648C] text-white font-medium rounded hover:bg-[#5A7AA0] transition-colors"
+                            className="inline-block px-8 py-3 bg-[#49648C] text-white font-medium hover:bg-[#5A7AA0] transition-colors"
                         >
                             Subscribe to Newsletter
                         </Link>
