@@ -1,14 +1,14 @@
 import React from 'react';
-import { Pillar } from '@/types';
+import { Category } from '@/types';
 import { cn } from '@/lib/utils';
 
-interface PillarBadgeProps {
-    pillar: Pillar;
+interface CategoryBadgeProps {
+    category: Category;
     className?: string;
     variant?: 'light' | 'dark';
 }
 
-export const PillarBadge: React.FC<PillarBadgeProps> = ({ pillar, className, variant = 'light' }) => {
+export const CategoryBadge: React.FC<CategoryBadgeProps> = ({ category, className, variant = 'light' }) => {
     return (
         <span
             className={cn(
@@ -17,7 +17,7 @@ export const PillarBadge: React.FC<PillarBadgeProps> = ({ pillar, className, var
                 className
             )}
         >
-            {pillar.name}
+            {category.name}
         </span>
     );
 };

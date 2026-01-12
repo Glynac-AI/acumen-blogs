@@ -46,8 +46,8 @@ export function generateRSS(articles: Article[]): string {
       <description>${escapeXml(article.excerpt)}</description>
       <pubDate>${pubDate}</pubDate>
       <author>${escapeXml(authorEmail)} (${authorName})</author>
-      <category>${escapeXml(article.pillar.name)}</category>
-      ${article.tags.map(tag => `<category>${escapeXml(tag.name)}</category>`).join('\n      ')}
+      <category>${escapeXml(article.category.name)}</category>
+      ${article.tags ? article.tags.map(tag => `<category>${escapeXml(tag.name)}</category>`).join('\n      ') : ''}
       ${article.featuredImage ? `<enclosure url="${article.featuredImage}" type="image/jpeg" />` : ''}
     </item>`;
         })

@@ -1,5 +1,4 @@
-import { Article, Author, Tag } from '@/types';
-import { PillarConfig } from '@/config/pillars';
+import { Article, Author, Tag, Category, Subcategory } from '@/types';
 import { getBaseUrl } from '@/config/site';
 
 const SITE_URL = getBaseUrl();
@@ -27,7 +26,8 @@ function formatDate(date: string): string {
 export function generateSitemap(
     articles: Article[],
     authors: Author[],
-    pillars: PillarConfig[],
+    categories: Category[],
+    subcategories: Subcategory[],
     tags: Tag[]
 ): string {
     const urls: SitemapURL[] = [];
@@ -82,12 +82,21 @@ export function generateSitemap(
         });
     });
 
-    // Pillar pages
-    pillars.forEach((pillar) => {
+    // Category pages
+    categories.forEach((category) => {
         urls.push({
-            loc: `${SITE_URL}/topics/${escapeXml(pillar.slug)}`,
+            loc: `${SITE_URL}/categories/${escapeXml(category.slug)}`,
             changefreq: 'weekly',
             priority: 0.8,
+        });
+    });
+
+    // Subcategory pages
+    subcategories.forEach((subcategory) => {
+        urls.push({
+            loc: `${SITE_URL}/subcategories/${escapeXml(subcategory.slug)}`,
+            changefreq: 'weekly',
+            priority: 0.7,
         });
     });
 

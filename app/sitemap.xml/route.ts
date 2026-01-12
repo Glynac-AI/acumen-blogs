@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { generateSitemap } from '@/lib/sitemap';
 import { mockArticles, mockAuthors, mockTags } from '@/lib/mock-data';
-import { PILLARS } from '@/config/pillars';
+import { CATEGORIES } from '@/config/categories';
+import { SUBCATEGORIES } from '@/config/subcategories';
 
 export async function GET() {
     try {
@@ -13,9 +14,10 @@ export async function GET() {
         const articles = mockArticles;
         const authors = mockAuthors;
         const tags = mockTags;
-        const pillars = PILLARS;
+        const categories = CATEGORIES;
+        const subcategories = SUBCATEGORIES;
 
-        const sitemap = generateSitemap(articles, authors, pillars, tags);
+        const sitemap = generateSitemap(articles, authors, categories, subcategories, tags);
 
         return new NextResponse(sitemap, {
             headers: {

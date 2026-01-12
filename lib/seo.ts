@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
-import { Article, Author } from '@/types';
-import { PillarConfig } from '@/config/pillars';
+import { Article, Author, Category } from '@/types';
 import { siteConfig, getBaseUrl, getFullUrl } from '@/config/site';
 
 const SITE_NAME = siteConfig.name;
@@ -13,7 +12,7 @@ export function generateArticleMetadata(article: Article): Metadata {
     const description = article.seo?.metaDescription || article.excerpt;
     const url = article.seo?.canonicalURL || getFullUrl(`/blog/${article.slug}`);
     const ogImage = article.seo?.ogImage || article.featuredImage || DEFAULT_OG_IMAGE;
-    const keywords = article.seo?.keywords || article.tags.map(t => t.name).join(', ');
+    const keywords = article.seo?.keywords || (article.tags ? article.tags.map(t => t.name).join(', ') : '');
 
     return {
         title,
@@ -101,10 +100,10 @@ export function generateAuthorMetadata(author: Author, articleCount: number): Me
     };
 }
 
-export function generatePillarMetadata(pillar: PillarConfig, articleCount: number): Metadata {
-    const title = `${pillar.name}: ${pillar.subtitle} | ${SITE_NAME}`;
-    const description = `${pillar.description} - ${articleCount} ${articleCount === 1 ? 'article' : 'articles'} on ${pillar.name}.`;
-    const url = getFullUrl(`/topics/${pillar.slug}`);
+export function generateCategoryMetadata(category: Category, articleCount: number): Metadata {
+    const title = `${category.name}: ${category.subtitle} | ${SITE_NAME}`;
+    const description = `${category.description} - ${articleCount} ${articleCount === 1 ? 'article' : 'articles'} on ${category.name}.`;
+    const url = getFullUrl(`/categories/${category.slug}`);
 
     return {
         title,
@@ -126,7 +125,7 @@ export function generatePillarMetadata(pillar: PillarConfig, articleCount: numbe
                     url: DEFAULT_OG_IMAGE,
                     width: 1200,
                     height: 630,
-                    alt: pillar.name,
+                    alt: category.name,
                 },
             ],
         },

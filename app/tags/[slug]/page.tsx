@@ -21,13 +21,13 @@ export default async function TagPage({ params }: TagPageProps) {
 
     // Get articles with this tag
     const tagArticles = mockArticles
-        .filter(article => article.tags.some(t => t.slug === slug))
+        .filter(article => article.tags?.some(t => t.slug === slug))
         .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
     // Get related tags (tags that appear in the same articles)
     const relatedTagSlugs = new Set<string>();
     tagArticles.forEach(article => {
-        article.tags.forEach(t => {
+        article.tags?.forEach(t => {
             if (t.slug !== slug) {
                 relatedTagSlugs.add(t.slug);
             }
