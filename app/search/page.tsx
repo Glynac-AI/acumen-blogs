@@ -7,8 +7,7 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
 import { useSearch } from '@/hooks/usesearch';
-import { Article, Author, Tag } from '@/types';
-import { PillarConfig } from '@/config/pillars';
+import { Article, Author, Tag, Category, Subcategory } from '@/types';
 
 function SearchResults() {
     const searchParams = useSearchParams();
@@ -20,7 +19,8 @@ function SearchResults() {
     const articles = results.filter(r => r.type === 'article');
     const authors = results.filter(r => r.type === 'author');
     const tags = results.filter(r => r.type === 'tag');
-    const pillars = results.filter(r => r.type === 'pillar');
+    const categories = results.filter(r => r.type === 'category');
+    const subcategories = results.filter(r => r.type === 'subcategory');
 
     if (!query) {
         return (
@@ -34,7 +34,7 @@ function SearchResults() {
                             Start Searching
                         </h2>
                         <p className="text-gray-600">
-                            Enter a search term to find articles, authors, tags, and topics
+                            Enter a search term to find articles, authors, categories, and topics
                         </p>
                     </div>
                 </Container>
@@ -162,6 +162,79 @@ function SearchResults() {
                         </section>
                     )}
 
+                    {/* Categories */}
+                    {categories.length > 0 && (
+                        <section className="bg-white">
+                            <Container>
+                                <div className="py-16 md:py-20">
+                                    <div className="flex items-center space-x-3 mb-8">
+                                        <div className="h-px w-12 bg-[#49648C]"></div>
+                                        <h2 className="text-2xl md:text-3xl font-light text-[#0B1F3B]">
+                                            Categories ({categories.length})
+                                        </h2>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                        {categories.map((result, index) => {
+                                            const category = result.item as Category;
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    href={`/categories/${category.slug}`}
+                                                    className="group"
+                                                >
+                                                    <div className="bg-white border border-gray-200 hover:border-[#49648C] transition-all duration-300 p-8">
+                                                        <h3 className="text-xl font-medium text-[#0B1F3B] group-hover:text-[#49648C] transition-colors mb-2">
+                                                            {category.name}
+                                                        </h3>
+                                                        <p className="text-sm text-[#49648C] font-medium mb-4">
+                                                            {category.subtitle}
+                                                        </p>
+                                                        <p className="text-sm text-gray-700 leading-relaxed line-clamp-3">
+                                                            {category.description}
+                                                        </p>
+                                                    </div>
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </Container>
+                        </section>
+                    )}
+
+                    {/* Subcategories */}
+                    {subcategories.length > 0 && (
+                        <section className="bg-[#F5F2EA]">
+                            <Container>
+                                <div className="py-16 md:py-20">
+                                    <div className="flex items-center space-x-3 mb-8">
+                                        <div className="h-px w-12 bg-[#49648C]"></div>
+                                        <h2 className="text-2xl md:text-3xl font-light text-[#0B1F3B]">
+                                            Topics ({subcategories.length})
+                                        </h2>
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-3">
+                                        {subcategories.map((result, index) => {
+                                            const subcategory = result.item as Subcategory;
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    href={`/subcategories/${subcategory.slug}`}
+                                                    className="px-4 py-2 text-sm font-medium text-[#0B1F3B] bg-white border border-gray-200 hover:border-[#49648C] hover:text-[#49648C] transition-colors"
+                                                    style={{ borderRadius: '2px' }}
+                                                >
+                                                    {subcategory.name}
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </Container>
+                        </section>
+                    )}
+
                     {/* Tags */}
                     {tags.length > 0 && (
                         <section className="bg-white">
@@ -185,47 +258,6 @@ function SearchResults() {
                                                     style={{ borderRadius: '2px' }}
                                                 >
                                                     {tag.name}
-                                                </Link>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            </Container>
-                        </section>
-                    )}
-
-                    {/* Pillars */}
-                    {pillars.length > 0 && (
-                        <section className="bg-[#F5F2EA]">
-                            <Container>
-                                <div className="py-16 md:py-20">
-                                    <div className="flex items-center space-x-3 mb-8">
-                                        <div className="h-px w-12 bg-[#49648C]"></div>
-                                        <h2 className="text-2xl md:text-3xl font-light text-[#0B1F3B]">
-                                            Topics ({pillars.length})
-                                        </h2>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                        {pillars.map((result, index) => {
-                                            const pillar = result.item as PillarConfig;
-                                            return (
-                                                <Link
-                                                    key={index}
-                                                    href={`/topics/${pillar.slug}`}
-                                                    className="group"
-                                                >
-                                                    <div className="bg-white border border-gray-200 hover:border-[#49648C] transition-all duration-300 p-8">
-                                                        <h3 className="text-xl font-medium text-[#0B1F3B] group-hover:text-[#49648C] transition-colors mb-2">
-                                                            {pillar.name}
-                                                        </h3>
-                                                        <p className="text-sm text-[#49648C] font-medium mb-4">
-                                                            {pillar.subtitle}
-                                                        </p>
-                                                        <p className="text-sm text-gray-700 leading-relaxed line-clamp-3">
-                                                            {pillar.description}
-                                                        </p>
-                                                    </div>
                                                 </Link>
                                             );
                                         })}

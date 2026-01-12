@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
 import Fuse from 'fuse.js';
 import { mockArticles, mockAuthors, mockTags } from '@/lib/mock-data';
-import { PILLARS } from '@/config/pillars';
-import { Article, Author, Tag } from '@/types';
-import { PillarConfig } from '@/config/pillars';
+import { CATEGORIES } from '@/config/categories';
+import { SUBCATEGORIES } from '@/config/subcategories';
+import { Article, Author, Tag, Category, Subcategory } from '@/types';
 
-export type SearchResultType = 'article' | 'author' | 'tag' | 'pillar';
+export type SearchResultType = 'article' | 'author' | 'tag' | 'category' | 'subcategory';
 
 export interface SearchResult {
     type: SearchResultType;
-    item: Article | Author | Tag | PillarConfig;
+    item: Article | Author | Tag | Category | Subcategory;
     score?: number;
 }
 
@@ -28,7 +28,7 @@ export function useSearch(query: string): SearchResult[] {
                 { name: 'excerpt', weight: 5 },
                 { name: 'subtitle', weight: 4 },
                 { name: 'author.name', weight: 3 },
-                { name: 'pillar.name', weight: 2 },
+                { name: 'category.name', weight: 2 },
             ],
             threshold: 0.4,
             includeScore: true,
@@ -79,8 +79,8 @@ export function useSearch(query: string): SearchResult[] {
             });
         });
 
-        // Search Pillars
-        const pillarFuse = new Fuse(PILLARS, {
+        // Search Categories
+        const categoryFuse = new Fuse(CATEGORIES, {
             keys: [
                 { name: 'name', weight: 10 },
                 { name: 'subtitle', weight: 5 },
@@ -90,10 +90,29 @@ export function useSearch(query: string): SearchResult[] {
             includeScore: true,
         });
 
-        const pillarResults = pillarFuse.search(query);
-        pillarResults.forEach(result => {
+        const categoryResults = categoryFuse.search(query);
+        categoryResults.forEach(result => {
             allResults.push({
-                type: 'pillar',
+                type: 'category',
+                item: result.item,
+                score: result.score,
+            });
+        });
+
+        // Search Subcategories
+        const subcategoryFuse = new Fuse(SUBCATEGORIES, {
+            keys: [
+                { name: 'name', weight: 10 },
+                { name: 'description', weight: 5 },
+            ],
+            threshold: 0.4,
+            includeScore: true,
+        });
+
+        const subcategoryResults = subcategoryFuse.search(query);
+        subcategoryResults.forEach(result => {
+            allResults.push({
+                type: 'subcategory',
                 item: result.item,
                 score: result.score,
             });

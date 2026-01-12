@@ -1,165 +1,166 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { mockArticles } from '@/lib/mock-data';
 
 export const HeroSection: React.FC = () => {
-    const featuredArticles = mockArticles.filter(article => article.isFeatured).slice(0, 3);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+    // Get featured articles
+    const featuredArticles = mockArticles
+        .filter(article => article.isFeatured)
+        .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
-    const currentArticle = featuredArticles[currentIndex] || mockArticles[0];
+    // Main featured article (largest)
+    const mainFeatured = featuredArticles[0] || mockArticles[0];
 
-    useEffect(() => {
-        if (!isAutoPlaying || featuredArticles.length <= 1) return;
+    // Side articles - Get more articles if not enough featured ones
+    let sideArticles = featuredArticles.slice(1);
 
-        const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % featuredArticles.length);
-        }, 5000);
+    if (sideArticles.length < 4) {
+        const recentArticles = mockArticles
+            .filter(article => !article.isFeatured && article.id !== mainFeatured.id)
+            .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
-        return () => clearInterval(interval);
-    }, [isAutoPlaying, featuredArticles.length]);
+        sideArticles = [...sideArticles, ...recentArticles].slice(0, 4);
+    }
 
-    const goToSlide = (index: number) => {
-        setCurrentIndex(index);
-        setIsAutoPlaying(false);
-    };
-
-    const goToPrevious = () => {
-        setCurrentIndex((prev) => (prev - 1 + featuredArticles.length) % featuredArticles.length);
-        setIsAutoPlaying(false);
-    };
-
-    const goToNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % featuredArticles.length);
-        setIsAutoPlaying(false);
+    const formatDate = (date: string) => {
+        return new Date(date).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
     };
 
     return (
-        <section className="relative bg-[#0B1F3B] text-white overflow-hidden min-h-[85vh]">
+        <section className="relative bg-[#0B1F3B] text-white overflow-hidden">
             <Container>
-                <div className="relative py-8 md:py-12 flex flex-col justify-center h-full">
-                    {/* Content Grid */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="py-12 md:py-16">
+                
+                    {/* Featured Grid Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-                        {/* Left Content - 7 columns */}
-                        <div className="lg:col-span-7 space-y-6">
-                            {/* Category Label */}
-                            <div className="flex items-center space-x-3">
-                                <div className="h-px w-12 bg-[#49648C]"></div>
-                                <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#49648C]">
-                                    {currentArticle.category.name}
-                                </span>
-                            </div>
-
-                            {/* Headline */}
-                            <Link href={`/blog/${currentArticle.slug}`} className="block group">
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight mb-4 group-hover:text-[#49648C] transition-colors duration-300">
-                                    {currentArticle.title}
-                                </h1>
-                            </Link>
-
-                            {/* Subtitle */}
-                            {currentArticle.subtitle && (
-                                <p className="text-lg md:text-xl font-light text-gray-300 leading-relaxed">
-                                    {currentArticle.subtitle}
-                                </p>
-                            )}
-
-                            {/* Meta Info */}
-                            <div className="flex items-center space-x-6 pt-2">
-                                <div className="flex items-center space-x-3">
-                                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#49648C]">
+                        {/* MAIN FEATURED ARTICLE - Left Side (7 columns) */}
+                        <div className="lg:col-span-7">
+                            <article className="group relative h-full">
+                                <Link href={`/blog/${mainFeatured.slug}`} className="block h-full">
+                                    {/* Image Container */}
+                                    <div className="relative w-full aspect-[16/10] overflow-hidden rounded-sm mb-6">
                                         <Image
-                                            src={currentArticle.author.photo}
-                                            alt={currentArticle.author.name}
+                                            src={mainFeatured.featuredImage}
+                                            alt={mainFeatured.title}
                                             fill
-                                            className="object-cover"
+                                            className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                            priority
                                         />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-medium">{currentArticle.author.name}</p>
-                                        <p className="text-xs text-gray-400">{currentArticle.author.title}</p>
-                                    </div>
-                                </div>
-                                <div className="h-8 w-px bg-gray-700"></div>
-                                <span className="text-sm text-gray-400">{currentArticle.readTime} min read</span>
-                            </div>
+                                        {/* Gradient Overlay */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
 
-                            {/* Read Article Button */}
-                            <Link
-                                href={`/blog/${currentArticle.slug}`}
-                                className="inline-flex items-center space-x-2 px-6 py-3 bg-[#49648C] text-white font-medium rounded hover:bg-[#5A7AA0] transition-colors"
-                            >
-                                <span>Read Article</span>
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </Link>
+                                        {/* Category Badge on Image */}
+                                        <div className="absolute top-4 left-4">
+                                            <span className="inline-block px-3 py-1 bg-[#49648C] text-white text-xs font-semibold uppercase tracking-wider">
+                                                {mainFeatured.category.name}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="space-y-3">
+                                        <h3 className="text-3xl md:text-4xl font-light leading-tight group-hover:text-[#49648C] transition-colors">
+                                            {mainFeatured.title}
+                                        </h3>
+
+                                        {mainFeatured.subtitle && (
+                                            <p className="text-lg text-gray-300 font-light leading-relaxed">
+                                                {mainFeatured.subtitle}
+                                            </p>
+                                        )}
+
+                                        <p className="text-gray-400 leading-relaxed line-clamp-2">
+                                            {mainFeatured.excerpt}
+                                        </p>
+
+                                        {/* Meta */}
+                                        <div className="flex items-center space-x-4 text-sm text-gray-400 pt-2">
+                                            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#49648C]">
+                                                <Image
+                                                    src={mainFeatured.author.photo}
+                                                    alt={mainFeatured.author.name}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                            <span className="font-medium text-white">{mainFeatured.author.name}</span>
+                                            <span>•</span>
+                                            <span>{formatDate(mainFeatured.publishDate)}</span>
+                                            <span>•</span>
+                                            <span>{mainFeatured.readTime} min read</span>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </article>
                         </div>
 
-                        {/* Right Image - 5 columns */}
-                        <div className="lg:col-span-5">
-                            <Link href={`/blog/${currentArticle.slug}`} className="block group">
-                                <div className="relative aspect-[4/5] rounded-sm overflow-hidden shadow-2xl max-h-[70vh]">
-                                    <Image
-                                        src={currentArticle.featuredImage}
-                                        alt={currentArticle.title}
-                                        fill
-                                        className="object-cover group-hover:scale-105 transition-transform duration-700"
-                                        priority
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60"></div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-
-                    {/* Navigation Controls */}
-                    {featuredArticles.length > 1 && (
-                        <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-800">
-                            {/* Left: Article Pills */}
-                            <div className="flex items-center space-x-2 flex-wrap">
-                                {featuredArticles.map((article, index) => (
-                                    <button
-                                        key={article.id}
-                                        onClick={() => goToSlide(index)}
-                                        className={`px-3 py-1 text-xs font-medium tracking-wide uppercase transition-all duration-300 ${index === currentIndex
-                                                ? 'bg-[#49648C] text-white'
-                                                : 'bg-transparent text-gray-400 hover:text-white border border-gray-700'
-                                            } rounded`}
-                                    >
-                                        {article.category.name}
-                                    </button>
-                                ))}
-                            </div>
-
-                            {/* Right: Arrow Controls */}
-                            <div className="flex items-center space-x-2">
-                                <button
-                                    onClick={goToPrevious}
-                                    className="p-2 text-gray-400 hover:text-white border border-gray-700 hover:border-[#49648C] rounded transition-colors"
-                                    aria-label="Previous article"
+                        {/* SIDE ARTICLES - Right Side (5 columns) */}
+                        <div className="lg:col-span-5 space-y-6">
+                            {sideArticles.map((article) => (
+                                <article
+                                    key={article.id}
+                                    className="group pb-6 border-b border-gray-700 last:border-0 last:pb-0"
                                 >
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                    </svg>
-                                </button>
-                                <button
-                                    onClick={goToNext}
-                                    className="p-2 text-gray-400 hover:text-white border border-gray-700 hover:border-[#49648C] rounded transition-colors"
-                                    aria-label="Next article"
+                                    <Link href={`/blog/${article.slug}`} className="block">
+                                        <div className="flex gap-4">
+                                            {/* Thumbnail */}
+                                            <div className="relative w-28 h-28 flex-shrink-0 overflow-hidden rounded-sm">
+                                                <Image
+                                                    src={article.featuredImage}
+                                                    alt={article.title}
+                                                    fill
+                                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                                />
+                                            </div>
+
+                                            {/* Content */}
+                                            <div className="flex-1 space-y-2">
+                                                {/* Category */}
+                                                <span className="text-xs font-medium text-[#49648C] uppercase tracking-wider">
+                                                    {article.category.name}
+                                                </span>
+
+                                                {/* Title */}
+                                                <h4 className="text-base font-medium leading-snug group-hover:text-[#49648C] transition-colors line-clamp-2">
+                                                    {article.title}
+                                                </h4>
+
+                                                {/* Meta */}
+                                                <div className="flex items-center space-x-2 text-xs text-gray-400">
+                                                    <span>{formatDate(article.publishDate)}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </article>
+                            ))}
+
+                            {/* View All Link */}
+                            <div className="pt-4">
+                                <Link
+                                    href="/blog"
+                                    className="inline-flex items-center space-x-2 text-sm font-medium text-[#49648C] hover:text-white transition-colors"
                                 >
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <span>View All Articles</span>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                     </svg>
-                                </button>
+                                </Link>
                             </div>
                         </div>
-                    )}
+                    </div>
                 </div>
             </Container>
         </section>

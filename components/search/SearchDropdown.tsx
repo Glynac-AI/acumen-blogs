@@ -4,8 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSearch, SearchResult } from '@/hooks/usesearch';
-import { Article, Author, Tag } from '@/types';
-import { PillarConfig } from '@/config/pillars';
+import { Article, Author, Tag, Category, Subcategory } from '@/types';
 
 export const SearchDropdown: React.FC = () => {
     const [query, setQuery] = useState('');
@@ -20,8 +19,9 @@ export const SearchDropdown: React.FC = () => {
     const groupedResults = {
         articles: results.filter(r => r.type === 'article').slice(0, 5),
         authors: results.filter(r => r.type === 'author').slice(0, 3),
+        categories: results.filter(r => r.type === 'category').slice(0, 3),
+        subcategories: results.filter(r => r.type === 'subcategory').slice(0, 3),
         tags: results.filter(r => r.type === 'tag').slice(0, 3),
-        pillars: results.filter(r => r.type === 'pillar').slice(0, 3),
     };
 
     const totalResults = results.length;
@@ -71,7 +71,7 @@ export const SearchDropdown: React.FC = () => {
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     onFocus={() => query.trim().length >= 2 && setIsOpen(true)}
-                    placeholder="Search articles, authors, tags..."
+                    placeholder="Search articles, authors, topics..."
                     className="w-full px-4 py-2 pl-10 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#49648C] focus:border-transparent"
                 />
                 <svg
@@ -124,13 +124,72 @@ export const SearchDropdown: React.FC = () => {
                                                         {article.excerpt}
                                                     </p>
                                                     <div className="flex items-center gap-2 mt-1">
-                                                        <span className="text-xs text-[#49648C]">{article.pillar.name}</span>
+                                                        <span className="text-xs text-[#49648C]">{article.category.name}</span>
                                                         <span className="text-xs text-gray-400">•</span>
                                                         <span className="text-xs text-gray-500">{article.author.name}</span>
                                                     </div>
                                                 </Link>
                                             );
                                         })}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Categories */}
+                            {groupedResults.categories.length > 0 && (
+                                <div className="border-b border-gray-100">
+                                    <div className="px-4 py-2 bg-gray-50">
+                                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                            Categories ({groupedResults.categories.length})
+                                        </p>
+                                    </div>
+                                    <div className="py-2">
+                                        {groupedResults.categories.map((result, index) => {
+                                            const category = result.item as Category;
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    href={`/categories/${category.slug}`}
+                                                    onClick={closeDropdown}
+                                                    className="block px-4 py-3 hover:bg-gray-50 transition-colors"
+                                                >
+                                                    <p className="text-sm font-medium text-[#0B1F3B]">
+                                                        {category.name}
+                                                    </p>
+                                                    <p className="text-xs text-gray-500 mt-1">
+                                                        {category.subtitle}
+                                                    </p>
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Subcategories */}
+                            {groupedResults.subcategories.length > 0 && (
+                                <div className="border-b border-gray-100">
+                                    <div className="px-4 py-2 bg-gray-50">
+                                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                            Subcategories ({groupedResults.subcategories.length})
+                                        </p>
+                                    </div>
+                                    <div className="py-2">
+                                        <div className="px-4 py-2 flex flex-wrap gap-2">
+                                            {groupedResults.subcategories.map((result, index) => {
+                                                const subcategory = result.item as Subcategory;
+                                                return (
+                                                    <Link
+                                                        key={index}
+                                                        href={`/subcategories/${subcategory.slug}`}
+                                                        onClick={closeDropdown}
+                                                        className="px-3 py-1 text-xs font-medium text-[#0B1F3B] bg-gray-100 hover:bg-[#49648C] hover:text-white transition-colors rounded-sm"
+                                                    >
+                                                        {subcategory.name}
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -168,7 +227,7 @@ export const SearchDropdown: React.FC = () => {
 
                             {/* Tags */}
                             {groupedResults.tags.length > 0 && (
-                                <div className="border-b border-gray-100">
+                                <div>
                                     <div className="px-4 py-2 bg-gray-50">
                                         <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                             Tags ({groupedResults.tags.length})
@@ -194,39 +253,8 @@ export const SearchDropdown: React.FC = () => {
                                 </div>
                             )}
 
-                            {/* Pillars */}
-                            {groupedResults.pillars.length > 0 && (
-                                <div>
-                                    <div className="px-4 py-2 bg-gray-50">
-                                        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                                            Topics ({groupedResults.pillars.length})
-                                        </p>
-                                    </div>
-                                    <div className="py-2">
-                                        {groupedResults.pillars.map((result, index) => {
-                                            const pillar = result.item as PillarConfig;
-                                            return (
-                                                <Link
-                                                    key={index}
-                                                    href={`/topics/${pillar.slug}`}
-                                                    onClick={closeDropdown}
-                                                    className="block px-4 py-3 hover:bg-gray-50 transition-colors"
-                                                >
-                                                    <p className="text-sm font-medium text-[#0B1F3B]">
-                                                        {pillar.name}
-                                                    </p>
-                                                    <p className="text-xs text-gray-500 mt-1">
-                                                        {pillar.subtitle}
-                                                    </p>
-                                                </Link>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            )}
-
                             {/* View All Results Link */}
-                            {totalResults > 10 && (
+                            {totalResults > 14 && (
                                 <div className="border-t border-gray-200 p-3 bg-gray-50">
                                     <Link
                                         href={`/search?q=${encodeURIComponent(query)}`}
