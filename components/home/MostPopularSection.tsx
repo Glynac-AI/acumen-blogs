@@ -48,10 +48,10 @@ export const MostPopularSection: React.FC = () => {
                                     key={article.id}
                                     className="group border-b border-gray-100 last:border-0"
                                 >
-                                    <Link href={`/blog/${article.slug}`} className="block py-8 hover:bg-[#F5F2EA]/30 transition-colors -mx-6 px-6">
-                                        <div className="flex items-center gap-8">
-                                            {/* Thumbnail */}
-                                            <div className="relative w-48 h-32 flex-shrink-0 overflow-hidden bg-gray-100 hidden md:block">
+                                    <Link href={`/blog/${article.slug}`} className="block py-6 md:py-8 hover:bg-[#F5F2EA]/30 transition-colors -mx-4 px-4 md:-mx-6 md:px-6">
+                                        <div className="flex items-center gap-4 md:gap-8">
+                                            {/* Thumbnail - Now visible on all screen sizes */}
+                                            <div className="relative w-24 h-20 sm:w-32 sm:h-24 md:w-48 md:h-32 flex-shrink-0 overflow-hidden bg-gray-100 rounded-sm">
                                                 <Image
                                                     src={article.featuredImage}
                                                     alt={article.title}
@@ -61,41 +61,41 @@ export const MostPopularSection: React.FC = () => {
                                             </div>
 
                                             {/* Content */}
-                                            <div className="flex-1 min-w-0 space-y-3">
+                                            <div className="flex-1 min-w-0 space-y-2 md:space-y-3">
                                                 {/* Category & Read Time */}
-                                                <div className="flex items-center gap-3 text-xs">
+                                                <div className="flex items-center gap-2 md:gap-3 text-xs">
                                                     <span className="font-medium text-[#49648C] uppercase tracking-wider">
                                                         {article.category.name}
                                                     </span>
-                                                    <span className="text-gray-400">•</span>
-                                                    <span className="text-gray-500">{article.readTime} min read</span>
+                                                    <span className="text-gray-400 hidden sm:inline">•</span>
+                                                    <span className="text-gray-500 hidden sm:inline">{article.readTime} min read</span>
                                                 </div>
 
                                                 {/* Title */}
-                                                <h3 className="text-2xl font-light text-[#0B1F3B] leading-tight group-hover:text-[#49648C] transition-colors">
+                                                <h3 className="text-base sm:text-lg md:text-2xl font-light text-[#0B1F3B] leading-tight group-hover:text-[#49648C] transition-colors line-clamp-2">
                                                     {article.title}
                                                 </h3>
 
-                                                {/* Subtitle or Excerpt */}
+                                                {/* Subtitle or Excerpt - Hidden on mobile */}
                                                 {article.subtitle ? (
-                                                    <p className="text-base text-gray-600 leading-relaxed line-clamp-1">
+                                                    <p className="text-sm md:text-base text-gray-600 leading-relaxed line-clamp-1 hidden sm:block">
                                                         {article.subtitle}
                                                     </p>
                                                 ) : (
-                                                    <p className="text-base text-gray-600 leading-relaxed line-clamp-2">
+                                                    <p className="text-sm md:text-base text-gray-600 leading-relaxed line-clamp-2 hidden sm:block">
                                                         {article.excerpt}
                                                     </p>
                                                 )}
 
                                                 {/* Author & Date */}
-                                                <div className="flex items-center gap-3 text-sm text-gray-500">
+                                                <div className="flex items-center gap-2 md:gap-3 text-xs md:text-sm text-gray-500">
                                                     <span className="font-medium text-gray-700">{article.author.name}</span>
                                                     <span className="text-gray-300">|</span>
                                                     <span>{formatDate(article.publishDate)}</span>
                                                 </div>
                                             </div>
 
-                                            {/* Arrow - Visible on Hover */}
+                                            {/* Arrow - Visible on Hover (Desktop only) */}
                                             <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity hidden lg:block">
                                                 <svg
                                                     className="w-6 h-6 text-[#49648C] group-hover:translate-x-1 transition-transform"
