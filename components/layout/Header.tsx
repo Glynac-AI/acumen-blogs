@@ -3,213 +3,274 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
-import { PILLARS } from '@/config/pillars';
-import { SearchDropdown } from '@/components/search/SearchDropdown';
+import { CATEGORIES } from '@/config/categories';
+import { getSubcategoriesByCategoryId } from '@/config/subcategories';
 
 export const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [showMobileSearch, setShowMobileSearch] = useState(false);
-
-    const pillarLinks = PILLARS.map(pillar => ({
-        href: `/topics/${pillar.slug}`,
-        label: pillar.name
-    }));
+    const [mobileOpenCategory, setMobileOpenCategory] = useState<string | null>(null);
 
     return (
-        <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
             <Container>
-                <div className="flex items-center justify-between h-16 gap-4">
+                <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-                        <div className="relative w-8 h-8 flex items-center justify-center">
-                            <svg viewBox="0 0 32 36" fill="none" className="w-full h-full">
-                                <path
-                                    d="M16 2L4 8v8c0 7.5 5 14 12 18 7-4 12-10.5 12-18V8L16 2z"
-                                    fill="#49648C"
-                                />
-                                <path
-                                    d="M16 6L8 10v6c0 5 3.5 9.5 8 12 4.5-2.5 8-7 8-12v-6l-8-4z"
-                                    fill="#0B1F3B"
-                                />
-                                <text
-                                    x="16"
-                                    y="21"
-                                    textAnchor="middle"
-                                    fill="white"
-                                    fontSize="14"
-                                    fontWeight="bold"
-                                    fontFamily="serif"
-                                >
-                                    R
-                                </text>
-                            </svg>
-                        </div>
-
-                        <span className="text-xl md:text-2xl font-bold text-[#0B1F3B]">
+                    <Link href="/" className="flex-shrink-0">
+                        <span className="text-xl font-bold text-[#0B1F3B]">
                             RegulateThis
                         </span>
                     </Link>
 
-                    {/* Desktop Search - Hidden on mobile/tablet */}
-                    <div className="hidden lg:flex flex-1 max-w-md mx-4">
-                        <SearchDropdown />
-                    </div>
-
                     {/* Desktop Navigation */}
-                    <nav className="hidden lg:flex items-center space-x-6">
-                        <Link
-                            href="/"
-                            className="text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors"
-                        >
-                            Home
-                        </Link>
+                    <nav className="hidden lg:flex items-center justify-between flex-1 ml-8">
+                        {/* Category Dropdowns - Left Side */}
+                        <div className="flex items-center space-x-1">
+                            {CATEGORIES.map((category) => {
+                                const subcategories = getSubcategoriesByCategoryId(category.id);
 
-                        {/* Topics Dropdown */}
-                        <div className="relative group">
-                            <button className="text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors flex items-center gap-1">
-                                Topics
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </button>
+                                return (
+                                    <div key={category.id} className="relative group">
+                                        <button className="px-3 py-2 text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors flex items-center whitespace-nowrap">
+                                            {category.name}
+                                            <svg
+                                                className="ml-1 w-3 h-3"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M19 9l-7 7-7-7"
+                                                />
+                                            </svg>
+                                        </button>
 
-                            {/* Dropdown Menu */}
-                            <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                                <div className="py-2">
-                                    {pillarLinks.map((link) => (
-                                        <Link
-                                            key={link.href}
-                                            href={link.href}
-                                            className="block px-4 py-2 text-sm text-[#0B1F3B] hover:bg-[#F5F2EA] hover:text-[#49648C] transition-colors"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
+                                        {/* Dropdown Menu */}
+                                        <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                            <div className="py-1">
+                                                {/* View All Category Link */}
+                                                <Link
+                                                    href={`/categories/${category.slug}`}
+                                                    className="block px-4 py-2 text-sm font-semibold text-[#0B1F3B] hover:bg-[#F5F2EA] transition-colors border-b border-gray-100"
+                                                >
+                                                    View All
+                                                </Link>
+
+                                                {/* Subcategories */}
+                                                <div className="max-h-80 overflow-y-auto">
+                                                    {subcategories.map((subcategory) => (
+                                                        <Link
+                                                            key={subcategory.id}
+                                                            href={`/subcategories/${subcategory.slug}`}
+                                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#F5F2EA] hover:text-[#49648C] transition-colors"
+                                                        >
+                                                            {subcategory.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
 
-                        <Link
-                            href="/blog"
-                            className="text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors"
-                        >
-                            All Articles
-                        </Link>
+                        {/* Right Side Navigation */}
+                        <div className="flex items-center space-x-1">
+                            {/* Resources Dropdown */}
+                            <div className="relative group">
+                                <button className="px-3 py-2 text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors flex items-center">
+                                    Resources
+                                    <svg
+                                        className="ml-1 w-3 h-3"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </button>
 
-                        <Link
-                            href="/authors"
-                            className="text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors"
-                        >
-                            Authors
-                        </Link>
+                                {/* Resources Dropdown Menu */}
+                                <div className="absolute top-full right-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                    <div className="py-1">
+                                        <Link
+                                            href="/authors"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#F5F2EA] hover:text-[#49648C] transition-colors"
+                                        >
+                                            Authors
+                                        </Link>
+                                        <Link
+                                            href="/webinars"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#F5F2EA] hover:text-[#49648C] transition-colors"
+                                        >
+                                            Webinars
+                                        </Link>
+                                        <Link
+                                            href="/events"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-[#F5F2EA] hover:text-[#49648C] transition-colors"
+                                        >
+                                            Events
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <Link
-                            href="/about"
-                            className="text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors"
-                        >
-                            About
-                        </Link>
+                            <Link
+                                href="/about"
+                                className="px-3 py-2 text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors"
+                            >
+                                About Us
+                            </Link>
+                        </div>
                     </nav>
 
-                    {/* Right Side: Search Icon (mobile/tablet) + Mobile Menu */}
-                    <div className="flex items-center space-x-2">
-                        {/* Mobile/Tablet Search Icon */}
-                        <button
-                            className="lg:hidden p-2 text-[#0B1F3B] hover:text-[#49648C] hover:bg-[#F5F2EA] rounded-full transition-colors"
-                            onClick={() => setShowMobileSearch(!showMobileSearch)}
-                            aria-label="Toggle search"
-                        >
-                            <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="lg:hidden p-2 text-[#0B1F3B] hover:bg-gray-100 rounded"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Toggle menu"
+                    >
+                        {isMobileMenuOpen ? (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
-                        </button>
-
-                        {/* Mobile Menu Button */}
-                        <button
-                            className="lg:hidden p-2 text-[#0B1F3B]"
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            aria-label="Toggle menu"
-                        >
-                            {isMobileMenuOpen ? (
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            ) : (
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                            )}
-                        </button>
-                    </div>
+                        ) : (
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        )}
+                    </button>
                 </div>
-
-                {/* Mobile/Tablet Search Bar */}
-                {showMobileSearch && (
-                    <div className="lg:hidden py-4 border-t border-gray-200">
-                        <SearchDropdown />
-                    </div>
-                )}
 
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (
                     <div className="lg:hidden py-4 border-t border-gray-200">
                         <nav className="flex flex-col space-y-1">
+                            {/* Home Link */}
                             <Link
                                 href="/"
-                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
+                                className="px-3 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 Home
                             </Link>
 
-                            {/* Topics Section in Mobile */}
-                            <div className="pt-2 pb-1 px-4">
-                                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Topics</span>
+                            {/* Categories Section */}
+                            <div className="pt-2 pb-1 px-3">
+                                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                    Categories
+                                </span>
                             </div>
-                            {pillarLinks.map((link) => (
+
+                            {/* Mobile Category Accordions */}
+                            {CATEGORIES.map((category) => {
+                                const subcategories = getSubcategoriesByCategoryId(category.id);
+                                const isOpen = mobileOpenCategory === category.id;
+
+                                return (
+                                    <div key={category.id}>
+                                        {/* Category Toggle */}
+                                        <button
+                                            onClick={() => setMobileOpenCategory(isOpen ? null : category.id)}
+                                            className="w-full px-3 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors flex items-center justify-between"
+                                        >
+                                            <span className="text-left">{category.name}</span>
+                                            <svg
+                                                className={`w-4 h-4 transition-transform flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M19 9l-7 7-7-7"
+                                                />
+                                            </svg>
+                                        </button>
+
+                                        {/* Subcategories (Collapsible) */}
+                                        {isOpen && (
+                                            <div className="pl-3">
+                                                {/* View All Link */}
+                                                <Link
+                                                    href={`/categories/${category.slug}`}
+                                                    className="block px-3 py-2 text-sm font-semibold text-[#49648C] hover:bg-[#F5F2EA] rounded transition-colors"
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                >
+                                                    View All
+                                                </Link>
+
+                                                {/* Subcategories */}
+                                                {subcategories.map((subcategory) => (
+                                                    <Link
+                                                        key={subcategory.id}
+                                                        href={`/subcategories/${subcategory.slug}`}
+                                                        className="block px-3 py-2 pl-6 text-sm text-gray-700 hover:bg-[#F5F2EA] rounded transition-colors"
+                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                    >
+                                                        {subcategory.name}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+
+                            {/* Right Side Navigation - Mobile */}
+                            <div className="pt-3 border-t border-gray-200 mt-2">
+                                {/* Resources Section */}
+                                <div className="pt-2 pb-1 px-3">
+                                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                        Resources
+                                    </span>
+                                </div>
+
                                 <Link
-                                    key={link.href}
-                                    href={link.href}
-                                    className="px-4 py-2 pl-8 text-sm text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
+                                    href="/authors"
+                                    className="block px-3 py-2 pl-6 text-sm text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
-                                    {link.label}
+                                    Authors
                                 </Link>
-                            ))}
 
-                            <Link
-                                href="/blog"
-                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                All Articles
-                            </Link>
+                                <Link
+                                    href="/webinars"
+                                    className="block px-3 py-2 pl-6 text-sm text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    Webinars
+                                </Link>
 
-                            <Link
-                                href="/authors"
-                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                Authors
-                            </Link>
+                                <Link
+                                    href="/events"
+                                    className="block px-3 py-2 pl-6 text-sm text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    Events
+                                </Link>
 
-                            <Link
-                                href="/about"
-                                className="px-4 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                About
-                            </Link>
+                                {/* About Us */}
+                                <div className="pt-3 border-t border-gray-200 mt-2">
+                                    <Link
+                                        href="/about"
+                                        className="block px-3 py-2 text-sm font-medium text-[#0B1F3B] hover:bg-[#F5F2EA] rounded transition-colors"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        About Us
+                                    </Link>
+                                </div>
+                            </div>
                         </nav>
                     </div>
                 )}

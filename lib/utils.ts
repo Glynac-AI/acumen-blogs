@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { Pillar } from '@/types';
-import { getPillarBySlug } from '@/config/pillars';
+import { Category } from '@/types';
+import { getCategoryBySlug } from '@/config/categories';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -15,12 +15,16 @@ export function formatDate(date: string): string {
     });
 }
 
-
-export function pillarToSlug(pillar: Pillar): string {
-    return pillar.slug; 
+// Convert category to slug
+export function categoryToSlug(category: Category): string {
+    return category.slug;
 }
 
-// Convert URL slug to pillar name
-export function slugToPillar(slug: string): Pillar | null {
-    return getPillarBySlug(slug) || null;
+// Convert URL slug to category
+export function slugToCategory(slug: string): Category | null {
+    return getCategoryBySlug(slug) || null;
 }
+
+// Legacy function names for backward compatibility (if needed)
+export const pillarToSlug = categoryToSlug;
+export const slugToPillar = slugToCategory;

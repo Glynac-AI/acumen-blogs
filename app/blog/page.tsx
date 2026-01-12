@@ -5,30 +5,30 @@ import { useSearchParams } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
 import { mockArticles } from '@/lib/mock-data';
-import { Pillar } from '@/types';
-import { PILLARS } from '@/config/pillars';
+import { Category } from '@/types';
+import { CATEGORIES } from '@/config/categories';
 
 function BlogContent() {
     const searchParams = useSearchParams();
-    const pillarParam = searchParams.get('pillar');
-    const tagParam = searchParams.get('tag');
+    const categoryParam = searchParams.get('category');
+    const subcategoryParam = searchParams.get('subcategory');
 
-    const [selectedPillar, setSelectedPillar] = useState<Pillar | 'All'>('All');
+    const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
 
-    const pillars: Array<Pillar | 'All'> = ['All', ...PILLARS];
+    const categories: Array<Category | 'All'> = ['All', ...CATEGORIES];
 
     // Filter articles
     let filteredArticles = mockArticles;
 
-    if (selectedPillar !== 'All') {
+    if (selectedCategory !== 'All') {
         filteredArticles = filteredArticles.filter(
-            article => article.pillar.id === selectedPillar.id
+            article => article.category.id === selectedCategory.id
         );
     }
 
-    if (tagParam) {
+    if (subcategoryParam) {
         filteredArticles = filteredArticles.filter(article =>
-            article.tags.some(tag => tag.slug === tagParam)
+            article.subcategories.some(sub => sub.slug === subcategoryParam)
         );
     }
 
@@ -51,10 +51,10 @@ function BlogContent() {
                                 </span>
                             </div>
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#0B1F3B] leading-tight mb-6">
-                                {tagParam ? `Articles tagged with "${tagParam}"` : 'Latest Insights'}
+                                {subcategoryParam ? `Articles in "${subcategoryParam}"` : 'Latest Insights'}
                             </h1>
                             <p className="text-xl text-gray-600 font-light leading-relaxed">
-                                Sharp analysis on practice management, technology, and compliance. Published when we have something worth saying.
+                                Sharp analysis on practice management, software, and compliance. Published when we have something worth saying.
                             </p>
                         </div>
                     </div>
@@ -67,22 +67,22 @@ function BlogContent() {
                     <div className="py-12 md:py-16">
                         {/* Filter Tabs */}
                         <div className="flex flex-wrap gap-3 mb-12">
-                            {pillars.map((pillar) => {
-                                const key = pillar === 'All' ? 'all' : pillar.id;
-                                const displayName = pillar === 'All' ? 'All' : pillar.name;
-                                const isSelected = selectedPillar === 'All'
-                                    ? pillar === 'All'
-                                    : pillar !== 'All' && selectedPillar.id === pillar.id;
+                            {categories.map((category) => {
+                                const key = category === 'All' ? 'all' : category.id;
+                                const displayName = category === 'All' ? 'All' : category.name;
+
+                                const isSelected =
+                                    (selectedCategory === 'All' && category === 'All') ||
+                                    (selectedCategory !== 'All' && category !== 'All' && selectedCategory.id === category.id);
 
                                 return (
                                     <button
                                         key={key}
-                                        onClick={() => setSelectedPillar(pillar)}
+                                        onClick={() => setSelectedCategory(category)}
                                         className={`px-4 py-2 text-sm font-medium transition-all duration-300 ${isSelected
                                                 ? 'bg-[#0B1F3B] text-white'
-                                                : 'bg-white text-[#0B1F3B] border border-gray-200 hover:border-[#49648C] hover:text-[#49648C]'
-                                            }`}
-                                        style={{ borderRadius: '2px' }}
+                                                : 'bg-white text-[#0B1F3B] border border-gray-300 hover:border-[#49648C]'
+                                            } rounded`}
                                     >
                                         {displayName}
                                     </button>
@@ -92,25 +92,16 @@ function BlogContent() {
 
                         {/* Articles Grid */}
                         {filteredArticles.length > 0 ? (
-                            <>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {filteredArticles.map((article) => (
-                                        <ArticleCard key={article.id} article={article} />
-                                    ))}
-                                </div>
-
-                                {/* Results Count */}
-                                <div className="mt-12 text-center">
-                                    <p className="text-sm text-gray-500">
-                                        Showing {filteredArticles.length} {filteredArticles.length === 1 ? 'article' : 'articles'}
-                                        {selectedPillar !== 'All' && ` in ${selectedPillar.name}`}
-                                    </p>
-                                </div>
-                            </>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredArticles.map((article) => (
+                                    <ArticleCard key={article.id} article={article} />
+                                ))}
+                            </div>
                         ) : (
                             <div className="text-center py-16">
-                                <p className="text-xl text-gray-500 mb-2">No articles found</p>
-                                <p className="text-sm text-gray-400">Try adjusting your filters</p>
+                                <p className="text-xl text-gray-500">
+                                    No articles found in this category.
+                                </p>
                             </div>
                         )}
                     </div>
@@ -122,13 +113,7 @@ function BlogContent() {
 
 export default function BlogPage() {
     return (
-        <Suspense fallback={
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="text-center">
-                    <p className="text-gray-500">Loading articles...</p>
-                </div>
-            </div>
-        }>
+        <Suspense fallback={<div>Loading...</div>}>
             <BlogContent />
         </Suspense>
     );

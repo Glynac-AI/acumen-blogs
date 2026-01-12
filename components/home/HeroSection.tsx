@@ -4,20 +4,21 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
-import { getFeaturedArticlesByPillar } from '@/lib/mock-data';
+import { mockArticles } from '@/lib/mock-data';
 
 export const HeroSection: React.FC = () => {
+    const featuredArticles = mockArticles.filter(article => article.isFeatured).slice(0, 3);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-    const featuredArticles = getFeaturedArticlesByPillar();
+    const currentArticle = featuredArticles[currentIndex] || mockArticles[0];
 
     useEffect(() => {
-        if (!isAutoPlaying) return;
+        if (!isAutoPlaying || featuredArticles.length <= 1) return;
 
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % featuredArticles.length);
-        }, 6000);
+        }, 5000);
 
         return () => clearInterval(interval);
     }, [isAutoPlaying, featuredArticles.length]);
@@ -37,22 +38,8 @@ export const HeroSection: React.FC = () => {
         setIsAutoPlaying(false);
     };
 
-    if (featuredArticles.length === 0) {
-        return null;
-    }
-
-    const currentArticle = featuredArticles[currentIndex];
-
     return (
-        <section className="relative bg-[#0B1F3B] text-white overflow-hidden h-[calc(100vh-4rem)]">
-            {/* Subtle grid pattern overlay */}
-            <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0" style={{
-                    backgroundImage: `linear-gradient(#49648C 1px, transparent 1px), linear-gradient(90deg, #49648C 1px, transparent 1px)`,
-                    backgroundSize: '50px 50px'
-                }}></div>
-            </div>
-
+        <section className="relative bg-[#0B1F3B] text-white overflow-hidden min-h-[85vh]">
             <Container>
                 <div className="relative py-8 md:py-12 flex flex-col justify-center h-full">
                     {/* Content Grid */}
@@ -64,7 +51,7 @@ export const HeroSection: React.FC = () => {
                             <div className="flex items-center space-x-3">
                                 <div className="h-px w-12 bg-[#49648C]"></div>
                                 <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#49648C]">
-                                    {currentArticle.pillar.name}
+                                    {currentArticle.category.name}
                                 </span>
                             </div>
 
@@ -102,14 +89,14 @@ export const HeroSection: React.FC = () => {
                                 <span className="text-sm text-gray-400">{currentArticle.readTime} min read</span>
                             </div>
 
-                            {/* CTA */}
+                            {/* Read Article Button */}
                             <Link
                                 href={`/blog/${currentArticle.slug}`}
-                                className="inline-flex items-center space-x-2 text-sm font-medium tracking-wide uppercase group mt-4"
+                                className="inline-flex items-center space-x-2 px-6 py-3 bg-[#49648C] text-white font-medium rounded hover:bg-[#5A7AA0] transition-colors"
                             >
-                                <span className="group-hover:text-[#49648C] transition-colors">Read Full Article</span>
-                                <svg className="w-5 h-5 group-hover:translate-x-1 group-hover:text-[#49648C] transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                <span>Read Article</span>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                 </svg>
                             </Link>
                         </div>
@@ -132,53 +119,47 @@ export const HeroSection: React.FC = () => {
                     </div>
 
                     {/* Navigation Controls */}
-                    <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-800">
-                        {/* Left: Topic Pills */}
-                        <div className="flex items-center space-x-2 flex-wrap">
-                            {featuredArticles.map((article, index) => (
+                    {featuredArticles.length > 1 && (
+                        <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-800">
+                            {/* Left: Article Pills */}
+                            <div className="flex items-center space-x-2 flex-wrap">
+                                {featuredArticles.map((article, index) => (
+                                    <button
+                                        key={article.id}
+                                        onClick={() => goToSlide(index)}
+                                        className={`px-3 py-1 text-xs font-medium tracking-wide uppercase transition-all duration-300 ${index === currentIndex
+                                                ? 'bg-[#49648C] text-white'
+                                                : 'bg-transparent text-gray-400 hover:text-white border border-gray-700'
+                                            } rounded`}
+                                    >
+                                        {article.category.name}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Right: Arrow Controls */}
+                            <div className="flex items-center space-x-2">
                                 <button
-                                    key={article.id}
-                                    onClick={() => goToSlide(index)}
-                                    className={`px-3 py-1 text-xs font-medium tracking-wide uppercase transition-all duration-300 ${index === currentIndex
-                                            ? 'bg-[#49648C] text-white'
-                                            : 'bg-transparent text-gray-500 hover:text-white border border-gray-700 hover:border-gray-500'
-                                        }`}
-                                    style={{ borderRadius: '2px' }}
+                                    onClick={goToPrevious}
+                                    className="p-2 text-gray-400 hover:text-white border border-gray-700 hover:border-[#49648C] rounded transition-colors"
+                                    aria-label="Previous article"
                                 >
-                                    {article.pillar.name}
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                    </svg>
                                 </button>
-                            ))}
+                                <button
+                                    onClick={goToNext}
+                                    className="p-2 text-gray-400 hover:text-white border border-gray-700 hover:border-[#49648C] rounded transition-colors"
+                                    aria-label="Next article"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-
-                        {/* Right: Arrow Navigation */}
-                        <div className="flex items-center space-x-4">
-                            <button
-                                onClick={goToPrevious}
-                                className="w-10 h-10 flex items-center justify-center border border-gray-700 hover:border-[#49648C] hover:text-[#49648C] transition-colors"
-                                style={{ borderRadius: '2px' }}
-                                aria-label="Previous"
-                            >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-
-                            <span className="text-sm font-light text-gray-500">
-                                {String(currentIndex + 1).padStart(2, '0')} / {String(featuredArticles.length).padStart(2, '0')}
-                            </span>
-
-                            <button
-                                onClick={goToNext}
-                                className="w-10 h-10 flex items-center justify-center border border-gray-700 hover:border-[#49648C] hover:text-[#49648C] transition-colors"
-                                style={{ borderRadius: '2px' }}
-                                aria-label="Next"
-                            >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                    )}
                 </div>
             </Container>
         </section>

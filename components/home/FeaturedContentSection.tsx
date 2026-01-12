@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -47,8 +49,8 @@ export const FeaturedContentSection: React.FC = () => {
 
                         {/* Featured Article - Large (spans 7 columns) */}
                         <div className="lg:col-span-7">
-                            <Link href={`/blog/${mainArticle.slug}`} className="group block">
-                                <article className="h-full">
+                            <article className="h-full group">
+                                <Link href={`/blog/${mainArticle.slug}`} className="block">
                                     <div className="relative w-full aspect-[4/3] bg-gray-100 overflow-hidden mb-6">
                                         <Image
                                             src={mainArticle.featuredImage}
@@ -57,73 +59,109 @@ export const FeaturedContentSection: React.FC = () => {
                                             className="object-cover group-hover:scale-105 transition-transform duration-700"
                                         />
                                     </div>
+                                </Link>
 
-                                    <div className="space-y-4">
-                                        <div className="flex items-center space-x-4 text-xs text-gray-500">
-                                            <span className="font-medium text-[#49648C]">{mainArticle.pillar.name}</span>
-                                            <span>•</span>
-                                            <span>{mainArticle.author.name}</span>
-                                            <span>•</span>
-                                            <span>{mainArticle.readTime} min read</span>
-                                        </div>
+                                <div className="space-y-4">
+                                    <div className="flex items-center space-x-4 text-xs text-gray-500">
+                                        <Link
+                                            href={`/categories/${mainArticle.category.slug}`}
+                                            className="font-medium text-[#49648C] hover:underline"
+                                        >
+                                            {mainArticle.category.name}
+                                        </Link>
+                                        <span>•</span>
+                                        <span>{mainArticle.author.name}</span>
+                                        <span>•</span>
+                                        <span>{mainArticle.readTime} min read</span>
+                                    </div>
 
+                                    <Link href={`/blog/${mainArticle.slug}`}>
                                         <h3 className="text-3xl md:text-4xl font-light text-[#0B1F3B] leading-tight group-hover:text-[#49648C] transition-colors">
                                             {mainArticle.title}
                                         </h3>
+                                    </Link>
 
-                                        {mainArticle.subtitle && (
-                                            <p className="text-lg text-gray-600 font-light">
-                                                {mainArticle.subtitle}
-                                            </p>
-                                        )}
-
-                                        <p className="text-base text-gray-600 leading-relaxed">
-                                            {mainArticle.excerpt}
+                                    {mainArticle.subtitle && (
+                                        <p className="text-lg text-gray-600 leading-relaxed">
+                                            {mainArticle.subtitle}
                                         </p>
-                                    </div>
-                                </article>
-                            </Link>
+                                    )}
+
+                                    <p className="text-gray-700 leading-relaxed">
+                                        {mainArticle.excerpt}
+                                    </p>
+
+                                    {/* Subcategories */}
+                                    {mainArticle.subcategories.length > 0 && (
+                                        <div className="flex flex-wrap gap-2 pt-2">
+                                            {mainArticle.subcategories.slice(0, 3).map((subcategory) => (
+                                                <Link
+                                                    key={subcategory.id}
+                                                    href={`/subcategories/${subcategory.slug}`}
+                                                    className="text-xs text-[#49648C] hover:underline"
+                                                >
+                                                    {subcategory.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </article>
                         </div>
 
-                        {/* Regular Articles Grid - 3x2 (spans 5 columns) */}
-                        <div className="lg:col-span-5 space-y-8">
+                        {/* Side Articles - Smaller (spans 5 columns) */}
+                        <div className="lg:col-span-5 space-y-6">
                             {sideArticles.map((article) => (
-                                <Link
+                                <article
                                     key={article.id}
-                                    href={`/blog/${article.slug}`}
-                                    className="group block"
+                                    className="group pb-6 border-b border-gray-300 last:border-0"
                                 >
-                                    <article className="flex gap-4">
-                                        {/* Small Image */}
-                                        <div className="relative w-24 h-24 flex-shrink-0 bg-gray-100 overflow-hidden">
-                                            <Image
-                                                src={article.featuredImage}
-                                                alt={article.title}
-                                                fill
-                                                className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                            />
-                                        </div>
+                                    <div className="flex gap-4">
+                                        {/* Thumbnail */}
+                                        <Link href={`/blog/${article.slug}`} className="flex-shrink-0">
+                                            <div className="relative w-24 h-24 bg-gray-100 overflow-hidden">
+                                                <Image
+                                                    src={article.featuredImage}
+                                                    alt={article.title}
+                                                    fill
+                                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                                />
+                                            </div>
+                                        </Link>
 
                                         {/* Content */}
-                                        <div className="flex-grow space-y-2">
-                                            <div className="text-xs text-gray-500">
-                                                <span className="text-[#49648C] font-medium">{article.pillar.name}</span>
-                                                <span className="mx-2">•</span>
+                                        <div className="flex-1 space-y-2">
+                                            <div className="flex items-center space-x-2 text-xs text-gray-500">
+                                                <Link
+                                                    href={`/categories/${article.category.slug}`}
+                                                    className="font-medium text-[#49648C] hover:underline"
+                                                >
+                                                    {article.category.name}
+                                                </Link>
+                                                <span>•</span>
                                                 <span>{article.readTime} min</span>
                                             </div>
 
-                                            <h4 className="text-base font-medium text-[#0B1F3B] leading-tight group-hover:text-[#49648C] transition-colors line-clamp-2">
-                                                {article.title}
-                                            </h4>
+                                            <Link href={`/blog/${article.slug}`}>
+                                                <h4 className="text-base font-medium text-[#0B1F3B] leading-snug group-hover:text-[#49648C] transition-colors line-clamp-2">
+                                                    {article.title}
+                                                </h4>
+                                            </Link>
+
+                                            {article.subtitle && (
+                                                <p className="text-sm text-gray-600 line-clamp-2">
+                                                    {article.subtitle}
+                                                </p>
+                                            )}
                                         </div>
-                                    </article>
-                                </Link>
+                                    </div>
+                                </article>
                             ))}
                         </div>
                     </div>
 
                     {/* Mobile View All Link */}
-                    <div className="md:hidden mt-8 text-center">
+                    <div className="mt-8 text-center md:hidden">
                         <Link
                             href="/blog"
                             className="inline-flex items-center space-x-2 text-sm font-medium text-[#0B1F3B] hover:text-[#49648C] transition-colors"

@@ -4,18 +4,18 @@ import React, { useState } from 'react';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
 import { mockArticles } from '@/lib/mock-data';
-import { Pillar } from '@/types';
-import { PILLARS } from '@/config/pillars';
+import { Category } from '@/types';
+import { CATEGORIES } from '@/config/categories';
 
 export const RecentArticlesSection: React.FC = () => {
-    const [selectedPillar, setSelectedPillar] = useState<Pillar | 'All'>('All');
+    const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
 
-    const pillars: Array<Pillar | 'All'> = ['All', ...PILLARS];
+    const categories: Array<Category | 'All'> = ['All', ...CATEGORIES];
 
-    // Filter articles based on selected pillar
-    const filteredArticles = selectedPillar === 'All'
+    // Filter articles based on selected category
+    const filteredArticles = selectedCategory === 'All'
         ? mockArticles
-        : mockArticles.filter(article => article.pillar.id === selectedPillar.id);
+        : mockArticles.filter(article => article.category.id === selectedCategory.id);
 
     // Show only first 9 articles
     const displayedArticles = filteredArticles.slice(0, 9);
@@ -38,26 +38,25 @@ export const RecentArticlesSection: React.FC = () => {
 
                         {/* Filter Tabs */}
                         <div className="flex flex-wrap gap-3">
-                            {pillars.map((pillar) => {
+                            {categories.map((category) => {
                                 // Get unique key
-                                const key = pillar === 'All' ? 'all' : pillar.id;
+                                const key = category === 'All' ? 'all' : category.id;
                                 // Get display name
-                                const displayName = pillar === 'All' ? 'All' : pillar.name;
+                                const displayName = category === 'All' ? 'All' : category.name;
 
-                                // Check if this pillar is selected
+                                // Check if this category is selected
                                 const isSelected =
-                                    (selectedPillar === 'All' && pillar === 'All') ||
-                                    (selectedPillar !== 'All' && pillar !== 'All' && selectedPillar.id === pillar.id);
+                                    (selectedCategory === 'All' && category === 'All') ||
+                                    (selectedCategory !== 'All' && category !== 'All' && selectedCategory.id === category.id);
 
                                 return (
                                     <button
                                         key={key}
-                                        onClick={() => setSelectedPillar(pillar)}
+                                        onClick={() => setSelectedCategory(category)}
                                         className={`px-4 py-2 text-sm font-medium transition-all duration-300 ${isSelected
                                                 ? 'bg-[#0B1F3B] text-white'
-                                                : 'bg-white text-[#0B1F3B] border border-gray-200 hover:border-[#49648C] hover:text-[#49648C]'
-                                            }`}
-                                        style={{ borderRadius: '2px' }}
+                                                : 'bg-white text-[#0B1F3B] border border-gray-300 hover:border-[#49648C]'
+                                            } rounded`}
                                     >
                                         {displayName}
                                     </button>
@@ -74,18 +73,24 @@ export const RecentArticlesSection: React.FC = () => {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-12">
-                            <p className="text-gray-500 text-lg">No articles found for this topic.</p>
+                        <div className="text-center py-16">
+                            <p className="text-xl text-gray-500">
+                                No articles found in this category.
+                            </p>
                         </div>
                     )}
 
-                    {/* Article Count Indicator */}
-                    <div className="mt-8 text-center">
-                        <p className="text-sm text-gray-500">
-                            Showing {displayedArticles.length} of {filteredArticles.length} articles
-                            {selectedPillar !== 'All' && ` in ${selectedPillar.name}`}
-                        </p>
-                    </div>
+                    {/* View All Link */}
+                    {filteredArticles.length > 9 && (
+                        <div className="mt-12 text-center">
+                            <a
+                                href={selectedCategory === 'All' ? '/blog' : `/categories/${selectedCategory.slug}`}
+                                className="inline-block px-8 py-3 bg-[#0B1F3B] text-white font-medium rounded hover:bg-[#49648C] transition-colors"
+                            >
+                                View All {selectedCategory === 'All' ? 'Articles' : `${selectedCategory.name} Articles`}
+                            </a>
+                        </div>
+                    )}
                 </div>
             </Container>
         </section>

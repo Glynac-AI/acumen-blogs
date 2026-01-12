@@ -1,10 +1,16 @@
-import { Author, Article, Tag, Pillar } from '@/types';
-import { PILLARS, getPillarByName } from '@/config/pillars';
+// lib/mock-data.ts - Updated with categories and your image paths
 
-// Helper to get pillar object
-const practiceManagement = getPillarByName('Practice Management')!;
-const wealthTech = getPillarByName('Wealth Management Tech')!;
-const compliance = getPillarByName('Compliance & Regulation')!;
+import { Author, Article, Tag } from '@/types';
+import { CATEGORIES, getCategoryByName } from '@/config/categories';
+import { getSubcategoryBySlug } from '@/config/subcategories';
+
+// Helper to get category objects
+const practiceManagement = getCategoryByName('Practice Management')!;
+const wealthSoftware = getCategoryByName('Wealth Management Software')!;
+const compliance = getCategoryByName('Compliance & Regulation')!;
+
+// Subcategories helpers
+const getSubcategory = (slug: string) => getSubcategoryBySlug(slug)!;
 
 export const mockAuthors: Author[] = [
     {
@@ -12,7 +18,7 @@ export const mockAuthors: Author[] = [
         name: 'Sarah Mitchell',
         title: 'Chief Compliance Officer',
         bio: 'Sarah has over 15 years of experience in regulatory compliance and has helped hundreds of RIAs navigate complex SEC requirements.',
-        photo: '/images/authors/sarah.jpg', 
+        photo: '/images/authors/sarah.jpg',
         linkedin: 'https://linkedin.com/in/sarahmitchell',
         email: 'sarah@regulatethis.com',
     },
@@ -21,7 +27,7 @@ export const mockAuthors: Author[] = [
         name: 'David Chen',
         title: 'Technology Strategy Director',
         bio: 'David specializes in helping wealth management firms leverage technology for operational efficiency and better client outcomes.',
-        photo: '/images/authors/david.jpg', 
+        photo: '/images/authors/david.jpg',
         linkedin: 'https://linkedin.com/in/davidchen',
         email: 'david@regulatethis.com',
     },
@@ -30,12 +36,13 @@ export const mockAuthors: Author[] = [
         name: 'Emily Rodriguez',
         title: 'Practice Management Consultant',
         bio: 'Emily works with RIA owners to scale their practices while maintaining exceptional client service and team culture.',
-        photo: '/images/authors/emily.jpg', 
+        photo: '/images/authors/emily.jpg',
         linkedin: 'https://linkedin.com/in/emilyrodriguez',
         email: 'emily@regulatethis.com',
     },
 ];
 
+// Keep tags for additional flexible tagging (optional)
 export const mockTags: Tag[] = [
     { id: '1', name: 'Portfolio Management', slug: 'portfolio-management' },
     { id: '2', name: 'SEC Examinations', slug: 'sec-examinations' },
@@ -57,7 +64,11 @@ export const mockArticles: Article[] = [
         slug: '2025-sec-examination-priorities',
         content: 'Full article content here...',
         excerpt: `The SEC released its examination priorities for 2025. We break down what actually matters for your compliance program versus what's just noise.`,
-        pillar: compliance,
+        category: compliance,
+        subcategories: [
+            getSubcategory('sec-examinations'),
+            getSubcategory('risk-management')
+        ],
         tags: [mockTags[1], mockTags[4]],
         author: mockAuthors[0],
         featuredImage: '/images/blog/sec-building.jpg',
@@ -72,12 +83,17 @@ export const mockArticles: Article[] = [
         slug: 'crm-platforms-compared',
         content: 'Full article content here...',
         excerpt: 'Every CRM vendor claims high adoption rates. We surveyed 200+ firms to see what advisors actually use daily and what sits ignored.',
-        pillar: wealthTech,
+        category: wealthSoftware,
+        subcategories: [
+            getSubcategory('crm-systems'),
+            getSubcategory('integration-data')
+        ],
         tags: [mockTags[2], mockTags[9]],
         author: mockAuthors[1],
         featuredImage: '/images/blog/tech-dashboard.jpg',
         publishDate: '2024-12-18',
         readTime: 10,
+        isFeatured: true,
     },
     {
         id: '3',
@@ -86,12 +102,17 @@ export const mockArticles: Article[] = [
         slug: 'what-breaks-when-aum-doubles',
         content: 'Full article content here...',
         excerpt: `Growth creates good problems. Here's what breaks first in firms that scale from $500M to $1B+ and how to prepare before it happens.`,
-        pillar: practiceManagement,
+        category: practiceManagement,
+        subcategories: [
+            getSubcategory('firm-growth'),
+            getSubcategory('operations-workflow')
+        ],
         tags: [mockTags[3], mockTags[6]],
         author: mockAuthors[2],
         featuredImage: '/images/blog/growing-firm.jpg',
         publishDate: '2024-12-15',
         readTime: 12,
+        isFeatured: true,
     },
     {
         id: '4',
@@ -100,7 +121,10 @@ export const mockArticles: Article[] = [
         slug: 'marketing-rule-two-years-later',
         content: 'Full article content here...',
         excerpt: 'Two years after the SEC marketing rule changes, we look at how firms actually adapted versus what regulators expected.',
-        pillar: compliance,
+        category: compliance,
+        subcategories: [
+            getSubcategory('marketing-rule')
+        ],
         tags: [mockTags[4]],
         author: mockAuthors[0],
         featuredImage: '/images/blog/marketing-meeting.jpg',
@@ -114,7 +138,11 @@ export const mockArticles: Article[] = [
         slug: 'portfolio-platforms-beyond-demos',
         content: 'Full article content here...',
         excerpt: `Sales demos look great. Implementation is different. Here's what portfolio management platforms don't tell you upfront.`,
-        pillar: wealthTech,
+        category: wealthSoftware,
+        subcategories: [
+            getSubcategory('portfolio-management'),
+            getSubcategory('integration-data')
+        ],
         tags: [mockTags[0], mockTags[9]],
         author: mockAuthors[1],
         featuredImage: '/images/blog/financial-charts.jpg',
@@ -128,7 +156,11 @@ export const mockArticles: Article[] = [
         slug: 'compensation-structures-that-work',
         content: 'Full article content here...',
         excerpt: `Most compensation plans create the wrong incentives. Here's how top firms structure pay to drive the behavior they actually want.`,
-        pillar: practiceManagement,
+        category: practiceManagement,
+        subcategories: [
+            getSubcategory('compensation-models'),
+            getSubcategory('firm-growth')
+        ],
         tags: [mockTags[8], mockTags[3]],
         author: mockAuthors[2],
         featuredImage: '/images/blog/contract-signing.jpg',
@@ -142,7 +174,10 @@ export const mockArticles: Article[] = [
         slug: 'cybersecurity-requirements-reality',
         content: 'Full article content here...',
         excerpt: `Not all cybersecurity measures are created equal. Here's what actually protects your firm versus what just checks compliance boxes.`,
-        pillar: compliance,
+        category: compliance,
+        subcategories: [
+            getSubcategory('privacy-data-security')
+        ],
         tags: [mockTags[5]],
         author: mockAuthors[0],
         featuredImage: '/images/blog/cyber-security.jpg',
@@ -156,7 +191,11 @@ export const mockArticles: Article[] = [
         slug: 'integration-nightmares',
         content: 'Full article content here...',
         excerpt: `Every vendor promises seamless integration. Reality is messier. Here's how successful firms handle the gaps.`,
-        pillar: wealthTech,
+        category: wealthSoftware,
+        subcategories: [
+            getSubcategory('integration-data'),
+            getSubcategory('crm-systems')
+        ],
         tags: [mockTags[9], mockTags[2]],
         author: mockAuthors[1],
         featuredImage: '/images/blog/network-connections.jpg',
@@ -170,7 +209,10 @@ export const mockArticles: Article[] = [
         slug: 'client-segmentation-profitability',
         content: 'Full article content here...',
         excerpt: `Most firms segment by AUM. The most profitable firms use different criteria. Here's what they look at instead.`,
-        pillar: practiceManagement,
+        category: practiceManagement,
+        subcategories: [
+            getSubcategory('client-segmentation')
+        ],
         tags: [mockTags[6]],
         author: mockAuthors[2],
         featuredImage: '/images/blog/segmentation-chart.jpg',
@@ -184,7 +226,11 @@ export const mockArticles: Article[] = [
         slug: 'sec-advertising-rule-mistakes',
         content: 'Full article content here...',
         excerpt: 'Three years in, firms still misinterpret key parts of the advertising rule. Here are the mistakes that trigger examiner attention.',
-        pillar: compliance,
+        category: compliance,
+        subcategories: [
+            getSubcategory('marketing-rule'),
+            getSubcategory('sec-examinations')
+        ],
         tags: [mockTags[4], mockTags[1]],
         author: mockAuthors[0],
         featuredImage: '/images/blog/legal-review.jpg',
@@ -198,7 +244,10 @@ export const mockArticles: Article[] = [
         slug: 'reporting-tools-clients-read',
         content: 'Full article content here...',
         excerpt: `Beautiful reports don't matter if clients ignore them. Here's what makes clients engage with performance reporting.`,
-        pillar: wealthTech,
+        category: wealthSoftware,
+        subcategories: [
+            getSubcategory('reporting-tools')
+        ],
         tags: [mockTags[0]],
         author: mockAuthors[1],
         featuredImage: '/images/blog/client-report.jpg',
@@ -212,7 +261,10 @@ export const mockArticles: Article[] = [
         slug: 'succession-planning-conversation',
         content: 'Full article content here...',
         excerpt: `Most advisors delay succession planning until it's too late. Here's how to start the conversation before crisis forces it.`,
-        pillar: practiceManagement,
+        category: practiceManagement,
+        subcategories: [
+            getSubcategory('succession-planning')
+        ],
         tags: [mockTags[7]],
         author: mockAuthors[2],
         featuredImage: '/images/blog/team-handshake.jpg',
@@ -221,24 +273,32 @@ export const mockArticles: Article[] = [
     },
 ];
 
-// Helper functions (kept the same)
-export const getFeaturedArticle = (): Article | undefined => {
-    return mockArticles.find(article => article.isFeatured);
-};
+// ============================================
+// HELPER FUNCTIONS
+// ============================================
 
-export const getRecentArticles = (limit: number = 9): Article[] => {
+export function getFeaturedArticle(): Article | undefined {
+    return mockArticles.find(article => article.isFeatured);
+}
+
+export function getRecentArticles(limit: number = 9): Article[] {
     return mockArticles
         .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
         .slice(0, limit);
-};
+}
 
-export const getArticlesByPillar = (pillarSlug: string): Article[] => {
-    return mockArticles.filter(article => article.pillar.slug === pillarSlug);
-};
+export function getArticlesByCategory(categorySlug: string): Article[] {
+    return mockArticles.filter(article => article.category.slug === categorySlug);
+}
 
-export const getFeaturedArticlesByPillar = (): Article[] => {
-    const pillars: Pillar[] = [practiceManagement, wealthTech, compliance];
-    return pillars
-        .map(pillar => mockArticles.find(article => article.pillar.id === pillar.id))
+export function getArticlesBySubcategory(subcategorySlug: string): Article[] {
+    return mockArticles.filter(article =>
+        article.subcategories.some(sub => sub.slug === subcategorySlug)
+    );
+}
+
+export function getFeaturedArticlesByCategory(): Article[] {
+    return CATEGORIES
+        .map(category => mockArticles.find(article => article.category.id === category.id))
         .filter((article): article is Article => article !== undefined);
-};
+}

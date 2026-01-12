@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
-import { PILLARS } from '@/config/pillars';
+import { CATEGORIES } from '@/config/categories';
 
 export const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
@@ -13,12 +13,16 @@ export const Footer: React.FC = () => {
             { href: '/', label: 'Home' },
             { href: '/blog', label: 'All Articles' },
             { href: '/authors', label: 'Authors' },
-            { href: '/about', label: 'About' },
+            { href: '/about', label: 'About Us' },
         ],
-        pillars: PILLARS.map(pillar => ({
-            href: `/topics/${pillar.slug}`,
-            label: pillar.name
+        categories: CATEGORIES.map(category => ({
+            href: `/categories/${category.slug}`,
+            label: category.name
         })),
+        additional: [
+            { href: '/resources', label: 'Resources' },
+            { href: '/events', label: 'Events' },
+        ],
         legal: [
             { href: '/privacy', label: 'Privacy Policy' },
             { href: '/terms', label: 'Terms of Use' },
@@ -35,39 +39,13 @@ export const Footer: React.FC = () => {
                         <div className="lg:col-span-1">
                             <h3 className="text-xl font-bold mb-4">RegulateThis</h3>
                             <p className="text-sm text-gray-300 leading-relaxed">
-                                Sharp, actionable insights on practice management, wealth management technology, and regulatory compliance.
+                                Sharp, actionable insights on practice management, wealth management software, and regulatory compliance.
                             </p>
-                            <div className="flex space-x-4 mt-6">
-                                {/* LinkedIn */}
-                                <a
-                                    href="https://linkedin.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-gray-300 hover:text-white transition-colors"
-                                    aria-label="LinkedIn"
-                                >
-                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                                    </svg>
-                                </a>
-                                {/* Twitter */}
-                                <a
-                                    href="https://twitter.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-gray-300 hover:text-white transition-colors"
-                                    aria-label="Twitter"
-                                >
-                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                                    </svg>
-                                </a>
-                            </div>
                         </div>
 
                         {/* Navigation Links */}
                         <div>
-                            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
                                 Navigation
                             </h4>
                             <ul className="space-y-2">
@@ -81,16 +59,7 @@ export const Footer: React.FC = () => {
                                         </Link>
                                     </li>
                                 ))}
-                            </ul>
-                        </div>
-
-                        {/* Content Pillars */}
-                        <div>
-                            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
-                                Topics
-                            </h4>
-                            <ul className="space-y-2">
-                                {footerLinks.pillars.map((link) => (
+                                {footerLinks.additional.map((link) => (
                                     <li key={link.href}>
                                         <Link
                                             href={link.href}
@@ -103,46 +72,89 @@ export const Footer: React.FC = () => {
                             </ul>
                         </div>
 
-                        {/* Newsletter Signup */}
+                        {/* Categories */}
                         <div>
-                            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
-                                Newsletter
+                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
+                                Categories
                             </h4>
-                            <p className="text-sm text-gray-300 mb-4">
-                                Sharp insights delivered to your inbox.
-                            </p>
-                            <form className="flex flex-col space-y-2">
-                                <input
-                                    type="email"
-                                    placeholder="Your email"
-                                    className="px-4 py-2 rounded bg-[#0F2A4D] text-white placeholder-gray-400 border border-[#3A5070] focus:outline-none focus:ring-2 focus:ring-[#49648C]"
-                                />
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-[#49648C] text-white rounded hover:bg-[#6B82A8] transition-colors"
+                            <ul className="space-y-2">
+                                {footerLinks.categories.map((link) => (
+                                    <li key={link.href}>
+                                        <Link
+                                            href={link.href}
+                                            className="text-sm text-gray-300 hover:text-white transition-colors"
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Legal & Contact */}
+                        <div>
+                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
+                                Legal
+                            </h4>
+                            <ul className="space-y-2">
+                                {footerLinks.legal.map((link) => (
+                                    <li key={link.href}>
+                                        <Link
+                                            href={link.href}
+                                            className="text-sm text-gray-300 hover:text-white transition-colors"
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            {/* Newsletter */}
+                            <div className="mt-6">
+                                <h4 className="text-sm font-semibold uppercase tracking-wider mb-3">
+                                    Newsletter
+                                </h4>
+                                <Link
+                                    href="/newsletter"
+                                    className="inline-block px-4 py-2 bg-[#49648C] text-white text-sm font-medium rounded hover:bg-[#5A7AA0] transition-colors"
                                 >
                                     Subscribe
-                                </button>
-                            </form>
+                                </Link>
+                            </div>
                         </div>
                     </div>
 
                     {/* Bottom Bar */}
-                    <div className="mt-12 pt-8 border-t border-[#0F2A4D]">
+                    <div className="mt-12 pt-8 border-t border-gray-700">
                         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                             <p className="text-sm text-gray-400">
                                 © {currentYear} RegulateThis. All rights reserved.
                             </p>
-                            <div className="flex space-x-6">
-                                {footerLinks.legal.map((link) => (
-                                    <Link
-                                        key={link.href}
-                                        href={link.href}
-                                        className="text-sm text-gray-400 hover:text-white transition-colors"
-                                    >
-                                        {link.label}
-                                    </Link>
-                                ))}
+
+                            {/* Social Links */}
+                            <div className="flex items-center space-x-4">
+                                <a
+                                    href="https://linkedin.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                    aria-label="LinkedIn"
+                                >
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                                    </svg>
+                                </a>
+                                <a
+                                    href="https://twitter.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-gray-400 hover:text-white transition-colors"
+                                    aria-label="Twitter"
+                                >
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>

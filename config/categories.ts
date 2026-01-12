@@ -1,7 +1,8 @@
-import { Pillar } from "@/types";
+// config/categories.ts 
 
+import { Category } from '@/types';
 
-export const PILLARS: Pillar[] = [
+export const CATEGORIES: Category[] = [
     {
         id: '1',
         name: 'Practice Management',
@@ -17,8 +18,8 @@ export const PILLARS: Pillar[] = [
     },
     {
         id: '2',
-        name: 'Wealth Management Tech',
-        slug: 'wealth-management-tech',
+        name: 'Wealth Management Software',
+        slug: 'wealth-management-software',
         subtitle: 'Cutting Through the Noise',
         description: 'Every new app claims to be the solution. We test those claims against reality — focusing on what actually improves client outcomes and firm efficiency, and calling it out when something falls short of the hype.',
         details: [
@@ -45,19 +46,23 @@ export const PILLARS: Pillar[] = [
     }
 ];
 
-// Keep helper functions, just update to use objects
-export function getPillarBySlug(slug: string): Pillar | undefined {
-    return PILLARS.find(pillar => pillar.slug === slug);
+// Helper functions
+export function getCategoryBySlug(slug: string): Category | undefined {
+    return CATEGORIES.find(category => category.slug === slug);
 }
 
-export function getPillarByName(name: string): Pillar | undefined {
-    return PILLARS.find(pillar => pillar.name === name);
+export function getCategoryByName(name: string): Category | undefined {
+    return CATEGORIES.find(category => category.name === name);
 }
 
-export function getAllPillarNames(): string[] {
-    return PILLARS.map(pillar => pillar.name);
+export function getCategoryById(id: string): Category | undefined {
+    return CATEGORIES.find(category => category.id === id);
 }
 
-export function getAllPillarSlugs(): string[] {
-    return PILLARS.map(pillar => pillar.slug);
+export function getAllCategoryNames(): string[] {
+    return CATEGORIES.map(category => category.name);
+}
+
+export function getAllCategorySlugs(): string[] {
+    return CATEGORIES.map(category => category.slug);
 }

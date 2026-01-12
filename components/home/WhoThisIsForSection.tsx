@@ -1,6 +1,7 @@
 import React from 'react';
+import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
-import { PILLARS } from '@/config/pillars';
+import { CATEGORIES } from '@/config/categories';
 
 export const WhoThisIsForSection: React.FC = () => {
     return (
@@ -14,28 +15,29 @@ export const WhoThisIsForSection: React.FC = () => {
                                 Read what the top advisors are reading
                             </h2>
                             <p className="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
-                                The advisory industry has enough noise. We publish sharp, actionable insights on practice management, wealth management technology, and regulatory compliance.
+                                The advisory industry has enough noise. We publish sharp, actionable insights on practice management, wealth management software, and regulatory compliance.
                             </p>
                         </div>
 
-                        {/* Three Pillars Grid */}
+                        {/* Three Categories Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
-                            {PILLARS.map((pillar, index) => (
-                                <div
-                                    key={index}
+                            {CATEGORIES.map((category) => (
+                                <Link
+                                    key={category.id}
+                                    href={`/categories/${category.slug}`}
                                     className="group relative p-8 bg-white border border-gray-200 hover:border-[#49648C] transition-all duration-300"
                                 >
                                     <div className="absolute top-0 left-0 w-full h-0.5 bg-[#49648C] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
 
                                     <div className="space-y-3">
                                         <h3 className="text-xl font-medium text-[#0B1F3B] group-hover:text-[#49648C] transition-colors">
-                                            {pillar.name}
+                                            {category.name}
                                         </h3>
                                         <p className="text-sm text-gray-600 leading-relaxed">
-                                            {pillar.subtitle}
+                                            {category.subtitle}
                                         </p>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
 

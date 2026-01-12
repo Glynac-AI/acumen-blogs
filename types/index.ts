@@ -1,5 +1,6 @@
-// Generate Pillar type from config
-export interface Pillar {
+// types/index.ts
+
+export interface Category {
     id: string;
     name: string;
     slug: string;
@@ -7,6 +8,14 @@ export interface Pillar {
     description: string;
     details: string[];
     order: number;
+}
+
+export interface Subcategory {
+    id: string;
+    name: string;
+    slug: string;
+    description?: string;
+    categoryId: string; 
 }
 
 export interface SEOMetadata {
@@ -29,6 +38,7 @@ export interface Author {
     email?: string;
 }
 
+// Keep Tag for flexible tagging (less structured than subcategories)
 export interface Tag {
     id: string;
     name: string;
@@ -42,8 +52,9 @@ export interface Article {
     slug: string;
     content: string;
     excerpt: string;
-    pillar: Pillar;
-    tags: Tag[];
+    category: Category; 
+    subcategories: Subcategory[]; 
+    tags?: Tag[]; 
     author: Author;
     featuredImage: string;
     publishDate: string;
