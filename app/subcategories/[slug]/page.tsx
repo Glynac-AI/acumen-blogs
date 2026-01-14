@@ -1,10 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
-import { mockArticles } from '@/lib/mock-data';
-import { getSubcategoryBySlug } from '@/config/subcategories';
-import { getCategoryById } from '@/config/categories';
+import { fetchSubcategoryBySlug, fetchArticles, fetchCategories, fetchSubcategories } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -17,7 +14,7 @@ interface SubcategoryPageProps {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: SubcategoryPageProps): Promise<Metadata> {
     const { slug } = await params;
-    const subcategory = getSubcategoryBySlug(slug);
+    const subcategory = await fetchSubcategoryBySlug(slug);
 
     if (!subcategory) {
         return {
@@ -37,29 +34,24 @@ export async function generateMetadata({ params }: SubcategoryPageProps): Promis
 
 export default async function SubcategoryPage({ params }: SubcategoryPageProps) {
     const { slug } = await params;
-    const subcategory = getSubcategoryBySlug(slug);
+    const subcategory = await fetchSubcategoryBySlug(slug);
 
     if (!subcategory) {
         notFound();
     }
 
     // Get parent category
-    const parentCategory = getCategoryById(subcategory.categoryId);
+    const categories = await fetchCategories();
+    const parentCategory = categories.find(cat => cat.id === subcategory.categoryId);
 
-    // Get articles with this subcategory
-    const subcategoryArticles = mockArticles
-        .filter(article => article.subcategories.some(sub => sub.id === subcategory.id))
-        .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    // Get articles with this subcategory (already sorted by publishDate desc from API)
+    const subcategoryArticles = await fetchArticles({ subcategorySlug: slug });
 
     // Get related subcategories (from the same parent category)
-    const relatedSubcategorySlugs = new Set<string>();
-    subcategoryArticles.forEach(article => {
-        article.subcategories.forEach(sub => {
-            if (sub.id !== subcategory.id && sub.categoryId === subcategory.categoryId) {
-                relatedSubcategorySlugs.add(sub.slug);
-            }
-        });
-    });
+    const allSubcategories = await fetchSubcategories();
+    const relatedSubcategories = allSubcategories.filter(
+        sub => sub.categoryId === subcategory.categoryId && sub.id !== subcategory.id
+    );
 
     return (
         <>
@@ -146,7 +138,7 @@ export default async function SubcategoryPage({ params }: SubcategoryPageProps) 
             </section>
 
             {/* Related Subcategories */}
-            {relatedSubcategorySlugs.size > 0 && parentCategory && (
+            {relatedSubcategories.length > 0 && parentCategory && (
                 <section className="bg-[#F5F2EA]">
                     <Container>
                         <div className="py-12 md:py-16">
@@ -154,13 +146,13 @@ export default async function SubcategoryPage({ params }: SubcategoryPageProps) 
                                 Related Topics in {parentCategory.name}
                             </h2>
                             <div className="flex flex-wrap gap-3">
-                                {Array.from(relatedSubcategorySlugs).slice(0, 6).map((slug) => (
+                                {relatedSubcategories.slice(0, 6).map((relatedSub) => (
                                     <Link
-                                        key={slug}
-                                        href={`/subcategories/${slug}`}
+                                        key={relatedSub.id}
+                                        href={`/subcategories/${relatedSub.slug}`}
                                         className="px-4 py-2 bg-white text-[#0B1F3B] text-sm font-medium rounded border border-gray-300 hover:border-[#49648C] hover:bg-[#49648C] hover:text-white transition-all"
                                     >
-                                        {slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                                        {relatedSub.name}
                                     </Link>
                                 ))}
                             </div>

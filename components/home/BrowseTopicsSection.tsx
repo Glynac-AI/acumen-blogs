@@ -3,29 +3,27 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
-import { CATEGORIES } from '@/config/categories';
-import { mockArticles } from '@/lib/mock-data';
+import type { Category } from '@/types';
 
-export const BrowseTopicsSection: React.FC = () => {
-    // Get article counts for each category
-    const categoriesWithCounts = CATEGORIES.map(category => ({
-        ...category,
-        articleCount: mockArticles.filter(article => article.category.id === category.id).length
-    }));
+interface BrowseTopicsSectionProps {
+    categories: (Category & { articleCount: number })[];
+}
 
-    // Icons for each category (you can replace with actual icon components)
-    const categoryIcons = {
-        '1': ( // Practice Management
+export const BrowseTopicsSection: React.FC<BrowseTopicsSectionProps> = ({ categories }) => {
+
+    // Icons for each category (mapped by slug)
+    const categoryIcons: Record<string, React.ReactNode> = {
+        'practice-management': ( // Practice Management
             <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
         ),
-        '2': ( // Wealth Management Software
+        'wealth-management-software': ( // Wealth Management Software
             <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
         ),
-        '3': ( // Compliance & Regulation
+        'compliance-regulation': ( // Compliance & Regulation
             <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
@@ -55,7 +53,7 @@ export const BrowseTopicsSection: React.FC = () => {
 
                     {/* Category Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {categoriesWithCounts.map((category) => (
+                        {categories.map((category) => (
                             <Link
                                 key={category.id}
                                 href={`/categories/${category.slug}`}
@@ -68,7 +66,7 @@ export const BrowseTopicsSection: React.FC = () => {
                                     <div className="p-8 md:p-10">
                                         {/* Icon */}
                                         <div className="mb-6 text-[#49648C] group-hover:text-[#0B1F3B] transition-colors">
-                                            {categoryIcons[category.id as keyof typeof categoryIcons]}
+                                            {categoryIcons[category.slug] || categoryIcons['practice-management']}
                                         </div>
 
                                         {/* Content */}

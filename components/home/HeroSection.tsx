@@ -4,22 +4,31 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
-import { mockArticles } from '@/lib/mock-data';
+import type { Article } from '@/types';
 
-export const HeroSection: React.FC = () => {
-    // Get featured articles
-    const featuredArticles = mockArticles
+interface HeroSectionProps {
+    articles: Article[];
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ articles }) => {
+    // Return null if no articles available
+    if (!articles || articles.length === 0) {
+        return null;
+    }
+
+    // Get featured articles first, sorted by publish date
+    const featuredArticles = articles
         .filter(article => article.isFeatured)
         .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 
-    // Main featured article (largest)
-    const mainFeatured = featuredArticles[0] || mockArticles[0];
+    // Main featured article (largest) - first featured article, or first article overall
+    const mainFeatured = featuredArticles[0] || articles[0];
 
-    // Side articles - Get more articles if not enough featured ones
+    // Side articles - Get remaining featured articles, fill with latest if needed
     let sideArticles = featuredArticles.slice(1);
 
     if (sideArticles.length < 5) {
-        const recentArticles = mockArticles
+        const recentArticles = articles
             .filter(article => !article.isFeatured && article.id !== mainFeatured.id)
             .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 

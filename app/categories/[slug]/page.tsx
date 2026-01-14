@@ -1,10 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
-import { mockArticles } from '@/lib/mock-data';
-import { getCategoryBySlug } from '@/config/categories';
-import { getSubcategoriesByCategoryId } from '@/config/subcategories';
+import { fetchCategoryBySlug, fetchArticles, fetchSubcategories } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
@@ -17,15 +14,13 @@ interface CategoryPageProps {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
     const { slug } = await params;
-    const category = getCategoryBySlug(slug);
+    const category = await fetchCategoryBySlug(slug);
 
     if (!category) {
         return {
             title: 'Category Not Found | RegulateThis',
         };
     }
-
-    const articleCount = mockArticles.filter(article => article.category.id === category.id).length;
 
     return {
         title: `${category.name} | RegulateThis`,
@@ -39,23 +34,22 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
     const { slug } = await params;
-    const category = getCategoryBySlug(slug);
+    const category = await fetchCategoryBySlug(slug);
 
     if (!category) {
         notFound();
     }
 
-    // Get all articles for this category
-    const categoryArticles = mockArticles
-        .filter(article => article.category.id === category.id)
-        .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    // Get all articles for this category (already sorted by publishDate desc from API)
+    const categoryArticles = await fetchArticles({ categorySlug: slug });
 
     // Featured article (most recent)
     const featuredArticle = categoryArticles[0];
     const otherArticles = categoryArticles.slice(1);
 
-    // Get subcategories for this category
-    const subcategories = getSubcategoriesByCategoryId(category.id);
+    // Get all subcategories and filter by this category
+    const allSubcategories = await fetchSubcategories();
+    const subcategories = allSubcategories.filter(sub => sub.categoryId === category.id);
 
     return (
         <>

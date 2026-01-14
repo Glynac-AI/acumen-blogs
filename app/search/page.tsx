@@ -129,7 +129,7 @@ function SearchResults() {
                                             return (
                                                 <Link
                                                     key={index}
-                                                    href={`/authors/${author.id}`}
+                                                    href={`/authors/${author.slug}`}
                                                     className="group"
                                                 >
                                                     <div className="bg-white border border-gray-200 hover:border-[#49648C] transition-all duration-300 p-8">

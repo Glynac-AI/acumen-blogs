@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SearchProvider } from "@/contexts/SearchContext";
 import { getBaseUrl } from "@/config/site";
+import { fetchCategories, fetchSubcategories, fetchArticles, fetchAuthors, fetchTags } from "@/lib/api";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -32,19 +34,36 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch all data from Strapi for header, footer, and search
+  const [categories, subcategories, articles, authors, tags] = await Promise.all([
+    fetchCategories(),
+    fetchSubcategories(),
+    fetchArticles(),
+    fetchAuthors(),
+    fetchTags(),
+  ]);
+
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="antialiased font-sans">
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
+        <SearchProvider
+          articles={articles}
+          authors={authors}
+          categories={categories}
+          subcategories={subcategories}
+          tags={tags}
+        >
+          <Header categories={categories} subcategories={subcategories} />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer categories={categories} />
+        </SearchProvider>
       </body>
     </html>
   );

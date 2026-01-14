@@ -4,13 +4,28 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
-import { mockArticles } from '@/lib/mock-data';
+import type { Article } from '@/types';
 
-export const MostPopularSection: React.FC = () => {
-    // Get recent articles (simulating "most popular")
-    const popularArticles = mockArticles
-        .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
-        .slice(0, 5);
+interface MostPopularSectionProps {
+    articles: Article[];
+}
+
+export const MostPopularSection: React.FC<MostPopularSectionProps> = ({ articles }) => {
+    // Show featured articles first, then fill with latest
+    const featuredArticles = articles
+        .filter(article => article.isFeatured)
+        .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+
+    let displayArticles = featuredArticles.slice(0, 5);
+
+    // If less than 5 featured articles, fill with latest non-featured
+    if (displayArticles.length < 5) {
+        const latestArticles = articles
+            .filter(article => !article.isFeatured)
+            .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+
+        displayArticles = [...displayArticles, ...latestArticles].slice(0, 5);
+    }
 
     const formatDate = (date: string) => {
         return new Date(date).toLocaleDateString('en-US', {
@@ -43,7 +58,7 @@ export const MostPopularSection: React.FC = () => {
 
                         {/* Popular Articles - Clean List */}
                         <div className="space-y-0">
-                            {popularArticles.map((article, index) => (
+                            {displayArticles.map((article) => (
                                 <article
                                     key={article.id}
                                     className="group border-b border-gray-100 last:border-0"

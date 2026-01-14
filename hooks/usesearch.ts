@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
 import Fuse from 'fuse.js';
-import { mockArticles, mockAuthors, mockTags } from '@/lib/mock-data';
-import { CATEGORIES } from '@/config/categories';
-import { SUBCATEGORIES } from '@/config/subcategories';
+import { useSearchContext } from '@/contexts/SearchContext';
 import { Article, Author, Tag, Category, Subcategory } from '@/types';
 
 export type SearchResultType = 'article' | 'author' | 'tag' | 'category' | 'subcategory';
@@ -14,6 +12,8 @@ export interface SearchResult {
 }
 
 export function useSearch(query: string): SearchResult[] {
+    const { articles, authors, categories, subcategories, tags } = useSearchContext();
+
     const results = useMemo(() => {
         if (!query || query.trim().length < 2) {
             return [];
@@ -22,7 +22,7 @@ export function useSearch(query: string): SearchResult[] {
         const allResults: SearchResult[] = [];
 
         // Search Articles
-        const articleFuse = new Fuse(mockArticles, {
+        const articleFuse = new Fuse(articles, {
             keys: [
                 { name: 'title', weight: 10 },
                 { name: 'excerpt', weight: 5 },
@@ -44,7 +44,7 @@ export function useSearch(query: string): SearchResult[] {
         });
 
         // Search Authors
-        const authorFuse = new Fuse(mockAuthors, {
+        const authorFuse = new Fuse(authors, {
             keys: [
                 { name: 'name', weight: 10 },
                 { name: 'title', weight: 5 },
@@ -64,7 +64,7 @@ export function useSearch(query: string): SearchResult[] {
         });
 
         // Search Tags
-        const tagFuse = new Fuse(mockTags, {
+        const tagFuse = new Fuse(tags, {
             keys: ['name'],
             threshold: 0.3,
             includeScore: true,
@@ -80,7 +80,7 @@ export function useSearch(query: string): SearchResult[] {
         });
 
         // Search Categories
-        const categoryFuse = new Fuse(CATEGORIES, {
+        const categoryFuse = new Fuse(categories, {
             keys: [
                 { name: 'name', weight: 10 },
                 { name: 'subtitle', weight: 5 },
@@ -100,7 +100,7 @@ export function useSearch(query: string): SearchResult[] {
         });
 
         // Search Subcategories
-        const subcategoryFuse = new Fuse(SUBCATEGORIES, {
+        const subcategoryFuse = new Fuse(subcategories, {
             keys: [
                 { name: 'name', weight: 10 },
                 { name: 'description', weight: 5 },
@@ -120,7 +120,7 @@ export function useSearch(query: string): SearchResult[] {
 
         // Sort all results by score (lower is better in Fuse.js)
         return allResults.sort((a, b) => (a.score || 0) - (b.score || 0));
-    }, [query]);
+    }, [query, articles, authors, categories, subcategories, tags]);
 
     return results;
 }

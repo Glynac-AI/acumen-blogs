@@ -1,8 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
-import { mockAuthors, mockArticles } from '@/lib/mock-data';
+import { fetchAuthors, fetchArticles } from '@/lib/api';
 import { generateDefaultMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 
@@ -12,11 +11,15 @@ export const metadata: Metadata = generateDefaultMetadata(
     '/authors'
 );
 
-export default function AuthorsPage() {
+export default async function AuthorsPage() {
+    // Fetch all authors and articles from Strapi
+    const authors = await fetchAuthors();
+    const allArticles = await fetchArticles();
+
     // Get article count for each author
-    const authorsWithArticles = mockAuthors.map(author => ({
+    const authorsWithArticles = authors.map(author => ({
         ...author,
-        articleCount: mockArticles.filter(article => article.author.id === author.id).length
+        articleCount: allArticles.filter(article => article.author.id === author.id).length
     }));
 
     return (
@@ -51,7 +54,7 @@ export default function AuthorsPage() {
                             {authorsWithArticles.map((author) => (
                                 <Link
                                     key={author.id}
-                                    href={`/authors/${author.id}`}
+                                    href={`/authors/${author.slug}`}
                                     className="group"
                                 >
                                     <article className="bg-white border border-gray-200 hover:border-[#49648C] transition-all duration-300 overflow-hidden">

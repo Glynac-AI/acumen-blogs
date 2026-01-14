@@ -1,10 +1,9 @@
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { SocialShareButtons } from '@/components/article/SocialShareButtons';
-import { mockArticles } from '@/lib/mock-data';
-import { categoryToSlug } from '@/lib/utils';
+import { MarkdownContent } from '@/components/article/MarkdownContent';
+import { fetchArticleBySlug, fetchArticles } from '@/lib/api';
 import { generateArticleMetadata } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -18,7 +17,7 @@ interface BlogPageProps {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
     const { slug } = await params;
-    const article = mockArticles.find(a => a.slug === slug);
+    const article = await fetchArticleBySlug(slug);
 
     if (!article) {
         return {
@@ -31,18 +30,17 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 
 export default async function BlogArticlePage({ params }: BlogPageProps) {
     const { slug } = await params;
-    const article = mockArticles.find(a => a.slug === slug);
+    const article = await fetchArticleBySlug(slug);
 
     if (!article) {
         notFound();
     }
 
     // Get related articles from same category
-    const relatedArticles = mockArticles
-        .filter(a => a.category.id === article.category.id && a.id !== article.id)
+    const allArticles = await fetchArticles({ categorySlug: article.category.slug });
+    const relatedArticles = allArticles
+        .filter(a => a.id !== article.id)
         .slice(0, 3);
-
-    const categorySlug = categoryToSlug(article.category);
 
     return (
         <>
@@ -60,7 +58,7 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                                 Blog
                             </Link>
                             <span>/</span>
-                            <Link href={`/categories/${categorySlug}`} className="hover:text-[#49648C] transition-colors">
+                            <Link href={`/categories/${article.category.slug}`} className="hover:text-[#49648C] transition-colors">
                                 {article.category.name}
                             </Link>
                         </div>
@@ -138,85 +136,8 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                             </p>
                         </div>
 
-                        {/* Main Content */}
-                        <div className="prose prose-lg max-w-none">
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                The wealth management industry stands at a critical juncture. Regulatory demands continue to intensify, client expectations evolve rapidly, and technological disruption reshapes traditional practice models. For advisory firms navigating this landscape, success increasingly depends on making informed strategic decisions grounded in operational reality rather than vendor promises.
-                            </p>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                Recent examination findings reveal a consistent pattern: firms struggle not because they lack compliance intentions, but because their operational infrastructure cannot support their regulatory obligations at scale. This gap between aspiration and execution creates unnecessary risk and limits growth potential.
-                            </p>
-
-                            <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">The Real Cost of Operational Inefficiency</h2>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                When firms experience rapid asset growth, operational bottlenecks emerge predictably. Client onboarding extends from days to weeks. Portfolio rebalancing becomes manual and error-prone. Compliance reviews create backlogs that delay business development. The very success that drives growth begins undermining service quality.
-                            </p>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                Consider the typical progression: A firm crosses $500 million in assets under management. Client acquisition accelerates. Then workflows that functioned adequately at smaller scale begin breaking down. Partners spend increasing time on administrative tasks rather than client relationships. New hires struggle to access information scattered across multiple systems. Critical deadlines slip.
-                            </p>
-
-                            <blockquote className="border-l-4 border-[#49648C] pl-6 my-8 italic text-gray-700">
-                                "The firms that scale successfully don't just add more people to broken processes. They fundamentally rethink how work flows through their organization before growth forces the issue."
-                            </blockquote>
-
-                            <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">Building Sustainable Infrastructure</h2>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                Strategic technology implementation requires understanding what actually drives efficiency gains versus what simply creates the appearance of sophistication. The distinction matters because technology deployed without clear operational objectives often increases complexity rather than reducing it.
-                            </p>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                Successful implementations share common characteristics. They begin with process documentation—not the compliance theater variety, but genuine understanding of how work currently flows and where friction exists. They prioritize integration over feature sets. They measure impact through operational metrics rather than adoption rates.
-                            </p>
-
-                            <h3 className="text-2xl font-light text-[#0B1F3B] mt-10 mb-5">Key Implementation Principles</h3>
-
-                            <ul className="space-y-3 mb-8 text-gray-800">
-                                <li className="flex items-start">
-                                    <span className="text-[#49648C] mr-3 mt-1.5">•</span>
-                                    <span><strong className="font-semibold text-[#0B1F3B]">Start with data architecture.</strong> Without clean, accessible data, sophisticated tools become expensive paperweights.</span>
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="text-[#49648C] mr-3 mt-1.5">•</span>
-                                    <span><strong className="font-semibold text-[#0B1F3B]">Prioritize integration capabilities.</strong> The best individual tools mean nothing if they can't communicate with your existing systems.</span>
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="text-[#49648C] mr-3 mt-1.5">•</span>
-                                    <span><strong className="font-semibold text-[#0B1F3B]">Test with real workflows.</strong> Demos showcase ideal conditions. Implementation reveals actual utility under operational pressure.</span>
-                                </li>
-                                <li className="flex items-start">
-                                    <span className="text-[#49648C] mr-3 mt-1.5">•</span>
-                                    <span><strong className="font-semibold text-[#0B1F3B]">Measure specific outcomes.</strong> Time saved per process, error reduction rates, client satisfaction scores—concrete metrics that demonstrate value.</span>
-                                </li>
-                            </ul>
-
-                            <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">Regulatory Compliance as Competitive Advantage</h2>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                Viewing compliance solely as cost center misses strategic opportunity. Firms that build robust compliance frameworks gain operational advantages extending beyond examination preparation. Systematic risk monitoring identifies issues before they become problems. Documented procedures enable consistent client service. Comprehensive recordkeeping supports informed decision-making.
-                            </p>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                The most sophisticated firms treat compliance infrastructure as business intelligence system. They leverage the same policies and procedures required for regulatory purposes to improve operational efficiency, reduce liability exposure, and demonstrate value to clients increasingly concerned about advisor oversight.
-                            </p>
-
-                            <h2 className="text-3xl font-light text-[#0B1F3B] mt-12 mb-6">Looking Forward</h2>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                Industry consolidation will continue. Regulatory requirements will expand. Technology capabilities will advance. Client expectations will rise. In this environment, competitive advantage belongs to firms that build operational infrastructure supporting sustainable growth rather than those chasing short-term efficiency gains.
-                            </p>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                The firms positioning themselves for long-term success share a common characteristic: they make strategic decisions based on operational reality rather than aspirational thinking. They invest in infrastructure before growth forces the issue. They implement technology to solve specific problems rather than following trends. They build compliance frameworks that support business objectives rather than simply checking regulatory boxes.
-                            </p>
-
-                            <p className="text-gray-800 leading-relaxed mb-6">
-                                This approach requires patience. It demands upfront investment that doesn't generate immediate revenue. It means declining opportunities that stress operational capacity. But it creates foundation for sustainable competitive advantage in an industry where operational excellence increasingly separates thriving firms from struggling ones.
-                            </p>
-                        </div>
+                        {/* Main Content - Rendered from Markdown */}
+                        <MarkdownContent content={article.content} />
 
                         {/* Social Share */}
                         <div className="mt-16 pt-8 border-t border-gray-200">
@@ -290,7 +211,7 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                     <div className="py-16 md:py-20">
                         <div className="flex flex-col md:flex-row gap-8 items-start">
                             <Link
-                                href={`/authors/${article.author.id}`}
+                                href={`/authors/${article.author.slug}`}
                                 className="flex-shrink-0 group"
                             >
                                 <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg group-hover:shadow-xl transition-shadow duration-300">
@@ -310,7 +231,7 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
                                     </span>
                                 </div>
                                 <Link
-                                    href={`/authors/${article.author.id}`}
+                                    href={`/authors/${article.author.slug}`}
                                     className="group inline-block"
                                 >
                                     <h3 className="text-2xl md:text-3xl font-light text-[#0B1F3B] mb-2 group-hover:text-[#49648C] transition-colors">

@@ -4,19 +4,16 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
-import { mockArticles } from '@/lib/mock-data';
-import { CATEGORIES } from '@/config/categories';
+import type { Article, Category } from '@/types';
 
-export const LatestByCategorySection: React.FC = () => {
-    // Get latest articles for each category (3 per category)
-    const articlesByCategory = CATEGORIES.map(category => ({
-        category,
-        articles: mockArticles
-            .filter(article => article.category.id === category.id)
-            .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
-            .slice(0, 3)
-    })).filter(group => group.articles.length > 0);
+interface LatestByCategorySectionProps {
+    articlesByCategory: {
+        category: Category;
+        articles: Article[];
+    }[];
+}
 
+export const LatestByCategorySection: React.FC<LatestByCategorySectionProps> = ({ articlesByCategory }) => {
     const formatDate = (date: string) => {
         return new Date(date).toLocaleDateString('en-US', {
             month: 'short',

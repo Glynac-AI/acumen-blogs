@@ -4,13 +4,22 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { SearchDropdown } from '@/components/search/SearchDropdown';
-import { CATEGORIES } from '@/config/categories';
-import { getSubcategoriesByCategoryId } from '@/config/subcategories';
+import type { Category, Subcategory } from '@/types';
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+    categories: Category[];
+    subcategories: Subcategory[];
+}
+
+export const Header: React.FC<HeaderProps> = ({ categories, subcategories }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [mobileOpenCategory, setMobileOpenCategory] = useState<string | null>(null);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+    // Helper function to get subcategories for a category
+    const getSubcategoriesForCategory = (categoryId: string) => {
+        return subcategories.filter(sub => sub.categoryId === categoryId);
+    };
 
     return (
         <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -50,8 +59,8 @@ export const Header: React.FC = () => {
                     <nav className="hidden lg:flex items-center justify-between flex-1 ml-8">
                         {/* Category Dropdowns - Left Side */}
                         <div className="flex items-center space-x-1">
-                            {CATEGORIES.map((category) => {
-                                const subcategories = getSubcategoriesByCategoryId(category.id);
+                            {categories.map((category) => {
+                                const categorySubcategories = getSubcategoriesForCategory(category.id);
 
                                 return (
                                     <div key={category.id} className="relative group">
@@ -85,7 +94,7 @@ export const Header: React.FC = () => {
 
                                                 {/* Subcategories */}
                                                 <div className="max-h-80 overflow-y-auto">
-                                                    {subcategories.map((subcategory) => (
+                                                    {categorySubcategories.map((subcategory) => (
                                                         <Link
                                                             key={subcategory.id}
                                                             href={`/subcategories/${subcategory.slug}`}
@@ -228,8 +237,8 @@ export const Header: React.FC = () => {
                             </div>
 
                             {/* Mobile Category Accordions */}
-                            {CATEGORIES.map((category) => {
-                                const subcategories = getSubcategoriesByCategoryId(category.id);
+                            {categories.map((category) => {
+                                const categorySubcategories = getSubcategoriesForCategory(category.id);
                                 const isOpen = mobileOpenCategory === category.id;
 
                                 return (
@@ -268,7 +277,7 @@ export const Header: React.FC = () => {
                                                 </Link>
 
                                                 {/* Subcategories */}
-                                                {subcategories.map((subcategory) => (
+                                                {categorySubcategories.map((subcategory) => (
                                                     <Link
                                                         key={subcategory.id}
                                                         href={`/subcategories/${subcategory.slug}`}

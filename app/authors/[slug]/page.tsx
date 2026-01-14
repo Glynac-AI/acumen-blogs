@@ -1,23 +1,22 @@
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
-import { mockAuthors, mockArticles } from '@/lib/mock-data';
+import { fetchAuthorBySlug, fetchArticles } from '@/lib/api';
 import { generateAuthorMetadata } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
 interface AuthorPageProps {
     params: Promise<{
-        id: string;
+        slug: string;
     }>;
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: AuthorPageProps): Promise<Metadata> {
-    const { id } = await params;
-    const author = mockAuthors.find(a => a.id === id);
+    const { slug } = await params;
+    const author = await fetchAuthorBySlug(slug);
 
     if (!author) {
         return {
@@ -25,23 +24,21 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
         };
     }
 
-    const articleCount = mockArticles.filter(article => article.author.id === author.id).length;
+    const authorArticles = await fetchArticles({ authorId: author.id });
 
-    return generateAuthorMetadata(author, articleCount);
+    return generateAuthorMetadata(author, authorArticles.length);
 }
 
 export default async function AuthorPage({ params }: AuthorPageProps) {
-    const { id } = await params;
-    const author = mockAuthors.find(a => a.id === id);
+    const { slug } = await params;
+    const author = await fetchAuthorBySlug(slug);
 
     if (!author) {
         notFound();
     }
 
-    // Get all articles by this author
-    const authorArticles = mockArticles
-        .filter(article => article.author.id === author.id)
-        .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    // Get all articles by this author (already sorted by publishDate desc from API)
+    const authorArticles = await fetchArticles({ authorId: author.id });
 
     return (
         <>

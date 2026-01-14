@@ -30,6 +30,7 @@ export interface SEOMetadata {
 export interface Author {
     id: string;
     name: string;
+    slug: string;
     title: string;
     bio: string;
     photo: string;
@@ -52,9 +53,9 @@ export interface Article {
     slug: string;
     content: string;
     excerpt: string;
-    category: Category; 
-    subcategories: Subcategory[]; 
-    tags?: Tag[]; 
+    category: Category;
+    subcategories: Subcategory[];
+    tags?: Tag[];
     author: Author;
     featuredImage: string;
     publishDate: string;

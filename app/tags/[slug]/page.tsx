@@ -1,9 +1,10 @@
-import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
-import { mockArticles, mockTags } from '@/lib/mock-data';
+import { fetchTagBySlug, fetchArticles } from '@/lib/api';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import type { Tag } from '@/types';
 
 interface TagPageProps {
     params: Promise<{
@@ -11,30 +12,49 @@ interface TagPageProps {
     }>;
 }
 
+// Generate metadata for SEO
+export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const tag = await fetchTagBySlug(slug);
+
+    if (!tag) {
+        return {
+            title: 'Tag Not Found | RegulateThis',
+        };
+    }
+
+    return {
+        title: `${tag.name} | RegulateThis`,
+        description: `Articles tagged with ${tag.name}`,
+        openGraph: {
+            title: `${tag.name} | RegulateThis`,
+            description: `Articles tagged with ${tag.name}`,
+        },
+    };
+}
+
 export default async function TagPage({ params }: TagPageProps) {
     const { slug } = await params;
-    const tag = mockTags.find(t => t.slug === slug);
+    const tag = await fetchTagBySlug(slug);
 
     if (!tag) {
         notFound();
     }
 
-    // Get articles with this tag
-    const tagArticles = mockArticles
-        .filter(article => article.tags?.some(t => t.slug === slug))
-        .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    // Get articles with this tag (already sorted by publishDate desc from API)
+    const tagArticles = await fetchArticles({ tagSlug: slug });
 
     // Get related tags (tags that appear in the same articles)
-    const relatedTagSlugs = new Set<string>();
+    const relatedTagsMap = new Map<string, Tag>();
     tagArticles.forEach(article => {
         article.tags?.forEach(t => {
-            if (t.slug !== slug) {
-                relatedTagSlugs.add(t.slug);
+            if (t.slug !== slug && !relatedTagsMap.has(t.id)) {
+                relatedTagsMap.set(t.id, t);
             }
         });
     });
 
-    const relatedTags = mockTags.filter(t => relatedTagSlugs.has(t.slug)).slice(0, 6);
+    const relatedTags = Array.from(relatedTagsMap.values()).slice(0, 6);
 
     return (
         <>

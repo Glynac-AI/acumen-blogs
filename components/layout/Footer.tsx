@@ -3,9 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
-import { CATEGORIES } from '@/config/categories';
+import type { Category } from '@/types';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+    categories: Category[];
+}
+
+export const Footer: React.FC<FooterProps> = ({ categories }) => {
     const currentYear = new Date().getFullYear();
 
     const footerLinks = {
@@ -15,7 +19,7 @@ export const Footer: React.FC = () => {
             { href: '/authors', label: 'Authors' },
             { href: '/about', label: 'About Us' },
         ],
-        categories: CATEGORIES.map(category => ({
+        categories: categories.map(category => ({
             href: `/categories/${category.slug}`,
             label: category.name
         })),

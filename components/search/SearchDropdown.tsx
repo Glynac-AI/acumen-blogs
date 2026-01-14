@@ -208,7 +208,7 @@ export const SearchDropdown: React.FC = () => {
                                             return (
                                                 <Link
                                                     key={index}
-                                                    href={`/authors/${author.id}`}
+                                                    href={`/authors/${author.slug}`}
                                                     onClick={closeDropdown}
                                                     className="block px-4 py-3 hover:bg-gray-50 transition-colors"
                                                 >
