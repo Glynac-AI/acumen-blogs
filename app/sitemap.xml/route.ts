@@ -1,21 +1,16 @@
 import { NextResponse } from 'next/server';
 import { generateSitemap } from '@/lib/sitemap';
-import { mockArticles, mockAuthors, mockTags } from '@/lib/mock-data';
-import { CATEGORIES } from '@/config/categories';
-import { SUBCATEGORIES } from '@/config/subcategories';
+import { fetchArticles, fetchAuthors, fetchCategories, fetchSubcategories, fetchTags } from '@/lib/api';
 
 export async function GET() {
     try {
-        // TODO: Replace with Strapi fetch when connected
-        // const articles = await fetch('your-strapi-url/api/articles?populate=*').then(r => r.json());
-        // const authors = await fetch('your-strapi-url/api/authors').then(r => r.json());
-        // const tags = await fetch('your-strapi-url/api/tags').then(r => r.json());
-
-        const articles = mockArticles;
-        const authors = mockAuthors;
-        const tags = mockTags;
-        const categories = CATEGORIES;
-        const subcategories = SUBCATEGORIES;
+        const [articles, authors, categories, subcategories, tags] = await Promise.all([
+            fetchArticles(),
+            fetchAuthors(),
+            fetchCategories(),
+            fetchSubcategories(),
+            fetchTags(),
+        ]);
 
         const sitemap = generateSitemap(articles, authors, categories, subcategories, tags);
 

@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server';
 import { generateRSS } from '@/lib/rss';
-import { mockArticles } from '@/lib/mock-data';
+import { fetchArticles } from '@/lib/api';
 
 export async function GET() {
     try {
-        // TODO: Replace with Strapi fetch when connected
-        // const articles = await fetch('your-strapi-url/api/articles').then(r => r.json());
-        const articles = mockArticles;
+        const articles = await fetchArticles();
 
         const rss = generateRSS(articles);
 

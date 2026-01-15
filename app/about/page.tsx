@@ -1,7 +1,6 @@
-import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
-import { CATEGORIES } from '@/config/categories';
+import { fetchCategories } from '@/lib/api';
 import { generateDefaultMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 
@@ -11,7 +10,9 @@ export const metadata: Metadata = generateDefaultMetadata(
     '/about'
 );
 
-export default function AboutPage() {
+export default async function AboutPage() {
+    const categories = await fetchCategories();
+
     return (
         <>
             {/* Hero Section - Strong Opening */}
@@ -79,7 +80,7 @@ export default function AboutPage() {
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                            {CATEGORIES.map((category) => (
+                            {categories.map((category) => (
                                 <Link
                                     key={category.id}
                                     href={`/categories/${category.slug}`}
@@ -98,14 +99,16 @@ export default function AboutPage() {
                                             {category.description.split('.')[0]}.
                                         </p>
 
-                                        <div className="space-y-2">
-                                            {category.details.slice(0, 2).map((detail, idx) => (
-                                                <div key={idx} className="flex items-start text-sm text-gray-600">
-                                                    <span className="text-[#49648C] mr-2">→</span>
-                                                    <span>{detail.split('—')[0]}</span>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        {category.details && category.details.length > 0 && (
+                                            <div className="space-y-2">
+                                                {category.details.slice(0, 2).map((detail, idx) => (
+                                                    <div key={idx} className="flex items-start text-sm text-gray-600">
+                                                        <span className="text-[#49648C] mr-2">→</span>
+                                                        <span>{detail.split('—')[0]}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
 
                                         <div className="mt-6 text-sm font-medium text-[#49648C] group-hover:text-[#0B1F3B] transition-colors">
                                             Explore {category.name} →

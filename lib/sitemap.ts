@@ -76,7 +76,7 @@ export function generateSitemap(
     // Author pages
     authors.forEach((author) => {
         urls.push({
-            loc: `${SITE_URL}/authors/${escapeXml(author.id)}`,
+            loc: `${SITE_URL}/authors/${escapeXml(author.slug)}`,
             changefreq: 'monthly',
             priority: 0.6,
         });

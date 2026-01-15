@@ -102,21 +102,12 @@ export const MarkdownContent: React.FC<MarkdownContentProps> = ({ content }) => 
             </em>
         ),
 
-        // Code blocks
-        code: ({ inline, children }) => {
-            if (inline) {
-                return (
-                    <code className="px-2 py-0.5 bg-[#F5F2EA] text-[#0B1F3B] text-sm font-mono rounded">
-                        {children}
-                    </code>
-                );
-            }
-            return (
-                <code className="block p-4 bg-[#F5F2EA] text-[#0B1F3B] text-sm font-mono rounded mb-6 overflow-x-auto leading-relaxed">
-                    {children}
-                </code>
-            );
-        },
+        // Code blocks (inline code only - block code is handled by pre)
+        code: ({ children }) => (
+            <code className="px-2 py-0.5 bg-[#F5F2EA] text-[#0B1F3B] text-sm font-mono rounded">
+                {children}
+            </code>
+        ),
 
         // Pre (code blocks)
         pre: ({ children }) => (

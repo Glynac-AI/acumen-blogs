@@ -3,19 +3,22 @@
 import React, { useState } from 'react';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
-import { mockArticles } from '@/lib/mock-data';
-import { Category } from '@/types';
-import { CATEGORIES } from '@/config/categories';
+import { Article, Category } from '@/types';
 
-export const RecentArticlesSection: React.FC = () => {
+interface RecentArticlesSectionProps {
+    articles: Article[];
+    categories: Category[];
+}
+
+export const RecentArticlesSection: React.FC<RecentArticlesSectionProps> = ({ articles, categories }) => {
     const [selectedCategory, setSelectedCategory] = useState<Category | 'All'>('All');
 
-    const categories: Array<Category | 'All'> = ['All', ...CATEGORIES];
+    const categoryOptions: Array<Category | 'All'> = ['All', ...categories];
 
     // Filter articles based on selected category
     const filteredArticles = selectedCategory === 'All'
-        ? mockArticles
-        : mockArticles.filter(article => article.category.id === selectedCategory.id);
+        ? articles
+        : articles.filter(article => article.category.id === selectedCategory.id);
 
     // Show only first 9 articles
     const displayedArticles = filteredArticles.slice(0, 9);
@@ -38,7 +41,7 @@ export const RecentArticlesSection: React.FC = () => {
 
                         {/* Filter Tabs */}
                         <div className="flex flex-wrap gap-3">
-                            {categories.map((category) => {
+                            {categoryOptions.map((category) => {
                                 // Get unique key
                                 const key = category === 'All' ? 'all' : category.id;
                                 // Get display name
