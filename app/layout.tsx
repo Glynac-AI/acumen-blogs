@@ -37,18 +37,29 @@ export const metadata: Metadata = {
   },
 };
 
+// Safe fetch wrapper that returns empty array on failure
+async function safeFetch<T>(fetchFn: () => Promise<T[]>, fallback: T[] = []): Promise<T[]> {
+  try {
+    return await fetchFn();
+  } catch (error) {
+    console.error('Failed to fetch data:', error);
+    return fallback;
+  }
+}
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   // Fetch all data from Strapi for header, footer, and search
+  // Using safeFetch to prevent app crash if backend is unavailable
   const [categories, subcategories, articles, authors, tags] = await Promise.all([
-    fetchCategories(),
-    fetchSubcategories(),
-    fetchArticles(),
-    fetchAuthors(),
-    fetchTags(),
+    safeFetch(fetchCategories),
+    safeFetch(fetchSubcategories),
+    safeFetch(fetchArticles),
+    safeFetch(fetchAuthors),
+    safeFetch(fetchTags),
   ]);
 
   return (
