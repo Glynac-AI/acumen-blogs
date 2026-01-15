@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = generateDefaultMetadata(
     'About',
-    'RegulateThis publishes sharp, actionable insights on practice management, wealth management software, and regulatory compliance. Learn about our mission and what makes us different.',
+    'Actionable insights on RIA practice management, wealth management software, and regulatory compliance. Written for advisors who run firms.',
     '/about'
 );
 
@@ -15,16 +15,27 @@ export default async function AboutPage() {
 
     return (
         <>
-            {/* Hero Section - Strong Opening */}
+            {/* Hero Section */}
             <section className="bg-[#0B1F3B] text-white">
                 <Container>
-                    <div className="py-20 md:py-32">
-                        <div className="max-w-4xl mx-auto text-center">
+                    <div className="py-20 md:py-28">
+                        <div className="max-w-4xl">
+                            <div className="flex items-center space-x-3 mb-6">
+                                <div className="h-px w-12 bg-[#49648C]"></div>
+                                <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#49648C]">
+                                    About Us
+                                </span>
+                            </div>
+
                             <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-8">
-                                Most wealth management content is forgettable by design
+                                Read What Top Advisors Are Reading
                             </h1>
-                            <p className="text-xl md:text-2xl font-light text-gray-300 leading-relaxed max-w-3xl mx-auto">
-                                Safe, surface-level, and written for everyone — which means it's useful to no one.
+
+                            <p className="text-xl md:text-2xl font-light text-gray-300 leading-relaxed mb-4">
+                                Actionable insights on RIA practice management, wealth management software, and regulatory compliance.
+                            </p>
+                            <p className="text-lg font-medium text-white">
+                                Written for advisors who run firms.
                             </p>
                         </div>
                     </div>
@@ -44,18 +55,18 @@ export default async function AboutPage() {
                             </div>
 
                             <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#0B1F3B] leading-tight mb-8">
-                                We built this for advisors who want sharper thinking
+                                Built for Advisors Who Value Their Time
                             </h2>
 
                             <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
                                 <p>
-                                    RegulateThis publishes sharp, actionable insights on practice management, wealth management software, and regulatory compliance.
+                                    RegulateThis delivers focused insights on practice management, wealth management technology, and RIA compliance.
                                 </p>
                                 <p>
-                                    No vendor spin. No compliance theater. No content written to appease everyone while helping no one.
+                                    Every article earns its place. If it doesn't help you make better decisions, we don't publish it.
                                 </p>
                                 <p>
-                                    We write for RIA owners, compliance officers, operations leaders, and advisors who value depth over breadth and substance over noise.
+                                    We write for RIA owners, compliance officers, operations leaders, and firm makers who want substance over noise.
                                 </p>
                             </div>
                         </div>
@@ -121,7 +132,7 @@ export default async function AboutPage() {
                 </Container>
             </section>
 
-            {/* Philosophy */}
+            {/* Our Approach */}
             <section className="bg-white">
                 <Container>
                     <div className="py-20 md:py-28">
@@ -134,34 +145,34 @@ export default async function AboutPage() {
                             </div>
 
                             <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#0B1F3B] leading-tight mb-8">
-                                What makes us different
+                                What Makes Us Different?
                             </h2>
 
                             <div className="space-y-8">
                                 <div>
                                     <h3 className="text-xl font-medium text-[#0B1F3B] mb-3">
-                                        We publish when we have something to say
+                                        We publish when it matters
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed">
-                                        Not on a schedule. Not to hit SEO targets. When we've tested something worth sharing, conducted research that matters, or identified a trend before it becomes obvious.
+                                        Quality over quantity. Every piece goes live because it's useful, not because a content calendar said so.
                                     </p>
                                 </div>
 
                                 <div>
                                     <h3 className="text-xl font-medium text-[#0B1F3B] mb-3">
-                                        We name names
+                                        We get specific
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed">
-                                        When a platform falls short, we say so. When a strategy works, we explain why. We test tools, call out gaps, and spotlight what actually delivers.
+                                        Vague advice helps no one. We break down what works, what doesn't, and why. Details you can apply this week.
                                     </p>
                                 </div>
 
                                 <div>
                                     <h3 className="text-xl font-medium text-[#0B1F3B] mb-3">
-                                        We write for practitioners
+                                        We write for the people doing the work
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed">
-                                        Not compliance committees. Not vendor audiences. People running firms, managing operations, and navigating regulations in the real world.
+                                        Firm owners. Compliance leads. Operations managers. If you're building or running an advisory firm, this is for you.
                                     </p>
                                 </div>
                             </div>
@@ -171,21 +182,23 @@ export default async function AboutPage() {
             </section>
 
             {/* Contact CTA */}
-            <section className="bg-[#0B1F3B] text-white">
+            <section className="bg-white">
                 <Container>
-                    <div className="py-16 md:py-20 text-center">
-                        <h2 className="text-3xl md:text-4xl font-light mb-4">
-                            Have a story to share or a topic to suggest?
-                        </h2>
-                        <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                            We're always looking for insights from the field and ideas worth exploring.
-                        </p>
-                        <a
-                            href="mailto:hello@regulatethis.com"
-                            className="inline-block px-8 py-3 bg-[#49648C] text-white font-medium rounded hover:bg-[#5A7AA0] transition-colors"
-                        >
-                            Get in Touch
-                        </a>
+                    <div className="py-16 md:py-20">
+                        <div className="bg-[#0B1F3B] text-white rounded-lg px-8 py-12 md:px-16 md:py-16 text-center">
+                            <h2 className="text-3xl md:text-4xl font-light mb-4">
+                                Have a Story to Share or a Topic to Suggest?
+                            </h2>
+                            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+                                We're always looking for insights from the field and ideas worth exploring.
+                            </p>
+                            <a
+                                href="mailto:hello@regulatethis.com"
+                                className="inline-block px-8 py-3 bg-[#49648C] text-white font-medium rounded hover:bg-[#5A7AA0] transition-colors"
+                            >
+                                Get in Touch
+                            </a>
+                        </div>
                     </div>
                 </Container>
             </section>
