@@ -259,18 +259,20 @@ function transformAuthor(strapiAuthor: StrapiAuthor): Author {
     };
 }
 
-function transformArticle(strapiArticle: StrapiArticle): Article {
+function transformArticle(strapiArticle: StrapiArticle): Article | null {
     const author = strapiArticle.author;
     const category = strapiArticle.category;
     const subcategories = strapiArticle.subcategories || [];
     const tags = strapiArticle.tags || [];
 
     if (!author) {
-        throw new Error(`Article ${strapiArticle.id} missing required relation: author`);
+        console.warn(`Article ${strapiArticle.id} (${strapiArticle.title}) missing required relation: author - skipping`);
+        return null;
     }
 
     if (!category) {
-        throw new Error(`Article ${strapiArticle.id} missing required relation: category`);
+        console.warn(`Article ${strapiArticle.id} (${strapiArticle.title}) missing required relation: category - skipping`);
+        return null;
     }
 
     return {
@@ -348,7 +350,10 @@ export async function fetchArticles(options: {
         `/articles?${params.toString()}`
     );
 
-    return response.data.map(transformArticle);
+    // Filter out articles with missing required relations
+    return response.data
+        .map(transformArticle)
+        .filter((article): article is Article => article !== null);
 }
 
 export async function fetchArticleBySlug(slug: string): Promise<Article | null> {
