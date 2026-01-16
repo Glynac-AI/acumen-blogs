@@ -8,7 +8,7 @@ import { getBaseUrl } from "@/config/site";
 import { fetchCategories, fetchSubcategories, fetchArticles, fetchAuthors, fetchTags } from "@/lib/api";
 import "./globals.css";
 
-const GOOGLE_TAG_ID = "GT-PBN23HQC";
+const GA_MEASUREMENT_ID = "G-2W427S0D28";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -67,7 +67,7 @@ export default async function RootLayout({
       <head>
         {/* Google Tag (gtag.js) */}
         <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`}
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
         />
         <Script
@@ -78,7 +78,7 @@ export default async function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${GOOGLE_TAG_ID}');
+              gtag('config', '${GA_MEASUREMENT_ID}');
             `,
           }}
         />
