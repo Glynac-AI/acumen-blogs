@@ -1,25 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getBaseUrl } from '@/config/site';
-
-const SITE_URL = getBaseUrl();
 
 export async function GET() {
     const robotsTxt = `# Robot Rules for RegulateThis
-# Allow all search engines to crawl the site
+# Block all search engines from indexing (temporary)
 
 User-agent: *
-Allow: /
-
-# Disallow admin and API routes (if any)
-Disallow: /api/
-Disallow: /admin/
-
-# Sitemap location
-Sitemap: ${SITE_URL}/sitemap.xml
-
-# Crawl-delay (optional, be nice to smaller crawlers)
-# Uncomment if needed
-# Crawl-delay: 10
+Disallow: /
 `;
 
     return new NextResponse(robotsTxt, {
