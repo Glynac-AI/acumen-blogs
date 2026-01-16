@@ -8,6 +8,9 @@ import { generateDefaultMetadata } from '@/lib/seo';
 import { fetchCategories, fetchArticles } from '@/lib/api';
 import type { Metadata } from 'next';
 
+// Revalidate data every 60 seconds
+export const revalidate = 60;
+
 export const metadata: Metadata = generateDefaultMetadata(
   'Home',
   'Sharp, actionable insights on practice management, wealth management technology, and regulatory compliance for wealth management professionals.',

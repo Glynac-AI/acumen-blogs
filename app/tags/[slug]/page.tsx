@@ -6,6 +6,9 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import type { Tag } from '@/types';
 
+// Revalidate data every 60 seconds
+export const revalidate = 60;
+
 interface TagPageProps {
     params: Promise<{
         slug: string;

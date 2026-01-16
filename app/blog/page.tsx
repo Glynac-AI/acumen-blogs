@@ -4,6 +4,9 @@ import { BlogContent } from '@/components/blog/BlogContent';
 import { fetchCategories, fetchArticles } from '@/lib/api';
 import type { Metadata } from 'next';
 
+// Revalidate data every 60 seconds
+export const revalidate = 60;
+
 export const metadata: Metadata = {
     title: 'Blog - Latest Insights | RegulateThis',
     description: 'Sharp analysis on practice management, software, and compliance. Published when we have something worth saying.',

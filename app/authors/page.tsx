@@ -5,6 +5,9 @@ import { fetchAuthors, fetchArticles } from '@/lib/api';
 import { generateDefaultMetadata } from '@/lib/seo';
 import type { Metadata } from 'next';
 
+// Revalidate data every 60 seconds
+export const revalidate = 60;
+
 export const metadata: Metadata = generateDefaultMetadata(
     'Authors',
     'Meet the industry professionals behind RegulateThis. Experienced advisors, compliance officers, and technology experts sharing their insights.',

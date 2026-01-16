@@ -5,6 +5,9 @@ import { fetchCategoryBySlug, fetchArticles, fetchSubcategories } from '@/lib/ap
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
+// Revalidate data every 60 seconds
+export const revalidate = 60;
+
 interface CategoryPageProps {
     params: Promise<{
         slug: string;
