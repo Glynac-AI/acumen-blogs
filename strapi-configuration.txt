@@ -1,0 +1,939 @@
+Overview
+4 main content types in Strapi:
+
+Articles (Collection Type)
+
+Authors (Collection Type)
+
+Categories (Collection Type) - formerly "Pillars"
+
+Subcategories (Collection Type) - formerly "Tags" but more structured
+
+Tags (Collection Type) - Optional flexible metadata
+
+1. Articles (Collection Type)
+Basic Information
+
+Field Name
+
+Type
+
+Required
+
+Description
+
+Additional Settings
+
+title
+
+Text (Short)
+
+✅ Yes
+
+Article title
+
+Max 200 characters
+
+subtitle
+
+Text (Short)
+
+❌ No
+
+Article subtitle
+
+Max 250 characters
+
+slug
+
+UID
+
+✅ Yes
+
+URL-friendly identifier
+
+Attached to title field
+
+excerpt
+
+Text (Long)
+
+✅ Yes
+
+Brief summary (2-3 sentences)
+
+Max 500 characters
+
+content
+
+Rich Text
+
+✅ Yes
+
+Full article content
+
+Use Markdown or Rich Text editor
+
+publishDate
+
+Date
+
+✅ Yes
+
+Publication date
+
+Include time
+
+readTime
+
+Number (Integer)
+
+✅ Yes
+
+Estimated minutes to read
+
+Min: 1, Max: 60
+
+isFeatured
+
+Boolean
+
+✅ Yes
+
+Show in featured sections
+
+Default: false
+
+Media
+Field Name
+
+Type
+
+Required
+
+Description
+
+Additional Settings
+
+featuredImage
+
+Media (Single)
+
+✅ Yes
+
+Main article image
+
+Allowed types: images, Min: 1200x630
+
+Relations
+Field Name
+
+Type
+
+Required
+
+Description
+
+Relation Type
+
+author
+
+Relation
+
+✅ Yes
+
+Article author
+
+Many-to-One with Authors
+
+category
+
+Relation
+
+✅ Yes
+
+Main category
+
+Many-to-One with Categories
+
+subcategories
+
+Relation
+
+✅ Yes
+
+Subcategories (1-3 recommended)
+
+Many-to-Many with Subcategories
+
+tags
+
+Relation
+
+❌ No
+
+Optional flexible tags
+
+Many-to-Many with Tags
+
+SEO Component (Create as Component)
+Field Name
+
+Type
+
+Required
+
+Description
+
+metaTitle
+
+Text (Short)
+
+❌ No
+
+Custom page title (max 60 chars)
+
+metaDescription
+
+Text (Long)
+
+❌ No
+
+Custom meta description (max 160 chars)
+
+keywords
+
+Text (Long)
+
+❌ No
+
+SEO keywords (comma-separated)
+
+ogImage
+
+Media (Single)
+
+❌ No
+
+Custom Open Graph image
+
+canonicalURL
+
+Text (Short)
+
+❌ No
+
+Custom canonical URL
+
+noIndex
+
+Boolean
+
+❌ No
+
+Prevent search engine indexing (default: false)
+
+Add SEO Component to Article:
+
+Component name: seo
+
+Type: Component
+
+Repeatable: No
+
+Article Status & Publishing
+Field Name
+
+Type
+
+Required
+
+Description
+
+status
+
+Enumeration
+
+✅ Yes
+
+Draft, Published, Scheduled, Archived
+
+Enable Draft & Publish: Yes (in Advanced Settings)
+
+2. Authors (Collection Type)
+Basic Information
+Field Name
+
+Type
+
+Required
+
+Description
+
+Additional Settings
+
+name
+
+Text (Short)
+
+✅ Yes
+
+Full name
+
+Max 100 characters
+
+slug
+
+UID
+
+✅ Yes
+
+URL-friendly identifier
+
+Attached to name field
+
+title
+
+Text (Short)
+
+✅ Yes
+
+Job title/position
+
+e.g., "Chief Compliance Officer"
+
+bio
+
+Text (Long)
+
+✅ Yes
+
+Author biography
+
+2-3 paragraphs, max 1000 chars
+
+email
+
+Email
+
+❌ No
+
+Contact email
+
+For RSS feed
+
+Media
+Field Name
+
+Type
+
+Required
+
+Description
+
+Additional Settings
+
+photo
+
+Media (Single)
+
+✅ Yes
+
+Author profile photo
+
+Square format recommended (400x400)
+
+Social Links
+Field Name
+
+Type
+
+Required
+
+Description
+
+linkedin
+
+Text (Short)
+
+❌ No
+
+LinkedIn profile URL
+
+twitter
+
+Text (Short)
+
+❌ No
+
+Twitter/X handle or URL
+
+Relations
+Field Name
+
+Type
+
+Description
+
+Relation Type
+
+articles
+
+Relation
+
+Articles by this author
+
+One-to-Many with Articles
+
+Author Status
+Field Name
+
+Type
+
+Required
+
+Description
+
+isActive
+
+Boolean
+
+✅ Yes
+
+Show author on site (default: true)
+
+3. Categories (Collection Type)
+Note: Fixed 3 categories (formerly called "Pillars")
+
+Basic Information
+Field Name
+
+Type
+
+Required
+
+Description
+
+Additional Settings
+
+name
+
+Text (Short)
+
+✅ Yes
+
+Category name
+
+e.g., "Practice Management"
+
+slug
+
+UID
+
+✅ Yes
+
+URL-friendly identifier
+
+e.g., "practice-management"
+
+subtitle
+
+Text (Short)
+
+✅ Yes
+
+Short tagline
+
+e.g., "Building Firms That Work"
+
+description
+
+Text (Long)
+
+✅ Yes
+
+Full description
+
+2-3 sentences
+
+order
+
+Number (Integer)
+
+✅ Yes
+
+Display order
+
+1, 2, 3
+
+Details (Component - Repeatable)
+Create a component called category-details with:
+
+Field Name
+
+Type
+
+Required
+
+Description
+
+detail
+
+Text (Long)
+
+✅ Yes
+
+One detail point
+
+Add to Category:
+
+Component name: details
+
+Type: Component
+
+Repeatable: Yes
+
+Min: 3, Max: 5
+
+Relations
+Field Name
+
+Type
+
+Description
+
+Relation Type
+
+articles
+
+Relation
+
+Articles in this category
+
+One-to-Many with Articles
+
+subcategories
+
+Relation
+
+Subcategories under this category
+
+One-to-Many with Subcategories
+
+4. Subcategories (Collection Type)
+Note: Structured subcategories with parent-child relationship to Categories
+
+Basic Information
+Field Name
+
+Type
+
+Required
+
+Description
+
+Additional Settings
+
+name
+
+Text (Short)
+
+✅ Yes
+
+Subcategory name
+
+Max 50 characters, e.g., "CRM Systems"
+
+slug
+
+UID
+
+✅ Yes
+
+URL-friendly identifier
+
+Attached to name field
+
+description
+
+Text (Long)
+
+❌ No
+
+Subcategory description
+
+Max 250 characters
+
+Relations
+Field Name
+
+Type
+
+Required
+
+Description
+
+Relation Type
+
+category
+
+Relation
+
+✅ Yes
+
+Parent category
+
+Many-to-One with Categories
+
+articles
+
+Relation
+
+❌ No
+
+Articles with this subcategory
+
+Many-to-Many with Articles
+
+5. Tags (Collection Type)
+Note: Optional flexible metadata for cross-category topics
+
+Basic Information
+Field Name
+
+Type
+
+Required
+
+Description
+
+Additional Settings
+
+name
+
+Text (Short)
+
+✅ Yes
+
+Tag name
+
+Max 50 characters, e.g., "Best Practices"
+
+slug
+
+UID
+
+✅ Yes
+
+URL-friendly identifier
+
+Attached to name field
+
+description
+
+Text (Long)
+
+❌ No
+
+Tag description (optional)
+
+Max 250 characters
+
+Relations
+Field Name
+
+Type
+
+Description
+
+Relation Type
+
+articles
+
+Relation
+
+Articles with this tag
+
+Many-to-Many with Articles
+
+6. Newsletter Subscribers (Collection Type) - Optional
+Field Name
+
+Type
+
+Required
+
+Description
+
+email
+
+Email
+
+✅ Yes
+
+Subscriber email
+
+subscribedAt
+
+DateTime
+
+✅ Yes
+
+Subscription date (auto-fill)
+
+status
+
+Enumeration
+
+✅ Yes
+
+Active, Unsubscribed
+
+source
+
+Enumeration
+
+❌ No
+
+Homepage, Article Footer, etc.
+
+Strapi Configuration Steps
+Step 1: Create Content Types
+
+
+# In Strapi Admin Panel
+1. Go to Content-Type Builder
+2. Create Collection Types:
+   - Articles
+   - Authors
+   - Categories
+   - Subcategories
+   - Tags
+3. Add all fields as specified above
+4. Save and restart server
+Step 2: Create SEO Component
+
+
+1. Content-Type Builder → Components
+2. Create new component category: "shared"
+3. Create component: "seo"
+4. Add SEO fields as specified
+5. Add this component to Articles content type
+Step 3: Create Category Details Component
+
+
+1. Content-Type Builder → Components
+2. Create component: "category-details"
+3. Add "detail" field
+4. Add as repeatable component to Categories
+Step 4: Configure Relationships
+
+
+// These are set up in the Content-Type Builder
+Articles:
+- author: Relation (Many-to-One) → Authors
+- category: Relation (Many-to-One) → Categories
+- subcategories: Relation (Many-to-Many) → Subcategories
+- tags: Relation (Many-to-Many) → Tags (optional)
+Authors:
+- articles: Relation (One-to-Many) → Articles
+Categories:
+- articles: Relation (One-to-Many) → Articles
+- subcategories: Relation (One-to-Many) → Subcategories
+Subcategories:
+- category: Relation (Many-to-One) → Categories
+- articles: Relation (Many-to-Many) → Articles
+Tags:
+- articles: Relation (Many-to-Many) → Articles
+Step 5: Set Permissions
+
+
+# In Settings → Roles → Public
+Allow these endpoints:
+- articles: find, findOne
+- authors: find, findOne
+- categories: find, findOne
+- subcategories: find, findOne
+- tags: find, findOne
+# Keep create/update/delete for authenticated users only
+API Endpoints
+Articles
+
+
+GET  /api/articles                    # List all articles
+GET  /api/articles/:id                # Get single article
+GET  /api/articles?filters[slug][$eq]=your-slug  # Get by slug
+GET  /api/articles?populate=*         # Get with relations
+POST /api/articles                    # Create (authenticated)
+PUT  /api/articles/:id                # Update (authenticated)
+DELETE /api/articles/:id              # Delete (authenticated)
+Authors
+
+
+GET  /api/authors
+GET  /api/authors/:id
+GET  /api/authors?filters[slug][$eq]=author-id
+GET  /api/authors?populate=articles
+Categories
+
+
+GET  /api/categories
+GET  /api/categories/:id
+GET  /api/categories?filters[slug][$eq]=category-slug
+GET  /api/categories?populate[subcategories]=*
+Subcategories
+
+
+GET  /api/subcategories
+GET  /api/subcategories/:id
+GET  /api/subcategories?filters[slug][$eq]=subcategory-slug
+GET  /api/subcategories?filters[category][slug][$eq]=practice-management
+Tags
+
+
+GET  /api/tags
+GET  /api/tags/:id
+GET  /api/tags?filters[slug][$eq]=tag-slug
+Populate (Relations) Examples
+
+
+# Get article with all related data
+GET /api/articles/1?populate[author]=*&populate[category]=*&populate[subcategories]=*&populate[tags]=*&populate[featuredImage]=*&populate[seo]=*
+# Get all articles with basic relations
+GET /api/articles?populate[0]=author&populate[1]=category&populate[2]=subcategories&populate[3]=featuredImage
+# Get author with all their articles
+GET /api/authors/1?populate[articles][populate][0]=featuredImage&populate[articles][populate][1]=category
+# Get category with subcategories
+GET /api/categories/1?populate[subcategories]=*&populate[articles][populate][0]=featuredImage
+Sample Data Migration
+Category 1: Practice Management
+
+
+{
+  "name": "Practice Management",
+  "slug": "practice-management",
+  "subtitle": "Building Firms That Work",
+  "description": "Growth creates problems. Good problems, but problems nonetheless. Our practice management coverage digs into compensation structures, talent acquisition, client segmentation, and the operational decisions that separate thriving firms from struggling ones.",
+  "order": 1,
+  "details": [
+    { "detail": "Succession & Transition — Planning exits, buying books, and everything in between" },
+    { "detail": "Scaling Operations — What breaks first when your AUM doubles" },
+    { "detail": "Client Experience — Retention starts long before the annual review" }
+  ]
+}
+Category 2: Wealth Management Software
+
+
+{
+  "name": "Wealth Management Software",
+  "slug": "wealth-management-software",
+  "subtitle": "Cutting Through the Noise",
+  "description": "Every new app claims to be the solution. We test those claims against reality — focusing on what actually improves client outcomes and firm efficiency, and calling it out when something falls short of the hype.",
+  "order": 2,
+  "details": [
+    { "detail": "Portfolio management platforms compared head-to-head" },
+    { "detail": "CRM solutions that advisors actually use" },
+    { "detail": "Reporting tools clients appreciate" },
+    { "detail": "Integration challenges and how firms solve them" },
+    { "detail": "Security considerations that matter now" }
+  ]
+}
+Category 3: Compliance & Regulation
+
+
+{
+  "name": "Compliance & Regulation",
+  "slug": "compliance-regulation",
+  "subtitle": "Keeping You Ahead of the Curve",
+  "description": "Regulatory shifts rarely arrive with clear instructions. We track SEC guidance, state-level changes, and industry standards — then translate what it means for your policies, disclosures, and daily operations.",
+  "order": 3,
+  "details": [
+    { "detail": "Marketing Rule Developments — Advertising, testimonials, and social media guidance" },
+    { "detail": "Examination Priorities — Where regulators are focusing their attention" },
+    { "detail": "Cybersecurity Standards — Requirements keep evolving. So should your approach" }
+  ]
+}
+Subcategories List
+Practice Management Subcategories
+
+
+[
+  { "name": "Firm Growth", "slug": "firm-growth", "description": "Strategies for scaling your practice", "category": "practice-management" },
+  { "name": "Succession Planning", "slug": "succession-planning", "description": "Planning for transitions and exits", "category": "practice-management" },
+  { "name": "Compensation Models", "slug": "compensation-models", "description": "How to structure pay and incentives", "category": "practice-management" },
+  { "name": "Client Segmentation", "slug": "client-segmentation", "description": "Organizing by client needs and profitability", "category": "practice-management" },
+  { "name": "Talent Management", "slug": "talent-management", "description": "Recruiting, retaining, and developing your team", "category": "practice-management" },
+  { "name": "Operations & Workflow", "slug": "operations-workflow", "description": "Streamlining processes and improving efficiency", "category": "practice-management" }
+]
+Wealth Management Software Subcategories
+
+
+[
+  { "name": "CRM Systems", "slug": "crm-systems", "description": "Client relationship management platforms", "category": "wealth-management-software" },
+  { "name": "Portfolio Management", "slug": "portfolio-management", "description": "Tools for managing client portfolios", "category": "wealth-management-software" },
+  { "name": "Integration & Data", "slug": "integration-data", "description": "Connecting systems and managing data", "category": "wealth-management-software" },
+  { "name": "Reporting Tools", "slug": "reporting-tools", "description": "Client reporting and performance visualization", "category": "wealth-management-software" },
+  { "name": "Financial Planning Software", "slug": "financial-planning-software", "description": "Tools for planning and projections", "category": "wealth-management-software" },
+  { "name": "Cybersecurity", "slug": "cybersecurity", "description": "Protecting client data and infrastructure", "category": "wealth-management-software" },
+  { "name": "Automation & AI", "slug": "automation-ai", "description": "Leveraging automation and AI for efficiency", "category": "wealth-management-software" }
+]
+Compliance & Regulation Subcategories
+
+
+[
+  { "name": "SEC Examinations", "slug": "sec-examinations", "description": "Preparing for SEC audits", "category": "compliance-regulation" },
+  { "name": "Marketing Rule", "slug": "marketing-rule", "description": "Advertising and marketing compliance", "category": "compliance-regulation" },
+  { "name": "Documentation & Recordkeeping", "slug": "documentation-recordkeeping", "description": "Required documentation and retention", "category": "compliance-regulation" },
+  { "name": "Risk Management", "slug": "risk-management", "description": "Identifying and mitigating risks", "category": "compliance-regulation" },
+  { "name": "Fiduciary Standards", "slug": "fiduciary-standards", "description": "Meeting fiduciary obligations", "category": "compliance-regulation" },
+  { "name": "Privacy & Data Security", "slug": "privacy-data-security", "description": "Client privacy and data protection", "category": "compliance-regulation" },
+  { "name": "State Regulations", "slug": "state-regulations", "description": "State-level compliance requirements", "category": "compliance-regulation" }
+]
+Optional Tags List
+
+
+[
+  { "name": "Best Practices", "slug": "best-practices" },
+  { "name": "Industry Trends", "slug": "industry-trends" },
+  { "name": "How-To Guide", "slug": "how-to-guide" },
+  { "name": "Case Study", "slug": "case-study" },
+  { "name": "Tool Comparison", "slug": "tool-comparison" }
+]
+Important Strapi Settings
+1. Enable Draft & Publish
+
+
+Content-Type Builder → Articles → Advanced Settings
+☑ Enable draft & publish system
+2. Configure Media Library
+
+
+Settings → Media Library
+- Set max file size (recommend 5MB for images)
+- Enable responsive formats
+- Set allowed formats: jpg, jpeg, png, webp
+3. API Token Setup
+
+
+Settings → API Tokens → Create new token
+- Name: "Frontend Production"
+- Token type: Read-only
+- Token duration: Unlimited
+- Copy token for environment variables
+4. CORS Configuration
+
+
+// config/middlewares.js
+module.exports = [
+  // ...
+  {
+    name: 'strapi::cors',
+    config: {
+      origin: [
+        'http://localhost:3000',
+        'https://regulatethis.com',
+        'https://www.regulatethis.com'
+      ],
+    },
+  },
+];
