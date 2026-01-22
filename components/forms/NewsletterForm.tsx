@@ -25,19 +25,42 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
         }
 
         setStatus('loading');
+        setMessage('');
 
-        // Simulate API call (replace with actual API integration later)
-        setTimeout(() => {
+        try {
+            const response = await fetch('/api/newsletter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to subscribe');
+            }
+
             setStatus('success');
-            setMessage('Thank you for subscribing!');
+            setMessage(data.message || 'Thank you for subscribing!');
             setEmail('');
 
-            // Reset after 3 seconds
+            // Reset after 5 seconds
             setTimeout(() => {
                 setStatus('idle');
                 setMessage('');
-            }, 3000);
-        }, 1000);
+            }, 5000);
+        } catch (error) {
+            setStatus('error');
+            setMessage(error instanceof Error ? error.message : 'Failed to subscribe. Please try again.');
+
+            // Reset error after 5 seconds
+            setTimeout(() => {
+                setStatus('idle');
+                setMessage('');
+            }, 5000);
+        }
     };
 
     if (variant === 'centered') {

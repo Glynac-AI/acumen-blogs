@@ -9,6 +9,12 @@ interface RSSConfig {
     email: string;
 }
 
+interface GenerateRSSOptions {
+    title?: string;
+    description?: string;
+    feedUrl?: string;
+}
+
 const config: RSSConfig = {
     title: siteConfig.name,
     description: siteConfig.description,
@@ -26,7 +32,13 @@ function escapeXml(unsafe: string): string {
         .replace(/'/g, '&apos;');
 }
 
-export function generateRSS(articles: Article[]): string {
+export function generateRSS(articles: Article[], options: GenerateRSSOptions = {}): string {
+    const {
+        title = config.title,
+        description = config.description,
+        feedUrl = `${config.siteUrl}/feed.xml`,
+    } = options;
+
     const latestArticles = articles
         .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime())
         .slice(0, 50);
@@ -58,16 +70,16 @@ export function generateRSS(articles: Article[]): string {
         : new Date().toUTCString();
 
     return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" 
+<rss version="2.0"
      xmlns:atom="http://www.w3.org/2005/Atom"
      xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>${escapeXml(config.title)}</title>
-    <description>${escapeXml(config.description)}</description>
+    <title>${escapeXml(title)}</title>
+    <description>${escapeXml(description)}</description>
     <link>${config.siteUrl}</link>
     <language>${config.language}</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
-    <atom:link href="${config.siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="${feedUrl}" rel="self" type="application/rss+xml"/>
 ${rssItems}
   </channel>
 </rss>`;
