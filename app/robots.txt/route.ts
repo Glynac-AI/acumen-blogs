@@ -1,11 +1,17 @@
 import { NextResponse } from 'next/server';
+import { getBaseUrl } from '@/config/site';
 
 export async function GET() {
+    const baseUrl = getBaseUrl();
     const robotsTxt = `# Robot Rules for RegulateThis
-# Block all search engines from indexing (temporary)
+# Allow all search engines to index the site
 
 User-agent: *
-Disallow: /
+Allow: /
+
+# Sitemap location
+Sitemap: ${baseUrl}/sitemap.xml
+Sitemap: ${baseUrl}/feed.xml
 `;
 
     return new NextResponse(robotsTxt, {
