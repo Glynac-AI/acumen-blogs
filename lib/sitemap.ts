@@ -59,6 +59,12 @@ export function generateSitemap(
         priority: 0.7,
     });
 
+    urls.push({
+        loc: `${SITE_URL}/feeds`,
+        changefreq: 'weekly',
+        priority: 0.8,
+    });
+
     // Article pages
     const sortedArticles = [...articles].sort(
         (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
