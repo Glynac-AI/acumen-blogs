@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useSearch, SearchResult } from '@/hooks/usesearch';
+import { useSearch } from '@/hooks/usesearch';
 import { Article, Author, Tag, Category, Subcategory } from '@/types';
 
 export const SearchDropdown: React.FC = () => {
@@ -94,7 +94,7 @@ export const SearchDropdown: React.FC = () => {
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-xl max-h-[80vh] overflow-y-auto z-50">
                     {totalResults === 0 ? (
                         <div className="p-6 text-center text-gray-500">
-                            <p className="text-sm">No results found for "{query}"</p>
+                            <p className="text-sm">No results found for &quot;{query}&quot;</p>
                             <p className="text-xs mt-1">Try different keywords</p>
                         </div>
                     ) : (

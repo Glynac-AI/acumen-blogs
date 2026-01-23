@@ -37,7 +37,7 @@ export default function EventsPage() {
                                 Coming Soon
                             </h2>
                             <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                                We're curating a calendar of industry events, conferences, and meetups where wealth management
+                                We&apos;re curating a calendar of industry events, conferences, and meetups where wealth management
                                 professionals can learn, network, and share insights.
                             </p>
                             <div className="inline-block px-8 py-3 bg-[#F5F2EA] text-[#0B1F3B] font-medium rounded">

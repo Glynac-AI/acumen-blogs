@@ -6,7 +6,7 @@ const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { email } = body;
+        const { email, source = 'Homepage' } = body;
 
         // Validate email
         if (!email || !/\S+@\S+\.\S+/.test(email)) {
@@ -15,6 +15,12 @@ export async function POST(request: NextRequest) {
                 { status: 400 }
             );
         }
+
+        // Get tenant domain from request headers
+        const host = request.headers.get('host') || request.headers.get('x-forwarded-host') || '';
+        const domain = host.split(':')[0];
+        // Use regulatethis.com for localhost/development, otherwise use actual domain
+        const tenantDomain = domain === 'localhost' ? 'regulatethis.com' : domain;
 
         // Check if subscriber already exists in Strapi
         const checkParams = new URLSearchParams({
@@ -27,6 +33,7 @@ export async function POST(request: NextRequest) {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Tenant-Domain': tenantDomain,
                     ...(STRAPI_API_TOKEN && { 'Authorization': `Bearer ${STRAPI_API_TOKEN}` }),
                 },
             }
@@ -48,7 +55,7 @@ export async function POST(request: NextRequest) {
                 email,
                 subscribedAt: new Date().toISOString(),
                 status: 'Active',
-                source: 'Website',
+                source,
             },
         };
 
@@ -56,6 +63,7 @@ export async function POST(request: NextRequest) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-Tenant-Domain': tenantDomain,
                 ...(STRAPI_API_TOKEN && { 'Authorization': `Bearer ${STRAPI_API_TOKEN}` }),
             },
             body: JSON.stringify(subscriberData),

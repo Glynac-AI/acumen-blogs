@@ -91,7 +91,7 @@ export default async function TagPage({ params }: TagPageProps) {
                                 {tag.name}
                             </h1>
                             <p className="text-xl text-gray-600 font-light leading-relaxed">
-                                {tagArticles.length} {tagArticles.length === 1 ? 'article' : 'articles'} tagged with "{tag.name}"
+                                {tagArticles.length} {tagArticles.length === 1 ? 'article' : 'articles'} tagged with &quot;{tag.name}&quot;
                             </p>
                         </div>
                     </div>

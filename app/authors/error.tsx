@@ -17,7 +17,7 @@ export default function AuthorsError({
   return (
     <ErrorFallback
       title="Unable to Load Author"
-      message="We're having trouble loading this author's profile. Please try again."
+      message="We&apos;re having trouble loading this author's profile. Please try again."
       showRetry={true}
       onRetry={reset}
       showHomeLink={true}

@@ -98,7 +98,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           tags={tags}
         >
           <Header categories={categories} subcategories={subcategories} />
-          <main className="min-h-screen">
+          <main className="min-h-screen pt-16">
             {children}
           </main>
           <Footer categories={categories} />

@@ -42,7 +42,7 @@ export default async function AuthorsPage() {
                                 Contributors
                             </h1>
                             <p className="text-xl text-gray-600 font-light leading-relaxed">
-                                Industry professionals who've been there, done that, and have the insights to prove it.
+                                Industry professionals who&apos;ve been there, done that, and have the insights to prove it.
                             </p>
                         </div>
                     </div>

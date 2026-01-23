@@ -17,7 +17,7 @@ export default function SubcategoriesError({
   return (
     <ErrorFallback
       title="Unable to Load Subcategory"
-      message="We're having trouble loading this subcategory. Please try again or browse our other content."
+      message="We&apos;re having trouble loading this subcategory. Please try again or browse our other content."
       showRetry={true}
       onRetry={reset}
       showHomeLink={true}

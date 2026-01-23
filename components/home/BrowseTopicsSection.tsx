@@ -108,7 +108,7 @@ export const BrowseTopicsSection: React.FC<BrowseTopicsSectionProps> = ({ catego
                     {/* Additional Info */}
                     <div className="mt-16 text-center">
                         <p className="text-gray-600 mb-6">
-                            Can't find what you're looking for?
+                            Can&apos;t find what you&apos;re looking for?
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                             <Link

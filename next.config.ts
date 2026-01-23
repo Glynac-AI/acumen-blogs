@@ -12,7 +12,6 @@ function getHostnameFromUrl(url: string): string | null {
 // Get Strapi configuration
 const strapiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
 const strapiHostname = getHostnameFromUrl(strapiUrl);
-const isHttps = strapiUrl.startsWith('https');
 
 // Get Cloudinary configuration
 const cloudinaryUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL || 'https://res.cloudinary.com';

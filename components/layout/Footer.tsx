@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
+import { NewsletterForm } from '@/components/forms/NewsletterForm';
 import type { Category } from '@/types';
 
 interface FooterProps {
@@ -23,13 +24,10 @@ export const Footer: React.FC<FooterProps> = ({ categories }) => {
             href: `/categories/${category.slug}`,
             label: category.name
         })),
-        additional: [
-            { href: '/resources', label: 'Resources' },
-            { href: '/events', label: 'Events' },
-        ],
         legal: [
             { href: '/privacy', label: 'Privacy Policy' },
             { href: '/terms', label: 'Terms of Use' },
+            { href: '/unsubscribe', label: 'Unsubscribe' },
             { href: '/feeds', label: 'RSS Feeds' },
         ],
     };
@@ -42,97 +40,8 @@ export const Footer: React.FC<FooterProps> = ({ categories }) => {
                         {/* About Section */}
                         <div className="lg:col-span-1">
                             <h3 className="text-xl font-bold mb-4">RegulateThis</h3>
-                            <p className="text-sm text-gray-300 leading-relaxed">
+                            <p className="text-sm text-gray-300 leading-relaxed mb-6">
                                 Sharp, actionable insights on practice management, wealth management software, and regulatory compliance.
-                            </p>
-                        </div>
-
-                        {/* Navigation Links */}
-                        <div>
-                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
-                                Navigation
-                            </h4>
-                            <ul className="space-y-2">
-                                {footerLinks.navigation.map((link) => (
-                                    <li key={link.href}>
-                                        <Link
-                                            href={link.href}
-                                            className="text-sm text-gray-300 hover:text-white transition-colors"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                                {footerLinks.additional.map((link) => (
-                                    <li key={link.href}>
-                                        <Link
-                                            href={link.href}
-                                            className="text-sm text-gray-300 hover:text-white transition-colors"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Categories */}
-                        <div>
-                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
-                                Categories
-                            </h4>
-                            <ul className="space-y-2">
-                                {footerLinks.categories.map((link) => (
-                                    <li key={link.href}>
-                                        <Link
-                                            href={link.href}
-                                            className="text-sm text-gray-300 hover:text-white transition-colors"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Legal & Contact */}
-                        <div>
-                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
-                                Legal
-                            </h4>
-                            <ul className="space-y-2">
-                                {footerLinks.legal.map((link) => (
-                                    <li key={link.href}>
-                                        <Link
-                                            href={link.href}
-                                            className="text-sm text-gray-300 hover:text-white transition-colors"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            {/* Newsletter */}
-                            <div className="mt-6">
-                                <h4 className="text-sm font-semibold uppercase tracking-wider mb-3">
-                                    Newsletter
-                                </h4>
-                                <Link
-                                    href="/newsletter"
-                                    className="inline-block px-4 py-2 bg-[#49648C] text-white text-sm font-medium rounded hover:bg-[#5A7AA0] transition-colors"
-                                >
-                                    Subscribe
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Bottom Bar */}
-                    <div className="mt-12 pt-8 border-t border-gray-700">
-                        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                            <p className="text-sm text-gray-400">
-                                © {currentYear} RegulateThis. All rights reserved.
                             </p>
 
                             {/* Social Links */}
@@ -168,6 +77,98 @@ export const Footer: React.FC<FooterProps> = ({ categories }) => {
                                         <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
                                     </svg>
                                 </a>
+                            </div>
+                        </div>
+
+                        {/* Navigation Links */}
+                        <div>
+                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
+                                Navigation
+                            </h4>
+                            <ul className="space-y-2">
+                                {footerLinks.navigation.map((link) => (
+                                    <li key={link.href}>
+                                        <Link
+                                            href={link.href}
+                                            className="text-sm text-gray-300 hover:text-white transition-colors"
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Categories */}
+                        <div>
+                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
+                                Categories
+                            </h4>
+                            <ul className="space-y-2">
+                                {footerLinks.categories.map((link) => (
+                                    <li key={link.href}>
+                                        <Link
+                                            href={link.href}
+                                            className="text-sm text-gray-300 hover:text-white transition-colors"
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Newsletter & RSS */}
+                        <div>
+                            <h4 className="text-sm font-semibold uppercase tracking-wider mb-4">
+                                Stay Connected
+                            </h4>
+
+                            {/* RSS Feed Link */}
+                            <div className="mb-6">
+                                <Link
+                                    href="/feeds"
+                                    className="text-sm text-gray-300 hover:text-white transition-colors inline-flex items-center gap-2"
+                                >
+                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z" />
+                                    </svg>
+                                    RSS Feeds
+                                </Link>
+                            </div>
+
+                            {/* Newsletter Form */}
+                            <div>
+                                <NewsletterForm variant="inline" source="global_footer" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Bottom Bar */}
+                    <div className="mt-12 pt-8 border-t border-gray-700">
+                        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <p className="text-sm text-gray-400">
+                                © {currentYear} RegulateThis. All rights reserved.
+                            </p>
+                            <div className="flex items-center gap-6">
+                                <Link
+                                    href="/privacy"
+                                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Privacy Policy
+                                </Link>
+                                <Link
+                                    href="/terms"
+                                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Terms of Use
+                                </Link>
+                                <Link
+                                    href="/unsubscribe"
+                                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                                >
+                                    Unsubscribe
+                                </Link>
                             </div>
                         </div>
                     </div>

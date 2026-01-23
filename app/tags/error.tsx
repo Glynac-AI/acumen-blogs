@@ -17,7 +17,7 @@ export default function TagsError({
   return (
     <ErrorFallback
       title="Unable to Load Tag"
-      message="We're having trouble loading articles with this tag. Please try again."
+      message="We&apos;re having trouble loading articles with this tag. Please try again."
       showRetry={true}
       onRetry={reset}
       showHomeLink={true}

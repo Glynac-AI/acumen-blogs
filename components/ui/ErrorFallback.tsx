@@ -15,7 +15,7 @@ interface ErrorFallbackProps {
 
 export function ErrorFallback({
   title = "Something went wrong",
-  message = "We're having trouble loading this content. Please try again later.",
+  message = "We&apos;re having trouble loading this content. Please try again later.",
   showRetry = true,
   onRetry,
   showHomeLink = true,
@@ -82,7 +82,7 @@ export function ConnectionErrorFallback({
   return (
     <ErrorFallback
       title="Connection Error"
-      message="We're unable to connect to our servers right now. This might be a temporary issue. Please check your internet connection and try again."
+      message="We&apos;re unable to connect to our servers right now. This might be a temporary issue. Please check your internet connection and try again."
       showRetry={true}
       onRetry={onRetry}
       showHomeLink={true}
@@ -98,7 +98,7 @@ export function DataLoadErrorFallback({
   return (
     <ErrorFallback
       title="Unable to Load Content"
-      message="We're having trouble loading the content you requested. Our team has been notified and is working on it."
+      message="We&apos;re having trouble loading the content you requested. Our team has been notified and is working on it."
       showRetry={true}
       onRetry={onRetry}
       showHomeLink={true}

@@ -26,7 +26,7 @@ export default function PrivacyPage() {
                             <section>
                                 <h2 className="text-2xl font-light text-[#0B1F3B] mb-4">Introduction</h2>
                                 <p className="text-gray-700 leading-relaxed">
-                                    RegulateThis ("we," "us," or "our") respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.
+                                    RegulateThis (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.
                                 </p>
                             </section>
 
@@ -48,7 +48,7 @@ export default function PrivacyPage() {
                                     We use the information we collect to:
                                 </p>
                                 <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-                                    <li>Send you our newsletter and updates (if you've subscribed)</li>
+                                    <li>Send you our newsletter and updates (if you&apos;ve subscribed)</li>
                                     <li>Respond to your inquiries and requests</li>
                                     <li>Improve our website and content</li>
                                     <li>Analyze website usage and trends</li>

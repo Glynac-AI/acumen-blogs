@@ -55,7 +55,7 @@ function SearchResults() {
                             </span>
                         </div>
                         <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#0B1F3B] mb-4">
-                            Results for "{query}"
+                            Results for &quot;{query}&quot;
                         </h1>
                         <p className="text-lg text-gray-600">
                             Found {results.length} {results.length === 1 ? 'result' : 'results'}

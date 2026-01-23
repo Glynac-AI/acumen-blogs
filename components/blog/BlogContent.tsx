@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
 import { ArticleCard } from '@/components/article/ArticleCard';
+import { BlogNewsletterSection } from '@/components/blog/BlogNewsletterSection';
 import type { Article, Category } from '@/types';
 
 interface BlogContentProps {
@@ -105,6 +106,9 @@ export const BlogContent: React.FC<BlogContentProps> = ({ categories, articles }
                     </div>
                 </Container>
             </section>
+
+            {/* Newsletter Section */}
+            <BlogNewsletterSection />
         </>
     );
 };

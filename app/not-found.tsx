@@ -22,11 +22,11 @@ export default function NotFound() {
                     </div>
 
                     <h2 className="text-3xl md:text-4xl font-light text-[#0B1F3B] mb-6">
-                        This page doesn't exist
+                        This page doesn&apos;t exist
                     </h2>
 
                     <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                        The page you're looking for might have been moved, deleted, or never existed in the first place.
+                        The page you&apos;re looking for might have been moved, deleted, or never existed in the first place.
                     </p>
 
                     {/* CTA Buttons */}

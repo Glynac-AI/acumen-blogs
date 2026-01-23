@@ -37,7 +37,7 @@ export default function WebinarsPage() {
                                 Coming Soon
                             </h2>
                             <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                                We're working on bringing you expert-led webinars covering the latest in SEC regulations,
+                                We&apos;re working on bringing you expert-led webinars covering the latest in SEC regulations,
                                 technology implementations, and practice growth strategies.
                             </p>
                             <div className="inline-block px-8 py-3 bg-[#F5F2EA] text-[#0B1F3B] font-medium rounded">

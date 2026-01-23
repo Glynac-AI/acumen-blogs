@@ -65,6 +65,36 @@ export function generateSitemap(
         priority: 0.8,
     });
 
+    urls.push({
+        loc: `${SITE_URL}/privacy`,
+        changefreq: 'yearly',
+        priority: 0.3,
+    });
+
+    urls.push({
+        loc: `${SITE_URL}/terms`,
+        changefreq: 'yearly',
+        priority: 0.3,
+    });
+
+    urls.push({
+        loc: `${SITE_URL}/unsubscribe`,
+        changefreq: 'yearly',
+        priority: 0.2,
+    });
+
+    urls.push({
+        loc: `${SITE_URL}/events`,
+        changefreq: 'monthly',
+        priority: 0.6,
+    });
+
+    urls.push({
+        loc: `${SITE_URL}/webinars`,
+        changefreq: 'monthly',
+        priority: 0.6,
+    });
+
     // Article pages
     const sortedArticles = [...articles].sort(
         (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()

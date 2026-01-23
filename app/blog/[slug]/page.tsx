@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
 import { SocialShareButtons } from '@/components/article/SocialShareButtons';
 import { MarkdownContent } from '@/components/article/MarkdownContent';
+import { NewsletterForm } from '@/components/forms/NewsletterForm';
 import { fetchArticleBySlug, fetchArticles } from '@/lib/api';
 import { generateArticleMetadata } from '@/lib/seo';
 import { notFound } from 'next/navigation';
@@ -337,24 +339,22 @@ export default async function BlogArticlePage({ params }: BlogPageProps) {
             )}
 
             {/* Newsletter CTA */}
-            <section className="bg-[#0B1F3B] text-white">
+            <Section background="gradient">
                 <Container maxWidth="md">
-                    <div className="py-16 md:py-20 text-center">
-                        <h2 className="text-3xl md:text-4xl font-light mb-4">
-                            Get More Insights Like This
-                        </h2>
-                        <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-                            Sharp analysis delivered when we have something worth saying. No fluff, just actionable insights.
-                        </p>
-                        <Link
-                            href="/newsletter"
-                            className="inline-block px-8 py-3 bg-[#49648C] text-white font-medium hover:bg-[#5A7AA0] transition-colors"
-                        >
-                            Subscribe to Newsletter
-                        </Link>
+                    <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl md:text-4xl font-heading text-[#0B1F3B] mb-4">
+                                Get More Insights Like This
+                            </h2>
+                            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                                Sharp analysis delivered when we have something worth saying. No fluff, just actionable insights for wealth management professionals.
+                            </p>
+                        </div>
+
+                        <NewsletterForm variant="centered" source="Article_CTA" />
                     </div>
                 </Container>
-            </section>
+            </Section>
         </>
     );
 }

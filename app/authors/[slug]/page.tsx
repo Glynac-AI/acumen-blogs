@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
+import { Section } from '@/components/ui/Section';
 import { ArticleCard } from '@/components/article/ArticleCard';
+import { NewsletterForm } from '@/components/forms/NewsletterForm';
 import { fetchAuthorBySlug, fetchArticles } from '@/lib/api';
 import { generateAuthorMetadata } from '@/lib/seo';
 import { notFound } from 'next/navigation';
@@ -159,6 +161,24 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                     </div>
                 </Container>
             </section>
+
+            {/* Newsletter CTA */}
+            <Section background="gradient">
+                <Container maxWidth="md">
+                    <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl md:text-4xl font-heading text-[#0B1F3B] mb-4">
+                                Enjoy {author.name.split(' ')[0]}&apos;s Work?
+                            </h2>
+                            <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                                Get our latest insights from {author.name.split(' ')[0]} and other experts delivered to your inbox.
+                            </p>
+                        </div>
+
+                        <NewsletterForm variant="centered" source="Author_CTA" />
+                    </div>
+                </Container>
+            </Section>
         </>
     );
 }

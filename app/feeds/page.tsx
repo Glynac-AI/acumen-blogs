@@ -123,7 +123,7 @@ export default async function FeedsPage() {
                     <h2 className="text-2xl font-bold text-[#0B1F3B] mb-4">How to Use RSS Feeds</h2>
                     <div className="prose prose-gray max-w-none">
                         <p className="text-gray-600 mb-4">
-                            RSS feeds allow you to stay updated with new content without visiting the website. Here's how to get started:
+                            RSS feeds allow you to stay updated with new content without visiting the website. Here&apos;s how to get started:
                         </p>
                         <ol className="list-decimal list-inside space-y-2 text-gray-600">
                             <li>Choose an RSS reader (Feedly, Inoreader, NewsBlur, or use your browser)</li>

@@ -27,7 +27,7 @@ export default function Error({
       title={isConnectionError ? "Connection Error" : "Something went wrong"}
       message={
         isConnectionError
-          ? "We're unable to connect to our servers right now. Please check your internet connection and try again."
+          ? "We&apos;re unable to connect to our servers right now. Please check your internet connection and try again."
           : "We encountered an unexpected error. Please try again or return to the homepage."
       }
       showRetry={true}

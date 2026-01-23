@@ -63,7 +63,7 @@ export default async function AboutPage() {
                                     RegulateThis delivers focused insights on practice management, wealth management technology, and RIA compliance.
                                 </p>
                                 <p>
-                                    Every article earns its place. If it doesn't help you make better decisions, we don't publish it.
+                                    Every article earns its place. If it doesn&apos;t help you make better decisions, we don&apos;t publish it.
                                 </p>
                                 <p>
                                     We write for RIA owners, compliance officers, operations leaders, and firm makers who want substance over noise.
@@ -154,7 +154,7 @@ export default async function AboutPage() {
                                         We publish when it matters
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed">
-                                        Quality over quantity. Every piece goes live because it's useful, not because a content calendar said so.
+                                        Quality over quantity. Every piece goes live because it&apos;s useful, not because a content calendar said so.
                                     </p>
                                 </div>
 
@@ -163,7 +163,7 @@ export default async function AboutPage() {
                                         We get specific
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed">
-                                        Vague advice helps no one. We break down what works, what doesn't, and why. Details you can apply this week.
+                                        Vague advice helps no one. We break down what works, what doesn&apos;t, and why. Details you can apply this week.
                                     </p>
                                 </div>
 
@@ -172,7 +172,7 @@ export default async function AboutPage() {
                                         We write for the people doing the work
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed">
-                                        Firm owners. Compliance leads. Operations managers. If you're building or running an advisory firm, this is for you.
+                                        Firm owners. Compliance leads. Operations managers. If you&apos;re building or running an advisory firm, this is for you.
                                     </p>
                                 </div>
                             </div>
@@ -190,7 +190,7 @@ export default async function AboutPage() {
                                 Have a Story to Share or a Topic to Suggest?
                             </h2>
                             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-                                We're always looking for insights from the field and ideas worth exploring.
+                                We&apos;re always looking for insights from the field and ideas worth exploring.
                             </p>
                             <a
                                 href="mailto:hello@regulatethis.com"

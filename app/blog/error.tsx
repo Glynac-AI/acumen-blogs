@@ -24,7 +24,7 @@ export default function BlogError({
       title={isConnectionError ? "Unable to Load Articles" : "Blog Error"}
       message={
         isConnectionError
-          ? "We're having trouble connecting to load our articles. Please try again in a moment."
+          ? "We&apos;re having trouble connecting to load our articles. Please try again in a moment."
           : "We couldn't load the blog content. Please try again."
       }
       showRetry={true}

@@ -17,7 +17,7 @@ export default function CategoriesError({
   return (
     <ErrorFallback
       title="Unable to Load Category"
-      message="We're having trouble loading this category. Please try again or browse our other content."
+      message="We&apos;re having trouble loading this category. Please try again or browse our other content."
       showRetry={true}
       onRetry={reset}
       showHomeLink={true}

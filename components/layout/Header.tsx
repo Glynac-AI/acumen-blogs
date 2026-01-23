@@ -22,7 +22,7 @@ export const Header: React.FC<HeaderProps> = ({ categories, subcategories }) => 
     };
 
     return (
-        <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
             <Container>
                 <div className="flex items-center justify-between h-16">
                     <Link href="/" className="flex items-center gap-2 flex-shrink-0">
@@ -56,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({ categories, subcategories }) => 
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden lg:flex items-center justify-between flex-1 ml-8">
+                    <nav className="hidden xl:flex items-center justify-between flex-1 ml-8">
                         {/* Category Dropdowns - Left Side */}
                         <div className="flex items-center space-x-1">
                             {categories.map((category) => {
@@ -178,7 +178,7 @@ export const Header: React.FC<HeaderProps> = ({ categories, subcategories }) => 
                     </nav>
 
                     {/* Mobile: Search + Menu Buttons */}
-                    <div className="lg:hidden flex items-center space-x-2">
+                    <div className="xl:hidden flex items-center space-x-2">
                         {/* Search Button - Mobile */}
                         <button
                             onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -218,7 +218,7 @@ export const Header: React.FC<HeaderProps> = ({ categories, subcategories }) => 
 
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (
-                    <div className="lg:hidden py-4 border-t border-gray-200">
+                    <div className="xl:hidden py-4 border-t border-gray-200">
                         <nav className="flex flex-col space-y-1">
                             {/* Home Link */}
                             <Link
