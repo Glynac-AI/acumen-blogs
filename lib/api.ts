@@ -117,7 +117,7 @@ interface StrapiSubscriber {
     id: number;
     documentId: string;
     email: string;
-    status: 'active' | 'inactive' | 'unsubscribed';
+    status: 'active' | 'unsubscribed';
     source?: string | null;
     subscribedAt: string;
     unsubscribedAt?: string | null;
