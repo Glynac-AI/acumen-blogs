@@ -68,6 +68,6 @@ export interface NewsletterSubscription {
     id?: string;
     email: string;
     subscribedAt: string;
-    status?: 'active' | 'inactive' | 'unsubscribed';
+    status?: 'active' | 'unsubscribed';
     source?: string;
 }
