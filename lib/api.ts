@@ -1,6 +1,6 @@
 // lib/api.ts - Strapi v5 CMS API Integration
 
-import { Article, Author, Category, Subcategory, Tag, SEOMetadata } from '@/types';
+import { Article, Author, Category, Subcategory, Tag, SEOMetadata, NewsletterSubscription } from '@/types';
 
 // ============================================
 // STRAPI V5 TYPES & INTERFACES
@@ -108,6 +108,20 @@ interface StrapiTag {
     name: string;
     slug: string;
     description?: string | null;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt?: string | null;
+}
+
+interface StrapiSubscriber {
+    id: number;
+    documentId: string;
+    email: string;
+    status: 'active' | 'inactive' | 'unsubscribed';
+    source?: string | null;
+    subscribedAt: string;
+    unsubscribedAt?: string | null;
+    unsubscribeReason?: string | null;
     createdAt: string;
     updatedAt: string;
     publishedAt?: string | null;
@@ -665,4 +679,69 @@ export async function getArticleCountByCategory(categorySlug: string): Promise<n
     );
 
     return response.meta.pagination?.total || 0;
+}
+
+// ============================================
+// NEWSLETTER SUBSCRIBERS
+// ============================================
+
+/**
+ * Transform Strapi subscriber to app format
+ */
+function transformSubscriber(strapiSubscriber: StrapiSubscriber): NewsletterSubscription {
+    return {
+        id: strapiSubscriber.documentId,
+        email: strapiSubscriber.email,
+        subscribedAt: strapiSubscriber.subscribedAt,
+        status: strapiSubscriber.status,
+        source: strapiSubscriber.source || undefined,
+    };
+}
+
+/**
+ * Fetch all active newsletter subscribers
+ */
+export async function fetchActiveSubscribers(): Promise<NewsletterSubscription[]> {
+    try {
+        const params = new URLSearchParams({
+            'filters[status][$eq]': 'active',
+            'pagination[pageSize]': '1000',
+            'sort[0]': 'subscribedAt:desc',
+        });
+
+        const response = await fetchAPI<StrapiResponse<StrapiSubscriber[]>>(
+            `/newsletter-subscribers?${params.toString()}`
+        );
+
+        if (!response.data || !Array.isArray(response.data)) {
+            console.warn('No subscribers found or invalid response format');
+            return [];
+        }
+
+        return response.data.map(transformSubscriber);
+    } catch (error) {
+        console.error('Error fetching active subscribers:', error);
+        return [];
+    }
+}
+
+/**
+ * Get total count of active subscribers
+ */
+export async function getActiveSubscriberCount(): Promise<number> {
+    try {
+        const params = new URLSearchParams({
+            'filters[status][$eq]': 'active',
+            'pagination[pageSize]': '1',
+        });
+
+        const response = await fetchAPI<StrapiResponse<StrapiSubscriber[]>>(
+            `/subscribers?${params.toString()}`
+        );
+
+        return response.meta.pagination?.total || 0;
+    } catch (error) {
+        console.error('Error getting subscriber count:', error);
+        return 0;
+    }
 }

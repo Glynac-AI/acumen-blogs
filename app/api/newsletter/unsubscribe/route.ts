@@ -54,14 +54,14 @@ export async function POST(request: NextRequest) {
         const subscriber = existingData.data[0];
 
         // Check if already unsubscribed
-        if (subscriber.status === 'Unsubscribed') {
+        if (subscriber.status === 'unsubscribed') {
             return NextResponse.json(
                 { message: 'This email is already unsubscribed' },
                 { status: 200 }
             );
         }
 
-        // Update subscriber status to Unsubscribed
+        // Update subscriber status to unsubscribed
         const updateResponse = await fetch(
             `${STRAPI_URL}/api/newsletter-subscribers/${subscriber.documentId}`,
             {
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
                 },
                 body: JSON.stringify({
                     data: {
-                        status: 'Unsubscribed',
+                        status: 'unsubscribed',
                         unsubscribedAt: new Date().toISOString(),
                         ...(reason && { unsubscribeReason: reason }),
                     },

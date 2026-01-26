@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
             data: {
                 email,
                 subscribedAt: new Date().toISOString(),
-                status: 'Active',
+                status: 'active',
                 source,
             },
         };
