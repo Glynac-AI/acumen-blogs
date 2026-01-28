@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Container } from '@/components/ui/Container';
 import Link from 'next/link';
+import { unsubscribeFromNewsletter } from '@/lib/api';
 
 // Success checkmark icon
 const CheckIcon = () => (
@@ -51,26 +52,14 @@ export default function UnsubscribePage() {
                 ? `Other: ${otherReasonText}`
                 : reason;
 
-            const response = await fetch('/api/newsletter/unsubscribe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, reason: finalReason }),
-            });
+            const result = await unsubscribeFromNewsletter(email, finalReason);
 
-            const data = await response.json();
-
-            if (!response.ok && response.status !== 404) {
-                throw new Error(data.error || 'Failed to unsubscribe');
-            }
-
-            if (response.status === 404) {
+            if (!result.success) {
                 setStatus('error');
-                setMessage('Email address not found. You may not be subscribed or have already unsubscribed.');
+                setMessage(result.message);
             } else {
                 setStatus('success');
-                setMessage(data.message || 'You have been successfully unsubscribed');
+                setMessage(result.message);
                 setEmail('');
                 setReason('');
                 setOtherReasonText('');

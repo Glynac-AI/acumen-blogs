@@ -1,5 +1,3 @@
-// types/index.ts
-
 export interface Category {
     id: string;
     name: string;
@@ -39,7 +37,6 @@ export interface Author {
     email?: string;
 }
 
-// Keep Tag for flexible tagging (less structured than subcategories)
 export interface Tag {
     id: string;
     name: string;
@@ -68,6 +65,6 @@ export interface NewsletterSubscription {
     id?: string;
     email: string;
     subscribedAt: string;
-    status?: 'active' | 'unsubscribed';
+    subscriptionStatus?: 'subscribed' | 'unsubscribed';
     source?: string;
 }

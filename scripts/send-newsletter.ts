@@ -10,7 +10,6 @@
  * Cron Expression: 0 14 * * 5 (9 AM EST = 14:00 UTC)
  */
 
-// Load environment variables from .env file
 import 'dotenv/config';
 
 import { Resend } from 'resend';
@@ -24,15 +23,13 @@ import WeeklyDigestEmail from '../emails/WeeklyDigest';
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const NEWSLETTER_FROM_EMAIL = process.env.NEWSLETTER_FROM_EMAIL || 'newsletter@regulatethis.com';
 const NEWSLETTER_FROM_NAME = process.env.NEWSLETTER_FROM_NAME || 'RegulateThis';
-const DAYS_TO_LOOK_BACK = 7; // Look back 7 days for articles
+const DAYS_TO_LOOK_BACK = 7;
 
-// Validate environment variables
 if (!RESEND_API_KEY) {
     console.error('❌ ERROR: RESEND_API_KEY environment variable is not set');
     process.exit(1);
 }
 
-// Initialize Resend
 const resend = new Resend(RESEND_API_KEY);
 
 // ============================================
@@ -64,7 +61,8 @@ function formatDate(date: Date): string {
 }
 
 /**
- * Send newsletter in batches to avoid rate limits
+ * Send newsletter in batches using Resend's Batch API
+ * Each recipient receives their own individual email (no exposed email addresses)
  */
 async function sendInBatches(
     emails: string[],
@@ -78,37 +76,45 @@ async function sendInBatches(
         errors: [] as string[],
     };
 
-    // Split emails into batches
     for (let i = 0; i < emails.length; i += batchSize) {
         const batch = emails.slice(i, i + batchSize);
+        const batchNumber = Math.floor(i / batchSize) + 1;
+        const totalBatches = Math.ceil(emails.length / batchSize);
 
-        console.log(`📤 Sending batch ${Math.floor(i / batchSize) + 1} of ${Math.ceil(emails.length / batchSize)} (${batch.length} emails)...`);
+        console.log(`📤 Sending batch ${batchNumber} of ${totalBatches} (${batch.length} emails)...`);
 
         try {
-            const response = await resend.emails.send({
+            const emailPayloads = batch.map(email => ({
                 from: `${NEWSLETTER_FROM_NAME} <${NEWSLETTER_FROM_EMAIL}>`,
-                to: batch,
+                to: [email],
                 subject: subject,
                 react: reactComponent,
-            });
+            }));
+
+            const response = await resend.batch.send(emailPayloads);
 
             if (response.error) {
                 console.error(`❌ Batch error:`, response.error);
                 results.failed += batch.length;
-                results.errors.push(`Batch ${i / batchSize + 1}: ${response.error.message}`);
+                results.errors.push(`Batch ${batchNumber}: ${response.error.message}`);
             } else {
-                results.success += batch.length;
-                console.log(`✅ Batch sent successfully (ID: ${response.data?.id})`);
+                const batchData = response.data?.data || [];
+                const successCount = batchData.filter(r => r.id).length;
+                const failCount = batch.length - successCount;
+
+                results.success += successCount;
+                results.failed += failCount;
+
+                console.log(`✅ Batch sent: ${successCount} succeeded, ${failCount} failed`);
             }
         } catch (error) {
-            console.error(`❌ Batch ${i / batchSize + 1} failed:`, error);
+            console.error(`❌ Batch ${batchNumber} failed:`, error);
             results.failed += batch.length;
-            results.errors.push(`Batch ${i / batchSize + 1}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            results.errors.push(`Batch ${batchNumber}: ${error instanceof Error ? error.message : 'Unknown error'}`);
         }
 
-        // Add delay between batches to respect rate limits
         if (i + batchSize < emails.length) {
-            await new Promise(resolve => setTimeout(resolve, 1000)); // 1 second delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
         }
     }
 
@@ -127,37 +133,31 @@ async function main() {
     console.log(`📅 Looking for articles from the last ${DAYS_TO_LOOK_BACK} days\n`);
 
     try {
-        // Step 1: Fetch recent articles
         console.log('📚 Fetching recent articles...');
         const cutoffDate = getDaysAgo(DAYS_TO_LOOK_BACK);
 
-        // Fetch all recent articles (sorted by publishDate desc by default)
         const allArticles = await fetchArticles({ limit: 50 });
 
-        // Filter to only articles published in the last N days
         const articles = allArticles
             .filter(article => {
                 const publishDate = new Date(article.publishDate);
                 return publishDate >= cutoffDate;
             })
-            .slice(0, 10); // Maximum 10 articles per newsletter
+            .slice(0, 10);
 
         console.log(`✅ Found ${articles.length} article(s) published since ${cutoffDate.toLocaleDateString()}`);
 
-        // Check if there are any articles to send
         if (articles.length === 0) {
             console.log('\n⚠️  No new articles found. Skipping newsletter send.');
             console.log('========================================\n');
             process.exit(0);
         }
 
-        // Log article titles
         console.log('\n📝 Articles to include:');
         articles.forEach((article, index) => {
             console.log(`   ${index + 1}. "${article.title}" by ${article.author.name}`);
         });
 
-        // Step 2: Fetch active subscribers
         console.log('\n👥 Fetching active subscribers...');
         const subscribers = await fetchActiveSubscribers();
         console.log(`✅ Found ${subscribers.length} active subscriber(s)`);
@@ -168,17 +168,14 @@ async function main() {
             process.exit(0);
         }
 
-        // Step 3: Generate email subject
         const subject = articles.length === 1
             ? `New Article: ${articles[0].title}`
             : `Weekly Digest: ${articles.length} New Articles on Compliance & Practice Management`;
 
         console.log(`\n📧 Email subject: "${subject}"`);
 
-        // Step 4: Prepare email list
         const emailList = subscribers.map(sub => sub.email);
 
-        // Step 5: Send newsletter
         console.log(`\n🚀 Sending newsletter to ${emailList.length} subscriber(s)...`);
 
         const results = await sendInBatches(
@@ -187,7 +184,6 @@ async function main() {
             WeeklyDigestEmail({ articles })
         );
 
-        // Step 6: Report results
         console.log('\n========================================');
         console.log('📊 SEND RESULTS');
         console.log('========================================');
@@ -203,7 +199,6 @@ async function main() {
         console.log(`🕐 Finished at: ${formatDate(new Date())}`);
         console.log('========================================\n');
 
-        // Exit with error code if any sends failed
         if (results.failed > 0) {
             process.exit(1);
         }
@@ -215,5 +210,4 @@ async function main() {
     }
 }
 
-// Run the script
 main();

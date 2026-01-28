@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { email, reason } = body;
 
-        // Validate email
         if (!email || !/\S+@\S+\.\S+/.test(email)) {
             return NextResponse.json(
                 { error: 'Please provide a valid email address' },
@@ -16,18 +15,16 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Get tenant domain from request headers
         const host = request.headers.get('host') || request.headers.get('x-forwarded-host') || '';
         const domain = host.split(':')[0];
         const tenantDomain = domain === 'localhost' ? 'regulatethis.com' : domain;
 
-        // Check if subscriber exists in Strapi
         const checkParams = new URLSearchParams({
             'filters[email][$eq]': email,
         });
 
         const checkResponse = await fetch(
-            `${STRAPI_URL}/api/newsletter-subscribers?${checkParams.toString()}`,
+            `${STRAPI_URL}/api/regulatethis-subscribers?${checkParams.toString()}`,
             {
                 method: 'GET',
                 headers: {
@@ -53,17 +50,15 @@ export async function POST(request: NextRequest) {
 
         const subscriber = existingData.data[0];
 
-        // Check if already unsubscribed
-        if (subscriber.status === 'unsubscribed') {
+        if (subscriber.subscriptionStatus === 'unsubscribed') {
             return NextResponse.json(
                 { message: 'This email is already unsubscribed' },
                 { status: 200 }
             );
         }
 
-        // Update subscriber status to unsubscribed
         const updateResponse = await fetch(
-            `${STRAPI_URL}/api/newsletter-subscribers/${subscriber.documentId}`,
+            `${STRAPI_URL}/api/regulatethis-subscribers/${subscriber.documentId}`,
             {
                 method: 'PUT',
                 headers: {
@@ -73,8 +68,8 @@ export async function POST(request: NextRequest) {
                 },
                 body: JSON.stringify({
                     data: {
-                        status: 'unsubscribed',
-                        unsubscribedAt: new Date().toISOString(),
+                        subscriptionStatus: 'unsubscribed',
+                        unsubscribeAt: new Date().toISOString(),
                         ...(reason && { unsubscribeReason: reason }),
                     },
                 }),

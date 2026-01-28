@@ -1,5 +1,3 @@
-// lib/api.ts - Strapi v5 CMS API Integration
-
 import { Article, Author, Category, Subcategory, Tag, SEOMetadata, NewsletterSubscription } from '@/types';
 
 // ============================================
@@ -36,7 +34,6 @@ interface StrapiCategoryDetail {
     detail: string;
 }
 
-// Strapi v5 returns flat objects, not nested in "attributes"
 interface StrapiArticle {
     id: number;
     documentId: string;
@@ -117,10 +114,10 @@ interface StrapiSubscriber {
     id: number;
     documentId: string;
     email: string;
-    status: 'active' | 'unsubscribed';
+    subscriptionStatus: 'subscribed' | 'unsubscribed';
     source?: string | null;
     subscribedAt: string;
-    unsubscribedAt?: string | null;
+    unsubscribeAt?: string | null;
     unsubscribeReason?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -146,23 +143,19 @@ interface StrapiResponse<T> {
 const STRAPI_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337';
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
 
-// Helper to build full URL for Strapi media
 function getStrapiURL(path: string = ''): string {
     return `${STRAPI_URL}${path}`;
 }
 
-// Helper to get full media URL
 function getMediaURL(media: StrapiMedia | null | undefined): string {
     if (!media) return '/images/placeholder.jpg';
 
     const url = media.url;
 
-    // If URL is already absolute, return it
     if (url.startsWith('http')) {
         return url;
     }
 
-    // Otherwise, prepend Strapi URL
     return getStrapiURL(url);
 }
 
@@ -323,7 +316,6 @@ export async function fetchArticles(options: {
 } = {}): Promise<Article[]> {
     const { limit = 100, page = 1, featured, categorySlug, subcategorySlug, tagSlug, authorId } = options;
 
-    // Build query parameters
     const params = new URLSearchParams({
         'pagination[page]': page.toString(),
         'pagination[pageSize]': limit.toString(),
@@ -340,7 +332,6 @@ export async function fetchArticles(options: {
         'populate[9]': 'seo.ogImage',
     });
 
-    // Add filters
     if (featured !== undefined) {
         params.append('filters[isFeatured][$eq]', featured.toString());
     }
@@ -357,14 +348,12 @@ export async function fetchArticles(options: {
         params.append('filters[author][id][$eq]', authorId);
     }
 
-    // Only show published articles
     params.append('filters[publishedAt][$notNull]', 'true');
 
     const response = await fetchAPI<StrapiResponse<StrapiArticle[]>>(
         `/articles?${params.toString()}`
     );
 
-    // Filter out articles with missing required relations
     return response.data
         .map(transformArticle)
         .filter((article): article is Article => article !== null);
@@ -693,7 +682,7 @@ function transformSubscriber(strapiSubscriber: StrapiSubscriber): NewsletterSubs
         id: strapiSubscriber.documentId,
         email: strapiSubscriber.email,
         subscribedAt: strapiSubscriber.subscribedAt,
-        status: strapiSubscriber.status,
+        subscriptionStatus: strapiSubscriber.subscriptionStatus,
         source: strapiSubscriber.source || undefined,
     };
 }
@@ -704,13 +693,13 @@ function transformSubscriber(strapiSubscriber: StrapiSubscriber): NewsletterSubs
 export async function fetchActiveSubscribers(): Promise<NewsletterSubscription[]> {
     try {
         const params = new URLSearchParams({
-            'filters[status][$eq]': 'active',
+            'filters[subscriptionStatus][$eq]': 'subscribed',
             'pagination[pageSize]': '1000',
             'sort[0]': 'subscribedAt:desc',
         });
 
         const response = await fetchAPI<StrapiResponse<StrapiSubscriber[]>>(
-            `/newsletter-subscribers?${params.toString()}`
+            `/regulatethis-subscribers?${params.toString()}`
         );
 
         if (!response.data || !Array.isArray(response.data)) {
@@ -731,17 +720,115 @@ export async function fetchActiveSubscribers(): Promise<NewsletterSubscription[]
 export async function getActiveSubscriberCount(): Promise<number> {
     try {
         const params = new URLSearchParams({
-            'filters[status][$eq]': 'active',
+            'filters[subscriptionStatus][$eq]': 'subscribed',
             'pagination[pageSize]': '1',
         });
 
         const response = await fetchAPI<StrapiResponse<StrapiSubscriber[]>>(
-            `/subscribers?${params.toString()}`
+            `/regulatethis-subscribers?${params.toString()}`
         );
 
         return response.meta.pagination?.total || 0;
     } catch (error) {
         console.error('Error getting subscriber count:', error);
         return 0;
+    }
+}
+
+// ============================================
+// NEWSLETTER SUBSCRIPTION API (CLIENT-SIDE)
+// ============================================
+
+export interface SubscribeResponse {
+    success: boolean;
+    message: string;
+    data?: NewsletterSubscription;
+    error?: string;
+}
+
+export interface UnsubscribeResponse {
+    success: boolean;
+    message: string;
+    error?: string;
+}
+
+/**
+ * Subscribe to newsletter (client-side)
+ */
+export async function subscribeToNewsletter(
+    email: string,
+    source?: string
+): Promise<SubscribeResponse> {
+    try {
+        const response = await fetch('/api/regulatethis-subscribers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, source }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                message: data.error || 'Failed to subscribe',
+                error: data.error,
+            };
+        }
+
+        return {
+            success: true,
+            message: data.message || 'Thank you for subscribing!',
+            data: data.data,
+        };
+    } catch (error) {
+        console.error('Newsletter subscription error:', error);
+        return {
+            success: false,
+            message: 'Failed to subscribe. Please try again later.',
+            error: error instanceof Error ? error.message : 'Unknown error',
+        };
+    }
+}
+
+/**
+ * Unsubscribe from newsletter (client-side)
+ */
+export async function unsubscribeFromNewsletter(
+    email: string,
+    reason?: string
+): Promise<UnsubscribeResponse> {
+    try {
+        const response = await fetch('/api/regulatethis-subscribers/unsubscribe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, reason }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                message: data.error || 'Failed to unsubscribe',
+                error: data.error,
+            };
+        }
+
+        return {
+            success: true,
+            message: data.message || 'You have been successfully unsubscribed',
+        };
+    } catch (error) {
+        console.error('Newsletter unsubscribe error:', error);
+        return {
+            success: false,
+            message: 'Failed to unsubscribe. Please try again later.',
+            error: error instanceof Error ? error.message : 'Unknown error',
+        };
     }
 }

@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { email, source = 'Homepage' } = body;
 
-        // Validate email
         if (!email || !/\S+@\S+\.\S+/.test(email)) {
             return NextResponse.json(
                 { error: 'Please provide a valid email address' },
@@ -16,19 +15,16 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Get tenant domain from request headers
         const host = request.headers.get('host') || request.headers.get('x-forwarded-host') || '';
         const domain = host.split(':')[0];
-        // Use regulatethis.com for localhost/development, otherwise use actual domain
         const tenantDomain = domain === 'localhost' ? 'regulatethis.com' : domain;
 
-        // Check if subscriber already exists in Strapi
         const checkParams = new URLSearchParams({
             'filters[email][$eq]': email,
         });
 
         const checkResponse = await fetch(
-            `${STRAPI_URL}/api/newsletter-subscribers?${checkParams.toString()}`,
+            `${STRAPI_URL}/api/regulatethis-subscribers?${checkParams.toString()}`,
             {
                 method: 'GET',
                 headers: {
@@ -49,17 +45,16 @@ export async function POST(request: NextRequest) {
             }
         }
 
-        // Create new subscriber in Strapi
         const subscriberData = {
             data: {
                 email,
                 subscribedAt: new Date().toISOString(),
-                status: 'active',
+                subscriptionStatus: 'subscribed',
                 source,
             },
         };
 
-        const response = await fetch(`${STRAPI_URL}/api/newsletter-subscribers`, {
+        const response = await fetch(`${STRAPI_URL}/api/regulatethis-subscribers`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

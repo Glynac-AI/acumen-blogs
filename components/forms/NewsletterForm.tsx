@@ -2,27 +2,25 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { subscribeToNewsletter } from '@/lib/api';
 
 interface NewsletterFormProps {
     variant?: 'inline' | 'centered' | 'dark';
     source?: string;
 }
 
-// Success checkmark icon
 const CheckIcon = () => (
     <svg className="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
     </svg>
 );
 
-// Error icon
 const ErrorIcon = () => (
     <svg className="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
     </svg>
 );
 
-// Loading spinner
 const LoadingSpinner = () => (
     <svg className="animate-spin h-5 w-5 inline mr-2" fill="none" viewBox="0 0 24 24">
         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -41,7 +39,6 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Basic email validation
         if (!email || !/\S+@\S+\.\S+/.test(email)) {
             setStatus('error');
             setMessage('Please enter a valid email address');
@@ -52,25 +49,23 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
         setMessage('');
 
         try {
-            const response = await fetch('/api/newsletter', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, source }),
-            });
+            const result = await subscribeToNewsletter(email, source);
 
-            const data = await response.json();
+            if (!result.success) {
+                setStatus('error');
+                setMessage(result.message);
 
-            if (!response.ok) {
-                throw new Error(data.error || 'Failed to subscribe');
+                setTimeout(() => {
+                    setStatus('idle');
+                    setMessage('');
+                }, 5000);
+                return;
             }
 
             setStatus('success');
-            setMessage(data.message || 'Thank you for subscribing!');
+            setMessage(result.message);
             setEmail('');
 
-            // Reset after 5 seconds
             setTimeout(() => {
                 setStatus('idle');
                 setMessage('');
@@ -79,7 +74,6 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
             setStatus('error');
             setMessage(error instanceof Error ? error.message : 'Failed to subscribe. Please try again.');
 
-            // Reset error after 5 seconds
             setTimeout(() => {
                 setStatus('idle');
                 setMessage('');
@@ -91,7 +85,6 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
         return (
             <div className="w-full">
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Input and Button Group */}
                     <div className="flex flex-col sm:flex-row gap-3">
                         <input
                             type="email"
@@ -117,7 +110,6 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
                         </button>
                     </div>
 
-                    {/* Success/Error Messages */}
                     {message && (
                         <div
                             className={`p-3 rounded-lg text-sm font-medium transition-all ${
@@ -142,7 +134,6 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
         return (
             <div className="max-w-lg mx-auto">
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Input and Button Group */}
                     <div className="flex flex-col sm:flex-row gap-3">
                         <input
                             type="email"
@@ -170,7 +161,6 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
                         </Button>
                     </div>
 
-                    {/* Success/Error Messages */}
                     {message && (
                         <div
                             className={`p-3 rounded-lg text-sm font-medium transition-all ${
@@ -191,7 +181,6 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
         );
     }
 
-    // Inline variant
     return (
         <div className="w-full">
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -221,7 +210,6 @@ export const NewsletterForm: React.FC<NewsletterFormProps> = ({
                 </Button>
             </form>
 
-            {/* Success/Error Messages */}
             {message && (
                 <div
                     className={`mt-3 p-2 rounded text-sm font-medium ${
