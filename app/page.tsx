@@ -12,7 +12,7 @@ import type { Metadata } from 'next';
 export const revalidate = 60;
 
 export const metadata: Metadata = generateDefaultMetadata(
-  'Home',
+  'Insights for Wealth Management',
   'Sharp, actionable insights on practice management, wealth management technology, and regulatory compliance for wealth management professionals.',
   '/'
 );

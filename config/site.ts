@@ -16,7 +16,7 @@ export const siteConfig: SiteConfig = {
     description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
         'Sharp, actionable insights on practice management, wealth management technology, and regulatory compliance.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://regulatethis.com',
-    ogImage: process.env.NEXT_PUBLIC_DEFAULT_OG_IMAGE || '/og-image.jpg',
+    ogImage: process.env.NEXT_PUBLIC_DEFAULT_OG_IMAGE || '/opengraph-image.png',
     email: process.env.NEXT_PUBLIC_SITE_EMAIL || 'info@regulatethis.com', // Add this
     links: {
         twitter: 'https://twitter.com/regulatethis',
