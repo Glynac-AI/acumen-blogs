@@ -200,6 +200,13 @@ async function fetchAPI<T>(
             return fetchAPI<T>(path, options, retries - 1);
         }
 
+        const method = options.method?.toUpperCase() || 'GET';
+
+        if (method === 'GET') {
+            console.warn(`Strapi unavailable for ${path}. Returning empty data.`);
+            return { data: [], meta: {} } as unknown as T;
+        }
+
         console.error(`Failed to fetch from Strapi: ${path}`, error);
         throw error;
     }

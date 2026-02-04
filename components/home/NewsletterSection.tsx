@@ -5,7 +5,7 @@ import { NewsletterForm } from '@/components/forms/NewsletterForm';
 
 export const NewsletterSection: React.FC = () => {
     return (
-        <Section background="gradient">
+        <Section background="white" className="pb-20 md:pb-24 lg:pb-28">
             <Container maxWidth="md">
                 <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
                     <div className="text-center mb-8">
