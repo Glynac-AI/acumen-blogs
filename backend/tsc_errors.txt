@@ -1,0 +1,2 @@
+src/index.ts(196,11): error TS2367: This comparison appears to be unintentional because the types '"api::article.article" | "api::author.author" | "api::category.category" | "api::tag.tag" | "api::pillar.pillar" | "api::subcategory.subcategory" | "api::site-setting.site-setting" | ... 20 more ... | "plugin::users-permissions.user"' and '"api::wiki-js-content.wiki-js-content"' have no overlap.
+src/index.ts(197,62): error TS2339: Property 'action' does not exist on type 'never'.

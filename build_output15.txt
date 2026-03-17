@@ -1,0 +1,495 @@
+
+> regulatethis-blog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.2s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+⚠ Using edge runtime on a page currently disables static generation for that page
+  Generating static pages using 11 workers (0/20) ...
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (3 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (3 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (3 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (3 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (3 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (3 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (3 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (3 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (3 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (3 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (3 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (2 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (2 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (2 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (2 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (2 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (2 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (2 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (2 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (2 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (2 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (2 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (1 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (1 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (1 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (1 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (1 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (1 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (1 attempts left)
+Retrying API call to /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true... (1 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /tags?sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (1 attempts left)
+Retrying API call to /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc... (1 attempts left)
+Retrying API call to /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc... (1 attempts left)
+Failed to fetch from Strapi: /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async r (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4550)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async r (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4550)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async l (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:2945)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async l (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:2945)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async n (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:3682)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async n (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:3682)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /tags?sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async t (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4974)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async t (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4974)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async r (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4550)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async r (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4550)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async l (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:2945)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async l (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:2945)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async n (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:3682)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async n (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:3682)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /tags?sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async t (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4974)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async t (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4974)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async r (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4550)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async r (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4550)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async l (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:2945)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async l (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:2945)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async n (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:3682)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async n (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:3682)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /tags?sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async t (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4974)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async t (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4974)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /subcategories?populate%5B0%5D=category&sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async r (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4550)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async r (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4550)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /articles?pagination%5Bpage%5D=1&pagination%5BpageSize%5D=100&sort%5B0%5D=publishDate%3Adesc&populate%5B0%5D=author&populate%5B1%5D=author.photo&populate%5B2%5D=category&populate%5B3%5D=category.details&populate%5B4%5D=subcategories&populate%5B5%5D=subcategories.category&populate%5B6%5D=tags&populate%5B7%5D=featuredImage&populate%5B8%5D=seo&populate%5B9%5D=seo.ogImage&filters%5BpublishedAt%5D%5B%24notNull%5D=true TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async l (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:2945)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async l (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:2945)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /authors?populate%5B0%5D=photo&filters%5BisActive%5D%5B%24eq%5D=true&sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async n (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:3682)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /tags?sort%5B0%5D=name%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async t (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4974)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async t (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4974)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch from Strapi: /categories?populate%5B0%5D=details&sort%5B0%5D=order%3Aasc TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Failed to fetch data: TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Error occurred prerendering page "/about". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: fetch failed
+    at async f (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:432)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:4111)
+    at async o (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11298)
+    at async p (C:\Users\User\Downloads\acumen-blogs-main\acumen-blogs-main\.next\server\chunks\ssr\[root-of-the-server]__5f071c40._.js:1:11414) {
+  digest: '3845161658',
+  [cause]: AggregateError: 
+      at ignore-listed frames {
+    code: 'ECONNREFUSED'
+  }
+}
+Export encountered an error on /about/page: /about, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null

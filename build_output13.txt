@@ -1,0 +1,22 @@
+
+> regulatethis-blog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.6s
+  Running TypeScript ...
+Failed to compile.
+
+./lib/strapi.ts:321:9
+Type error: Object literal may only specify known properties, and 'isActive' does not exist in type 'Author'.
+
+[0m [90m 319 |[39m         twitter[33m:[39m attrs[33m.[39mtwitter[33m,[39m
+ [90m 320 |[39m         email[33m:[39m attrs[33m.[39memail[33m,[39m
+[31m[1m>[22m[39m[90m 321 |[39m         isActive[33m:[39m attrs[33m.[39misActive[33m,[39m
+ [90m     |[39m         [31m[1m^[22m[39m
+ [90m 322 |[39m     }[33m;[39m
+ [90m 323 |[39m }
+ [90m 324 |[39m[0m
+Next.js build worker exited with code: 1 and signal: null

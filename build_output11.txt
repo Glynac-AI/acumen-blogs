@@ -1,0 +1,22 @@
+
+> regulatethis-blog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.1s
+  Running TypeScript ...
+Failed to compile.
+
+./app/blog/[slug]/page.tsx:45:61
+Type error: 'article.category' is possibly 'undefined'.
+
+[0m [90m 43 |[39m
+ [90m 44 |[39m     [90m// Get related articles from same category[39m
+[31m[1m>[22m[39m[90m 45 |[39m     [36mconst[39m allArticles [33m=[39m [36mawait[39m fetchArticles({ categorySlug[33m:[39m article[33m.[39mcategory[33m.[39mslug })[33m;[39m
+ [90m    |[39m                                                             [31m[1m^[22m[39m
+ [90m 46 |[39m     [36mconst[39m relatedArticles [33m=[39m allArticles
+ [90m 47 |[39m         [33m.[39mfilter(a [33m=>[39m a[33m.[39mid [33m!==[39m article[33m.[39mid)
+ [90m 48 |[39m         [33m.[39mslice([35m0[39m[33m,[39m [35m3[39m)[33m;[39m[0m
+Next.js build worker exited with code: 1 and signal: null

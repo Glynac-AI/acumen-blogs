@@ -1,0 +1,22 @@
+
+> regulatethis-blog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.3s
+  Running TypeScript ...
+Failed to compile.
+
+./lib/blog-post-api.ts:10:16
+Type error: Cannot find module 'qs' or its corresponding type declarations.
+
+[0m [90m  8 |[39m     searchPosts
+ [90m  9 |[39m } [36mfrom[39m [32m'../types/blog-post'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m qs [36mfrom[39m [32m'qs'[39m[33m;[39m
+ [90m    |[39m                [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [90m// Configuration[39m
+ [90m 13 |[39m [36mconst[39m [33mSTRAPI_URL[39m [33m=[39m process[33m.[39menv[33m.[39m[33mNEXT_PUBLIC_STRAPI_URL[39m [33m||[39m [32m'http://localhost:5603'[39m[33m;[39m[0m
+Next.js build worker exited with code: 1 and signal: null

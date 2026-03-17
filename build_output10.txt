@@ -1,0 +1,22 @@
+
+> regulatethis-blog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.1s
+  Running TypeScript ...
+Failed to compile.
+
+./lib/mock-data.ts:4:5
+Type error: Property 'slug' is missing in type '{ id: string; name: string; title: string; bio: string; photo: string; linkedin: string; email: string; }' but required in type 'Author'.
+
+[0m [90m 2 |[39m
+ [90m 3 |[39m [36mexport[39m [36mconst[39m mockAuthors[33m:[39m [33mAuthor[39m[] [33m=[39m [
+[31m[1m>[22m[39m[90m 4 |[39m     {
+ [90m   |[39m     [31m[1m^[22m[39m
+ [90m 5 |[39m         id[33m:[39m [32m'1'[39m[33m,[39m
+ [90m 6 |[39m         name[33m:[39m [32m'Sarah Mitchell'[39m[33m,[39m
+ [90m 7 |[39m         title[33m:[39m [32m'Chief Compliance Officer'[39m[33m,[39m[0m
+Next.js build worker exited with code: 1 and signal: null

@@ -1,0 +1,22 @@
+
+> regulatethis-blog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.3s
+  Running TypeScript ...
+Failed to compile.
+
+./lib/data-service.ts:8:37
+Type error: Module '"@/types"' has no exported member 'Pillar'.
+
+[0m [90m  6 |[39m [90m */[39m
+ [90m  7 |[39m
+[31m[1m>[22m[39m[90m  8 |[39m [36mimport[39m type { [33mAuthor[39m[33m,[39m [33mArticle[39m[33m,[39m [33mTag[39m[33m,[39m [33mPillar[39m } [36mfrom[39m [32m'@/types'[39m[33m;[39m
+ [90m    |[39m                                     [31m[1m^[22m[39m
+ [90m  9 |[39m [36mimport[39m {
+ [90m 10 |[39m     getRecentArticles [36mas[39m getStrapiRecentArticles[33m,[39m
+ [90m 11 |[39m     getFeaturedArticle [36mas[39m getStrapiFeaturedArticle[33m,[39m[0m
+Next.js build worker exited with code: 1 and signal: null

@@ -1,0 +1,22 @@
+
+> regulatethis-blog@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.4s
+  Running TypeScript ...
+Failed to compile.
+
+./components/home/IndustryInsightsSection.tsx:74:107
+Type error: Property 'pillar' does not exist on type 'Article'.
+
+[0m [90m 72 |[39m                                     [33m<[39m[33mdiv[39m className[33m=[39m[32m"space-y-4"[39m[33m>[39m
+ [90m 73 |[39m                                         [33m<[39m[33mdiv[39m className[33m=[39m[32m"flex items-center space-x-4 text-xs text-gray-500"[39m[33m>[39m
+[31m[1m>[22m[39m[90m 74 |[39m                                             [33m<[39m[33mspan[39m className[33m=[39m[32m"font-medium text-[#49648C]"[39m[33m>[39m{featuredArticle[33m.[39mpillar}[33m<[39m[33m/[39m[33mspan[39m[33m>[39m
+ [90m    |[39m                                                                                                           [31m[1m^[22m[39m
+ [90m 75 |[39m                                             [33m<[39m[33mspan[39m[33m>[39m•[33m<[39m[33m/[39m[33mspan[39m[33m>[39m
+ [90m 76 |[39m                                             [33m<[39m[33mspan[39m[33m>[39m{featuredArticle[33m.[39mauthor[33m.[39mname}[33m<[39m[33m/[39m[33mspan[39m[33m>[39m
+ [90m 77 |[39m                                             [33m<[39m[33mspan[39m[33m>[39m•[33m<[39m[33m/[39m[33mspan[39m[33m>[39m[0m
+Next.js build worker exited with code: 1 and signal: null
