@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wiki_js_contents",
+  "info": {
+    "singularName": "wiki-js-content",
+    "pluralName": "wiki-js-contents",
+    "displayName": "Wiki JS Content",
+    "description": "Content targeted for synchronization to Wiki.js"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "body": {
+      "type": "richtext"
+    },
+    "syncToWiki": {
+      "type": "boolean",
+      "default": false
+    },
+    "wikiPath": {
+      "type": "string"
+    },
+    "wikiTags": {
+      "type": "string"
+    },
+    "lastSyncedAt": {
+      "type": "datetime"
+    },
+    "lastSyncStatus": {
+      "type": "enumeration",
+      "enum": ["success", "failed", "pending"]
+    },
+    "lastSyncError": {
+      "type": "text"
+    },
+    "wikiPageId": {
+      "type": "integer"
+    }
+  }
+}
